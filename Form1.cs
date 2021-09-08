@@ -21,5 +21,9 @@ namespace TweetAutomationProject {
     private void button_clear(object sender, EventArgs e) {
 
     }
+
+    private void button_send(object sender, EventArgs e) {
+
+    }
   }
 }
