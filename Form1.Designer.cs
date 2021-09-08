@@ -1,6 +1,6 @@
 ﻿
 namespace TweetAutomationProject {
-  partial class Form1 {
+  partial class TweetAutomationFrom {
     /// <summary>
     ///  Required designer variable.
     /// </summary>
