@@ -17,12 +17,6 @@ namespace TweetAutomationProject {
       ReloadCredential();
     }
 
-    private void ReloadCredential() {
-      ConsumerKey.Text = credentialSetting.ConsumerKeySetting;
-      ConsumerSecret.Text = credentialSetting.ConsumerSecretSetting;
-      AccessTokenKey.Text = credentialSetting.AccessTokenKeySetting;
-      AccessTokenSecret.Text = credentialSetting.AccessTokenSecretSetting;
-    }
     private void button_save(object sender, EventArgs e) {
       credentialSetting.ConsumerKeySetting = ConsumerKey.Text;
       credentialSetting.ConsumerSecretSetting = ConsumerSecret.Text;
@@ -32,15 +26,26 @@ namespace TweetAutomationProject {
     }
 
     private void button_clear(object sender, EventArgs e) {
-      ConsumerKey.Clear();
-      ConsumerSecret.Clear();
-      AccessTokenKey.Clear();
-      AccessTokenSecret.Clear();
+      ClearTwitterAPIForm();
       credentialSetting.Reset();
     }
 
     private void button_send(object sender, EventArgs e) {
 
+    }
+
+    private void ReloadCredential() {
+      ConsumerKey.Text = credentialSetting.ConsumerKeySetting;
+      ConsumerSecret.Text = credentialSetting.ConsumerSecretSetting;
+      AccessTokenKey.Text = credentialSetting.AccessTokenKeySetting;
+      AccessTokenSecret.Text = credentialSetting.AccessTokenSecretSetting;
+    }
+
+    private void ClearTwitterAPIForm() {
+      ConsumerKey.Clear();
+      ConsumerSecret.Clear();
+      AccessTokenKey.Clear();
+      AccessTokenSecret.Clear();
     }
   }
 }
