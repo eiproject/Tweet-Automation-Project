@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TweetAutomationProject.Business;
+using UserInterface.Business;
+using TwitterAPIHandler.Business;
 
-namespace TweetAutomationProject {
+namespace UserInterface {
   public partial class TweetAutomationFrom : Form {
     private CredentialSetting credentialSetting = new CredentialSetting();
     public TweetAutomationFrom() {
       InitializeComponent();
       ReloadCredential();
+      /*Twitter twt = new Twitter();
+      twt.PostTweet();*/
     }
 
     private void button_save(object sender, EventArgs e) {

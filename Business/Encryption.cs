@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace TweetAutomationProject.Business {
+namespace UserInterface.Business {
   static class Encryption {
     internal static string Encrypt(
         this string clearText,

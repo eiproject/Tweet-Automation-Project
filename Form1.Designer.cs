@@ -1,5 +1,5 @@
 ﻿
-namespace TweetAutomationProject {
+namespace UserInterface {
   partial class TweetAutomationFrom {
     /// <summary>
     ///  Required designer variable.

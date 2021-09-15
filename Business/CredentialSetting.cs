@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 
-namespace TweetAutomationProject.Business {
+namespace UserInterface.Business {
   sealed class CredentialSetting : ApplicationSettingsBase {
     [UserScopedSetting()]
     public String ConsumerKeySetting {
