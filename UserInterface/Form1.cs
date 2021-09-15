@@ -1,23 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UserInterface.Business;
 using TwitterAPIHandler.Business;
+using UserInterface.Business;
+using UserInterface.Model;
 
 namespace UserInterface {
   public partial class TweetAutomationFrom : Form {
     private CredentialSetting credentialSetting = new CredentialSetting();
+    private Twitter _twitter;
+    private TweetRecords _records;
     public TweetAutomationFrom() {
       InitializeComponent();
       ReloadCredential();
-      /*Twitter twt = new Twitter();
-      twt.PostTweet();*/
+
+      _twitter = new Twitter();
+      _records = new TweetRecords();
+
+      TweetDataGrid.AutoGenerateColumns = false;
+      _records.Records.Add(
+        new TweetRecord(1, "a", "b", "c", "d")
+        );
+      _records.Records.Add(
+        new TweetRecord(2, "b", "b", "c", "d")
+        );
+      TweetDataGrid.Rows.Add("a", "b", "c", "d", "a");
     }
 
     private void button_save(object sender, EventArgs e) {
@@ -34,7 +41,12 @@ namespace UserInterface {
     }
 
     private void button_send(object sender, EventArgs e) {
+      _twitter.SetCredential(
+        ConsumerKey.Text, ConsumerSecret.Text,
+        AccessTokenKey.Text, AccessTokenSecret.Text);
 
+      CreateDataFrameRecord();
+      // _ = CreateTweetAsync(TweetText.Text);
     }
 
     private void ReloadCredential() {
@@ -49,6 +61,31 @@ namespace UserInterface {
       ConsumerSecret.Clear();
       AccessTokenKey.Clear();
       AccessTokenSecret.Clear();
+    }
+
+    private void CreateDataFrameRecord() {
+      DataGridViewButtonColumn button = new DataGridViewButtonColumn();
+      button.Name = "button";
+      button.HeaderText = "Button";
+      button.Text = "Button";
+      button.UseColumnTextForButtonValue = true; //dont forget this line
+      TweetDataGrid.Rows.Insert(1, 1, 2, 3, 4, 5, button);
+      // TweetDataGrid.Columns.Add(button);
+    }
+
+    private async Task CreateTweetAsync(string text) {
+      var response = await _twitter.Tweet(text);
+      Console.WriteLine(response);
+    }
+
+    private void TweetDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+      //Check deleted rows
+      // loggerText.Text = e.ColumnIndex.ToString();
+      if (TweetDataGrid.Columns[e.ColumnIndex].Name != "Delete") {
+        if (MessageBox.Show("Are you sure want to delete this record ?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+          Console.WriteLine();
+        TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
+      }
     }
   }
 }
