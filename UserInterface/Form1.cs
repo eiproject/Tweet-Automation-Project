@@ -10,21 +10,19 @@ namespace UserInterface {
     private CredentialSetting credentialSetting = new CredentialSetting();
     private Twitter _twitter;
     private TweetRecords _records;
+    TweetRecordFactory _factory;
     public TweetAutomationFrom() {
       InitializeComponent();
       ReloadCredential();
 
       _twitter = new Twitter();
       _records = new TweetRecords();
+      _factory = new TweetRecordFactory(_records);
 
       TweetDataGrid.AutoGenerateColumns = false;
-      _records.Records.Add(
-        new TweetRecord(1, "a", "b", "c", "d")
-        );
-      _records.Records.Add(
-        new TweetRecord(2, "b", "b", "c", "d")
-        );
-      TweetDataGrid.Rows.Add("a", "b", "c", "d", "a");
+      DatePicker.Value = DateTime.Now;
+      DatePicker.MinDate = DateTime.Now;
+      TimePicker.Value = DateTime.Now;
     }
 
     private void button_save(object sender, EventArgs e) {
@@ -64,13 +62,15 @@ namespace UserInterface {
     }
 
     private void CreateDataFrameRecord() {
-      DataGridViewButtonColumn button = new DataGridViewButtonColumn();
-      button.Name = "button";
-      button.HeaderText = "Button";
-      button.Text = "Button";
-      button.UseColumnTextForButtonValue = true; //dont forget this line
-      TweetDataGrid.Rows.Insert(1, 1, 2, 3, 4, 5, button);
-      // TweetDataGrid.Columns.Add(button);
+      // loggerText.Text = TimePicker.Value.ToString("dd MM yyyy || HH : mm");
+      loggerText.Text = (DatePicker.Value - DateTime.Now).Days.ToString();
+      TweetRecord record = _factory.Create(
+        TweetText.Text, DatePicker.Value, TimePicker.Value
+        );
+      _records.Add(record);
+      TweetDataGrid.Rows.Insert(0, 
+        record.ID, record.Tweet, record.DateString,
+        record.TimeString, record.Status, "Delete");
     }
 
     private async Task CreateTweetAsync(string text) {
@@ -79,12 +79,13 @@ namespace UserInterface {
     }
 
     private void TweetDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-      //Check deleted rows
-      // loggerText.Text = e.ColumnIndex.ToString();
-      if (TweetDataGrid.Columns[e.ColumnIndex].Name != "Delete") {
-        if (MessageBox.Show("Are you sure want to delete this record ?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-          Console.WriteLine();
-        TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
+      var buttonValue = TweetDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value ?? "null";
+      if (TweetDataGrid.Columns[e.ColumnIndex].Name != "Delete" && buttonValue.ToString().ToLower() == "delete") {
+        if (MessageBox.Show(
+          "Are you sure want to delete this record ?",
+          "Message",
+          MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+          TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
       }
     }
   }

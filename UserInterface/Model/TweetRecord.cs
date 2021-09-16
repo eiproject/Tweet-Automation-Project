@@ -4,17 +4,22 @@ using System.Text;
 
 namespace UserInterface.Model {
   class TweetRecord {
-    public int No { get; set; }
+    public int ID { get; set; }
     public string Tweet { get; set; }
-    public string Date { get; set; }
-    public string Time { get; set; }
+    public DateTime DateObject { get; set; }
+    public string DateString { get; set; }
+    public DateTime TimeObject { get; set; }
+    public string TimeString { get; set; }
     public string Status { get; set; }
 
-    public TweetRecord(int no, string tweet, string date, string time, string status) {
-      No = no;
+    public TweetRecord(
+      int id, string tweet, DateTime date, DateTime time, string status) {
+      ID = id;
       Tweet = tweet;
-      Date = date;
-      Time = time;
+      DateObject = date;
+      DateString = date.ToString("dd/MM/yyyy");
+      TimeObject = time;
+      TimeString = time.ToString("hh:mm tt");
       Status = status;
     }
   }
