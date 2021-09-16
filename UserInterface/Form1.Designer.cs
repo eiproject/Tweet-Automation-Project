@@ -1,8 +1,10 @@
 ﻿
 using System.Windows.Forms;
 
-namespace UserInterface {
-  partial class TweetAutomationFrom {
+namespace UserInterface
+{
+  partial class TweetAutomationFrom
+  {
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -12,8 +14,10 @@ namespace UserInterface {
     ///  Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing) {
-      if (disposing && (components != null)) {
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing && (components != null))
+      {
         components.Dispose();
       }
       base.Dispose(disposing);
@@ -25,7 +29,8 @@ namespace UserInterface {
     ///  Required method for Designer support - do not modify
     ///  the contents of this method with the code editor.
     /// </summary>
-    private void InitializeComponent() {
+    private void InitializeComponent()
+    {
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
       this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveCredentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,7 +175,7 @@ namespace UserInterface {
       this.SaveButton.TabIndex = 4;
       this.SaveButton.Text = "Save";
       this.SaveButton.UseVisualStyleBackColor = false;
-      this.SaveButton.Click += new System.EventHandler(this.button_save);
+      this.SaveButton.Click += new System.EventHandler(this.ButtonSave);
       // 
       // ClearButton
       // 
@@ -181,7 +186,7 @@ namespace UserInterface {
       this.ClearButton.TabIndex = 5;
       this.ClearButton.Text = "Clear";
       this.ClearButton.UseVisualStyleBackColor = false;
-      this.ClearButton.Click += new System.EventHandler(this.button_clear);
+      this.ClearButton.Click += new System.EventHandler(this.ButtonClear);
       // 
       // AccessTokenSecret
       // 
@@ -227,7 +232,7 @@ namespace UserInterface {
       this.SendButton.TabIndex = 10;
       this.SendButton.Text = "Send";
       this.SendButton.UseVisualStyleBackColor = false;
-      this.SendButton.Click += new System.EventHandler(this.button_send);
+      this.SendButton.Click += new System.EventHandler(this.ButtonSend);
       // 
       // TweetDataGrid
       // 

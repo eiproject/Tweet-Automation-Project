@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 
-namespace UserInterface.Business {
-  sealed class CredentialSetting : ApplicationSettingsBase {
+namespace UserInterface.Business
+{
+  sealed class CredentialSetting : ApplicationSettingsBase
+  {
     [UserScopedSetting()]
-    public String ConsumerKeySetting {
-      get {
+    public String ConsumerKeySetting
+    {
+      get
+      {
         return (((String)this["ConsumerKeySetting"]) == null)
       ? null : ((String)this["ConsumerKeySetting"]).Decrypt();
       }
@@ -15,8 +19,10 @@ namespace UserInterface.Business {
     }
 
     [UserScopedSetting()]
-    public String ConsumerSecretSetting {
-      get {
+    public String ConsumerSecretSetting
+    {
+      get
+      {
         return (((String)this["ConsumerSecretSetting"]) == null)
       ? null : ((String)this["ConsumerSecretSetting"]).Decrypt();
       }
@@ -24,8 +30,10 @@ namespace UserInterface.Business {
     }
 
     [UserScopedSetting()]
-    public String AccessTokenKeySetting {
-      get {
+    public String AccessTokenKeySetting
+    {
+      get
+      {
         return (((String)this["AccessTokenKeySetting"]) == null)
       ? null : ((String)this["AccessTokenKeySetting"]).Decrypt();
       }
@@ -33,8 +41,10 @@ namespace UserInterface.Business {
     }
 
     [UserScopedSetting()]
-    public String AccessTokenSecretSetting {
-      get {
+    public String AccessTokenSecretSetting
+    {
+      get
+      {
         return (((String)this["AccessTokenSecretSetting"]) == null)
       ? null : ((String)this["AccessTokenSecretSetting"]).Decrypt();
       }

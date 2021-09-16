@@ -6,13 +6,15 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitterAPIHandler.Business {
-  public class Twitter {
+namespace TwitterAPIHandler.Business
+{
+  public class Twitter
+  {
     private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
     private string _consumerKey;
     private string _consumerKeySecret;
     private string _accessToken;
-    private string  _accessTokenSecret;
+    private string _accessTokenSecret;
     private HMACSHA1 _sigHasher;
     private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -20,7 +22,8 @@ namespace TwitterAPIHandler.Business {
 
     public void SetCredential(
       string consumerKey, string consumerKeySecret,
-      string accessToken, string accessTokenSecret) {
+      string accessToken, string accessTokenSecret)
+    {
       _consumerKey = consumerKey;
       _consumerKeySecret = consumerKeySecret;
       _accessToken = accessToken;
@@ -30,7 +33,8 @@ namespace TwitterAPIHandler.Business {
         string.Format("{0}&{1}", consumerKeySecret, accessTokenSecret)));
     }
 
-    public Task<string> Tweet(string text) {
+    public Task<string> Tweet(string text)
+    {
       var data = new Dictionary<string, string> {
             { "status", text },
             { "trim_user", "1" }
@@ -39,7 +43,8 @@ namespace TwitterAPIHandler.Business {
       return SendRequest("statuses/update.json", data);
     }
 
-    private Task<string> SendRequest(string url, Dictionary<string, string> data) {
+    private Task<string> SendRequest(string url, Dictionary<string, string> data)
+    {
       var fullUrl = _twitterApiBaseUrl + url;
 
       // Timestamps are in seconds since 1/1/1970.
@@ -65,7 +70,8 @@ namespace TwitterAPIHandler.Business {
       return SendRequest(fullUrl, oAuthHeader, formData);
     }
 
-    private string GenerateSignature(string url, Dictionary<string, string> data) {
+    private string GenerateSignature(string url, Dictionary<string, string> data)
+    {
       var sigString = string.Join(
           "&",
           data
@@ -84,7 +90,8 @@ namespace TwitterAPIHandler.Business {
       return Convert.ToBase64String(_sigHasher.ComputeHash(new ASCIIEncoding().GetBytes(fullSigData.ToString())));
     }
 
-    private string GenerateOAuthHeader(Dictionary<string, string> data) {
+    private string GenerateOAuthHeader(Dictionary<string, string> data)
+    {
       return "OAuth " + string.Join(
           ", ",
           data
@@ -94,8 +101,10 @@ namespace TwitterAPIHandler.Business {
       );
     }
 
-    private async Task<string> SendRequest(string fullUrl, string oAuthHeader, FormUrlEncodedContent formData) {
-      using (var http = new HttpClient()) {
+    private async Task<string> SendRequest(string fullUrl, string oAuthHeader, FormUrlEncodedContent formData)
+    {
+      using (var http = new HttpClient())
+      {
         http.DefaultRequestHeaders.Add("Authorization", oAuthHeader);
 
         var httpResp = await http.PostAsync(fullUrl, formData);

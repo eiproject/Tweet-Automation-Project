@@ -8,6 +8,7 @@ namespace UserInterface.Model {
     internal TweetRecordFactory(TweetRecords records) {
       _records = records;
     }
+
     internal TweetRecord Create(
       string tweet, DateTime date, DateTime time) {
 

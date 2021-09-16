@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserInterface.Model {
-  class TweetRecords {
+namespace UserInterface.Model
+{
+  class TweetRecords
+  {
     public List<TweetRecord> Records { get { return _reecords; } }
     private List<TweetRecord> _reecords;
-    internal TweetRecords() {
+    internal TweetRecords()
+    {
       _reecords = new List<TweetRecord>();
     }
-    internal void Add(TweetRecord record) {
+    internal void Add(TweetRecord record)
+    {
       _reecords.Add(record);
     }
   }

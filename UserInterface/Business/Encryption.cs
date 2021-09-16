@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace UserInterface.Business {
-  static class Encryption {
+namespace UserInterface.Business
+{
+  static class Encryption
+  {
     internal static string Encrypt(
         this string clearText,
         string optionalEntropy = null,
-        DataProtectionScope scope = DataProtectionScope.CurrentUser) {
+        DataProtectionScope scope = DataProtectionScope.CurrentUser)
+    {
       if (clearText == null)
         throw new ArgumentNullException("clearText");
       byte[] clearBytes = Encoding.UTF8.GetBytes(clearText);
@@ -22,7 +25,8 @@ namespace UserInterface.Business {
     internal static string Decrypt(
         this string encryptedText,
         string optionalEntropy = null,
-        DataProtectionScope scope = DataProtectionScope.CurrentUser) {
+        DataProtectionScope scope = DataProtectionScope.CurrentUser)
+    {
       if (encryptedText == null)
         throw new ArgumentNullException("encryptedText");
       byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
