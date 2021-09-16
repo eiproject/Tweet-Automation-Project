@@ -99,7 +99,16 @@ namespace UserInterface
 
     private void ChangeStatusToSuccess(TweetRecord record)
     {
-      record.Status = "Success";
+      int rowCount = TweetDataGrid.Rows.Count;
+      for (int i = 0; i < rowCount - 1; i++)
+      {
+        if (TweetDataGrid.Rows[i].Cells[0].Value.ToString() == record.ID.ToString())
+        {
+          TweetDataGrid.Rows[i].Cells[4].Value = "Success";
+          record.Status = "Success";
+          loggerText.Invoke(new Action(() => loggerText.Text = "Success"));
+        }
+      }
     }
 
     private async Task CreateTweetAsync(string text)
@@ -110,6 +119,7 @@ namespace UserInterface
 
     private void TweetDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
+      if (e.RowIndex < 0 || e.ColumnIndex < 0) { return; }
       var buttonValue = TweetDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value ?? "null";
       if (TweetDataGrid.Columns[e.ColumnIndex].Name != "Delete" && buttonValue.ToString().ToLower() == "delete")
       {
