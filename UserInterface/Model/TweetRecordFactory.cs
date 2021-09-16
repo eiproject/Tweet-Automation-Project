@@ -11,7 +11,7 @@ namespace UserInterface.Model {
     internal TweetRecord Create(
       string tweet, DateTime date, DateTime time) {
 
-      return new TweetRecord(GetLastID(), tweet, date, time, CheckTimeStatus(date, time));
+      return new TweetRecord(GetLastID(), tweet, date, time, CheckStatus(tweet, date, time));
     }
 
     private int GetLastID() {
@@ -25,11 +25,12 @@ namespace UserInterface.Model {
       return id;
     }
 
-    private string CheckTimeStatus(DateTime date, DateTime time) {
+    private string CheckStatus(string tweet, DateTime date, DateTime time) {
       string status = "On Queue";
       int dateDifference = (date - DateTime.Now).Days;
       double timeDifference = (time - DateTime.Now).TotalMinutes;
       if (dateDifference < 0 || timeDifference < 0) status = "Time Error";
+      if (tweet == null || tweet == "" || tweet == " ") status = "Tweet null";
       return status;
     }
   }
