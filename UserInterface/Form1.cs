@@ -80,10 +80,10 @@ namespace UserInterface
       TweetDataGrid.Rows.Insert(0,
         record.ID, record.Tweet, record.DateString,
         record.TimeString, record.Status, "Delete");
-      SetUpTimer(record);
+      SetUpTimerAndSendTweet(record);
     }
 
-    private void SetUpTimer(TweetRecord record)
+    private void SetUpTimerAndSendTweet(TweetRecord record)
     {
       System.Threading.Timer timer;
       TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
@@ -91,10 +91,18 @@ namespace UserInterface
       {
         return;
       }
-      timer = new System.Threading.Timer(x =>
+      timer = new System.Threading.Timer(async x =>
       {
+        await CreateTweetAsync(record);
         ChangeStatusToSuccess(record);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
+    }
+
+    private async Task CreateTweetAsync(TweetRecord record)
+    {
+      string response = await _twitter.Tweet(record.Tweet);
+      loggerText.Invoke(new Action(() => loggerText.Text = response));
+      Console.WriteLine(response);
     }
 
     private void ChangeStatusToSuccess(TweetRecord record)
@@ -106,15 +114,9 @@ namespace UserInterface
         {
           TweetDataGrid.Rows[i].Cells[4].Value = "Success";
           record.Status = "Success";
-          loggerText.Invoke(new Action(() => loggerText.Text = "Success"));
+          // loggerText.Invoke(new Action(() => loggerText.Text = "Success"));
         }
       }
-    }
-
-    private async Task CreateTweetAsync(string text)
-    {
-      var response = await _twitter.Tweet(text);
-      Console.WriteLine(response);
     }
 
     private void TweetDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
