@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
 using UserInterface.Business;
+using UserInterface.Factory;
 using UserInterface.Local;
 using UserInterface.Model;
 
@@ -14,9 +15,9 @@ namespace UserInterface
     private const string _credentialsBinaryFilepath = "Credentials.bin";
     private ITwitter _twitter;
     private TweetRecords _records;
-    private TweetRecordFactory _factory;
-    private RecordSaverBinary _tweetRecordsSaver;
-    private CredentialSaverBinary _credentialSaver;
+    private ITweetRecordFactory _factory;
+    private ISaverBinary _tweetRecordsSaver;
+    private ISaverBinary _credentialSaver;
     public TweetAutomationFrom()
     {
       InitializeComponent();

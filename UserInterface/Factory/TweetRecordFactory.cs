@@ -1,32 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UserInterface.Model;
 
-namespace UserInterface.Model {
-  class TweetRecordFactory {
+namespace UserInterface.Factory
+{
+  public class TweetRecordFactory : ITweetRecordFactory
+  {
     TweetRecords _records;
-    internal TweetRecordFactory(TweetRecords records) {
+    public TweetRecordFactory(TweetRecords records)
+    {
       _records = records;
     }
 
-    internal TweetRecord Create(
-      string tweet, DateTime date, DateTime time) {
+    public TweetRecord Create(
+      string tweet, DateTime date, DateTime time)
+    {
 
-      return new TweetRecord(GetLastID(), tweet, date, time, CheckStatus(tweet, date, time));
+      return new TweetRecord(
+        GetLastID(),
+        tweet,
+        date,
+        time,
+        CheckStatus(tweet, date, time));
     }
 
-    private int GetLastID() {
+    private int GetLastID()
+    {
       int id;
-      if (_records.Records.Count == 0) {
+      if (_records.Records.Count == 0)
+      {
         id = 0;
       }
-      else {
+      else
+      {
         id = _records.Records[_records.Records.Count - 1].ID + 1;
       }
       return id;
     }
 
-    private string CheckStatus(string tweet, DateTime date, DateTime time) {
+    private string CheckStatus(string tweet, DateTime date, DateTime time)
+    {
       string status = "On Queue";
       int dateDifference = (date - DateTime.Now).Days;
       double timeDifference = (time - DateTime.Now).TotalMinutes;
