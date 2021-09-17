@@ -106,7 +106,7 @@ namespace UserInterface
       // aboutToolStripMenuItem
       // 
       this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
       this.aboutToolStripMenuItem.Text = "About";
       this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutButtonStripMenuItem);
       // 
@@ -355,6 +355,7 @@ namespace UserInterface
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
+      this.loggerText.Visible = false;
       // 
       // TweetAutomationFrom
       // 
@@ -379,6 +380,7 @@ namespace UserInterface
       this.Controls.Add(this.ConsumerKey);
       this.Controls.Add(this.menuStrip1);
       this.MainMenuStrip = this.menuStrip1;
+      this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
       this.Text = "Tweet Automation";
       this.menuStrip1.ResumeLayout(false);

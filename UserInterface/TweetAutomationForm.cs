@@ -14,7 +14,7 @@ namespace UserInterface
     private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
     private const string _credentialsBinaryFilepath = "Credentials.bin";
     private ITwitter _twitter;
-    private TweetRecords _records;
+    private ITweetRecords _records;
     private ITweetRecordFactory _factory;
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
@@ -111,7 +111,7 @@ namespace UserInterface
       SetUpTimerAndSendTweet(record);
     }
 
-    private void UpdateDataGridWithSavedBinary(TweetRecords records)
+    private void UpdateDataGridWithSavedBinary(ITweetRecords records)
     {
       foreach (TweetRecord record in records.Records)
       {
