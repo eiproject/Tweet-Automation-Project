@@ -5,7 +5,7 @@ using System.Text;
 namespace UserInterface.Model
 {
   [Serializable]
-  public class TweetRecords
+  public class TweetRecords : ITweetRecords
   {
     public List<TweetRecord> Records { get { return _records; } }
     private List<TweetRecord> _records;
@@ -13,17 +13,17 @@ namespace UserInterface.Model
     {
       _records = new List<TweetRecord>();
     }
-    internal void Add(TweetRecord record)
+    public void Add(TweetRecord record)
     {
       _records.Add(record);
     }
 
-    internal void Update(TweetRecords lastTweetList)
+    public void Update(TweetRecords lastTweetList)
     {
       if (lastTweetList != null) _records = lastTweetList.Records;
     }
 
-    internal void Delete(int id)
+    public void Delete(int id)
     {
       foreach (TweetRecord record in _records)
       {

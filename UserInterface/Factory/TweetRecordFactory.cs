@@ -7,8 +7,8 @@ namespace UserInterface.Factory
 {
   public class TweetRecordFactory : ITweetRecordFactory
   {
-    TweetRecords _records;
-    public TweetRecordFactory(TweetRecords records)
+    ITweetRecords _records;
+    public TweetRecordFactory(ITweetRecords records)
     {
       _records = records;
     }
