@@ -33,11 +33,7 @@ namespace UserInterface
     {
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
       this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.saveCredentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.loadCredentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ConsumerKey = new System.Windows.Forms.TextBox();
@@ -77,7 +73,6 @@ namespace UserInterface
       // 
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
             this.helpToolStripMenuItem});
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
@@ -88,44 +83,17 @@ namespace UserInterface
       // fileToolStripMenuItem
       // 
       this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveCredentialToolStripMenuItem,
-            this.loadCredentialToolStripMenuItem,
             this.exitToolStripMenuItem});
       this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
       this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
       this.fileToolStripMenuItem.Text = "File";
       // 
-      // saveCredentialToolStripMenuItem
-      // 
-      this.saveCredentialToolStripMenuItem.Name = "saveCredentialToolStripMenuItem";
-      this.saveCredentialToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-      this.saveCredentialToolStripMenuItem.Text = "Save";
-      // 
-      // loadCredentialToolStripMenuItem
-      // 
-      this.loadCredentialToolStripMenuItem.Name = "loadCredentialToolStripMenuItem";
-      this.loadCredentialToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-      this.loadCredentialToolStripMenuItem.Text = "Load";
-      // 
       // exitToolStripMenuItem
       // 
       this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-      this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+      this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
       this.exitToolStripMenuItem.Text = "Exit";
-      // 
-      // editToolStripMenuItem
-      // 
-      this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configurationToolStripMenuItem});
-      this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-      this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-      this.editToolStripMenuItem.Text = "Edit";
-      // 
-      // configurationToolStripMenuItem
-      // 
-      this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-      this.configurationToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-      this.configurationToolStripMenuItem.Text = "Config";
+      this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitButtonStripMenuItem);
       // 
       // helpToolStripMenuItem
       // 
@@ -138,8 +106,9 @@ namespace UserInterface
       // aboutToolStripMenuItem
       // 
       this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.aboutToolStripMenuItem.Text = "About";
+      this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutButtonStripMenuItem);
       // 
       // ConsumerKey
       // 
@@ -424,7 +393,6 @@ namespace UserInterface
 
     private System.Windows.Forms.MenuStrip menuStrip1;
     private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     private System.Windows.Forms.TextBox ConsumerKey;
     private System.Windows.Forms.TextBox ConsumerSecret;
@@ -436,11 +404,8 @@ namespace UserInterface
     private System.Windows.Forms.TextBox TweetText;
     private System.Windows.Forms.Label TweetLabel;
     private System.Windows.Forms.Button SendButton;
-    private System.Windows.Forms.ToolStripMenuItem saveCredentialToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem loadCredentialToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
     private System.Windows.Forms.DataGridView TweetDataGrid;
     private System.Windows.Forms.DataGridViewTextBoxColumn id;
     private System.Windows.Forms.DataGridViewTextBoxColumn tweet;

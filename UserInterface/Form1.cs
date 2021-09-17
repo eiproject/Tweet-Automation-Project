@@ -39,6 +39,17 @@ namespace UserInterface
       TimePicker.Value = DateTime.Now;
     }
 
+    private void ExitButtonStripMenuItem(object sender, EventArgs e)
+    {
+      Application.Exit();
+    }
+
+    private void AboutButtonStripMenuItem(object sender, EventArgs e)
+    {
+      AboutForm about = new AboutForm();
+      about.ShowDialog();
+    }
+
     private void ButtonSave(object sender, EventArgs e)
     {
       _credentialSaver.UpdateBinary(
