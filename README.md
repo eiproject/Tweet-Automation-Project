@@ -7,6 +7,7 @@ Tweet Automation Project
 - Credential Save and Clear button
 - Add Tweet queue
 - Remove Tweet queue
+- Save Tweet queue records
 
 ## User Interface Progress
 
