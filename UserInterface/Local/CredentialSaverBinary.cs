@@ -6,13 +6,12 @@ using UserInterface.Model;
 
 namespace UserInterface.Local
 {
-  internal class RecordSaverBinary
+  class CredentialSaverBinary
   {
-    private TweetRecords _records;
     private string _filePath;
     private bool _overwrite = false;
-    internal RecordSaverBinary(TweetRecords records, string filePath) {
-      _records = records;
+    internal CredentialSaverBinary(string filePath)
+    {
       _filePath = filePath;
     }
 
@@ -25,18 +24,18 @@ namespace UserInterface.Local
         }
     }
 
-    internal TweetRecords Read<TweetRecord>()
+    internal Credentials Read<TweetRecord>()
     {
       using (Stream stream = File.Open(_filePath, FileMode.Open))
       {
-        TweetRecords readResult = null;
+        Credentials readResult = null;
         var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
+        if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
         return readResult;
       }
     }
 
-    internal void UpdateBinary<TweetRecords>(TweetRecords objectToWrite)
+    internal void UpdateBinary<Credentials>(Credentials objectToWrite)
     {
       using (Stream stream = File.Open(_filePath, FileMode.Create))
       {
@@ -47,7 +46,8 @@ namespace UserInterface.Local
 
     internal void Delete()
     {
-
+      if (File.Exists(_filePath))
+        File.Delete(_filePath);
     }
   }
 }

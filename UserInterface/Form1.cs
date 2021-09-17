@@ -10,26 +10,29 @@ namespace UserInterface
 {
   public partial class TweetAutomationFrom : Form
   {
-    private const string _filepath = "TweetRecords.bin";
-    private CredentialSetting credentialSetting = new CredentialSetting();
+    private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
+    private const string _credentialsBinaryFilepath = "Credentials.bin";
     private Twitter _twitter;
     private TweetRecords _records;
     private TweetRecordFactory _factory;
-    private RecordSaverBinary _saver;
+    private RecordSaverBinary _tweetRecordsSaver;
+    private CredentialSaverBinary _credentialSaver;
     public TweetAutomationFrom()
     {
       InitializeComponent();
-      ReloadCredential();
 
       _twitter = new Twitter();
       _records = new TweetRecords();
       _factory = new TweetRecordFactory(_records);
-      _saver = new RecordSaverBinary(_records, _filepath);
+      _tweetRecordsSaver = new RecordSaverBinary(_records, _tweetRecordsBinaryFilepath);
+      _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
 
-      _saver.CreateFileIfNotExist();
-      _records.Update(_saver.Read<TweetRecords>());
+      _tweetRecordsSaver.CreateFileIfNotExist();
+      _records.Update(_tweetRecordsSaver.Read<TweetRecords>());
       UpdateDataGridWithSavedBinary(_records);
-
+      
+      _credentialSaver.CreateFileIfNotExist();
+      UpdateCredentialsWithSavedBinary();
       TweetDataGrid.AutoGenerateColumns = false;
       DatePicker.Value = DateTime.Now;
       DatePicker.MinDate = DateTime.Now;
@@ -38,17 +41,20 @@ namespace UserInterface
 
     private void ButtonSave(object sender, EventArgs e)
     {
-      credentialSetting.ConsumerKeySetting = ConsumerKey.Text;
-      credentialSetting.ConsumerSecretSetting = ConsumerSecret.Text;
-      credentialSetting.AccessTokenKeySetting = AccessTokenKey.Text;
-      credentialSetting.AccessTokenSecretSetting = AccessTokenSecret.Text;
-      credentialSetting.Save();
+      _credentialSaver.UpdateBinary(
+        new Credentials()
+        {
+          ConsumerKey = ConsumerKey.Text,
+          ConsumerSecret = ConsumerSecret.Text,
+          AccessTokenKey = AccessTokenKey.Text,
+          AccessTokenSecret = AccessTokenSecret.Text
+        });
     }
 
     private void ButtonClear(object sender, EventArgs e)
     {
       ClearTwitterAPIForm();
-      credentialSetting.Reset();
+      _credentialSaver.Delete();
     }
 
     private void ButtonSend(object sender, EventArgs e)
@@ -61,12 +67,16 @@ namespace UserInterface
       // _ = CreateTweetAsync(TweetText.Text);
     }
 
-    private void ReloadCredential()
+    private void UpdateCredentialsWithSavedBinary()
     {
-      ConsumerKey.Text = credentialSetting.ConsumerKeySetting;
-      ConsumerSecret.Text = credentialSetting.ConsumerSecretSetting;
-      AccessTokenKey.Text = credentialSetting.AccessTokenKeySetting;
-      AccessTokenSecret.Text = credentialSetting.AccessTokenSecretSetting;
+      Credentials credentials = _credentialSaver.Read<Credentials>();
+      if (credentials != null)
+      {
+        ConsumerKey.Text = credentials.ConsumerKey;
+        ConsumerSecret.Text = credentials.ConsumerSecret;
+        AccessTokenKey.Text = credentials.AccessTokenKey;
+        AccessTokenSecret.Text = credentials.AccessTokenSecret;
+      }
     }
 
     private void ClearTwitterAPIForm()
@@ -83,7 +93,7 @@ namespace UserInterface
         TweetText.Text, DatePicker.Value, TimePicker.Value
         );
       _records.Add(record);
-      _saver.UpdateBinary(_records);
+      _tweetRecordsSaver.UpdateBinary(_records);
 
       UpdateDataGrid(record);
       SetUpTimerAndSendTweet(record);
@@ -153,7 +163,7 @@ namespace UserInterface
         {
           int recordID = int.Parse(TweetDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
           _records.Delete(recordID);
-          _saver.UpdateBinary(_records);
+          _tweetRecordsSaver.UpdateBinary(_records);
           TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
         }
       }
