@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
-using UserInterface.Business;
 using UserInterface.Factory;
 using UserInterface.Local;
 using UserInterface.Model;
@@ -70,7 +69,6 @@ namespace UserInterface
         AccessTokenKey.Text, AccessTokenSecret.Text);
 
       CreateDataFrameRecord();
-      // _ = CreateTweetAsync(TweetText.Text);
     }
 
     private void SaveCredential()

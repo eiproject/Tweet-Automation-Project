@@ -1,6 +1,4 @@
-﻿using UserInterface.Model;
-
-namespace UserInterface.Local
+﻿namespace UserInterface.Local
 {
   public interface ISaverBinary
   {
