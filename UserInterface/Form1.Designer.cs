@@ -51,6 +51,12 @@ namespace UserInterface
       this.TweetLabel = new System.Windows.Forms.Label();
       this.SendButton = new System.Windows.Forms.Button();
       this.TweetDataGrid = new System.Windows.Forms.DataGridView();
+      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
       this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tweet = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,12 +69,6 @@ namespace UserInterface
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.loggerText = new System.Windows.Forms.Label();
-      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.SuspendLayout();
@@ -253,6 +253,43 @@ namespace UserInterface
       this.TweetDataGrid.TabIndex = 11;
       this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TweetDataGrid_CellContentClick);
       // 
+      // dataGridViewTextBoxColumn1
+      // 
+      this.dataGridViewTextBoxColumn1.HeaderText = "ID";
+      this.dataGridViewTextBoxColumn1.MinimumWidth = 50;
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      this.dataGridViewTextBoxColumn1.Width = 50;
+      // 
+      // dataGridViewTextBoxColumn2
+      // 
+      this.dataGridViewTextBoxColumn2.HeaderText = "Tweet";
+      this.dataGridViewTextBoxColumn2.MinimumWidth = 395;
+      this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+      this.dataGridViewTextBoxColumn2.Width = 395;
+      // 
+      // dataGridViewTextBoxColumn3
+      // 
+      this.dataGridViewTextBoxColumn3.HeaderText = "Date";
+      this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+      // 
+      // dataGridViewTextBoxColumn4
+      // 
+      this.dataGridViewTextBoxColumn4.HeaderText = "Time";
+      this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+      // 
+      // dataGridViewTextBoxColumn5
+      // 
+      this.dataGridViewTextBoxColumn5.HeaderText = "Status";
+      this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+      // 
+      // dataGridViewButtonColumn1
+      // 
+      this.dataGridViewButtonColumn1.HeaderText = "Action";
+      this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+      this.dataGridViewButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewButtonColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+      this.dataGridViewButtonColumn1.Text = "Remove";
+      // 
       // id
       // 
       this.id.HeaderText = "No.";
@@ -349,43 +386,6 @@ namespace UserInterface
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
-      // 
-      // dataGridViewTextBoxColumn1
-      // 
-      this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-      this.dataGridViewTextBoxColumn1.MinimumWidth = 50;
-      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-      this.dataGridViewTextBoxColumn1.Width = 50;
-      // 
-      // dataGridViewTextBoxColumn2
-      // 
-      this.dataGridViewTextBoxColumn2.HeaderText = "Tweet";
-      this.dataGridViewTextBoxColumn2.MinimumWidth = 395;
-      this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-      this.dataGridViewTextBoxColumn2.Width = 395;
-      // 
-      // dataGridViewTextBoxColumn3
-      // 
-      this.dataGridViewTextBoxColumn3.HeaderText = "Date";
-      this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-      // 
-      // dataGridViewTextBoxColumn4
-      // 
-      this.dataGridViewTextBoxColumn4.HeaderText = "Time";
-      this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-      // 
-      // dataGridViewTextBoxColumn5
-      // 
-      this.dataGridViewTextBoxColumn5.HeaderText = "Status";
-      this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-      // 
-      // dataGridViewButtonColumn1
-      // 
-      this.dataGridViewButtonColumn1.HeaderText = "Action";
-      this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
-      this.dataGridViewButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewButtonColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-      this.dataGridViewButtonColumn1.Text = "Remove";
       // 
       // TweetAutomationFrom
       // 

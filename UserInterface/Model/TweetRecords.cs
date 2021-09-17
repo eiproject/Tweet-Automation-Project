@@ -4,17 +4,24 @@ using System.Text;
 
 namespace UserInterface.Model
 {
-  class TweetRecords
+  [Serializable]
+  public class TweetRecords
   {
-    public List<TweetRecord> Records { get { return _reecords; } }
-    private List<TweetRecord> _reecords;
-    internal TweetRecords()
+    public List<TweetRecord> Records { get { return _records; } }
+    private List<TweetRecord> _records;
+    public TweetRecords()
     {
-      _reecords = new List<TweetRecord>();
+      _records = new List<TweetRecord>();
     }
     internal void Add(TweetRecord record)
     {
-      _reecords.Add(record);
+      _records.Add(record);
+    }
+
+    internal void Update(List<TweetRecord> lastTweetList)
+    {
+      _records = lastTweetList;
+
     }
   }
 }

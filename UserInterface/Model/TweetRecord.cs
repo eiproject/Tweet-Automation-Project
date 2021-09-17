@@ -4,7 +4,8 @@ using System.Text;
 
 namespace UserInterface.Model
 {
-  class TweetRecord
+  [Serializable]
+  public class TweetRecord
   {
     public int ID { get; set; }
     public string Tweet { get; set; }

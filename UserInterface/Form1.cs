@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
 using UserInterface.Business;
+using UserInterface.Local;
 using UserInterface.Model;
 
 namespace UserInterface
 {
   public partial class TweetAutomationFrom : Form
   {
+    private const string _filepath = "TweetRecords.bin";
     private CredentialSetting credentialSetting = new CredentialSetting();
     private Twitter _twitter;
     private TweetRecords _records;
-    TweetRecordFactory _factory;
+    private TweetRecordFactory _factory;
+    private RecordSaverBinary _saver;
     public TweetAutomationFrom()
     {
       InitializeComponent();
@@ -21,6 +24,10 @@ namespace UserInterface
       _twitter = new Twitter();
       _records = new TweetRecords();
       _factory = new TweetRecordFactory(_records);
+      _saver = new RecordSaverBinary(_records, _filepath);
+
+      _saver.CreateFileIfNotExist();
+      _records.Update(_saver.Read<TweetRecords>().Records);
 
       TweetDataGrid.AutoGenerateColumns = false;
       DatePicker.Value = DateTime.Now;
@@ -71,12 +78,12 @@ namespace UserInterface
 
     private void CreateDataFrameRecord()
     {
-      // loggerText.Text = TimePicker.Value.ToString("dd MM yyyy || HH : mm");
-      loggerText.Text = (DatePicker.Value - DateTime.Now).Days.ToString();
       TweetRecord record = _factory.Create(
         TweetText.Text, DatePicker.Value, TimePicker.Value
         );
       _records.Add(record);
+      _saver.UpdateBinary(_records);
+      
       TweetDataGrid.Rows.Insert(0,
         record.ID, record.Tweet, record.DateString,
         record.TimeString, record.Status, "Delete");
