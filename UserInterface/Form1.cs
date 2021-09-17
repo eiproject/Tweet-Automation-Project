@@ -27,7 +27,8 @@ namespace UserInterface
       _saver = new RecordSaverBinary(_records, _filepath);
 
       _saver.CreateFileIfNotExist();
-      _records.Update(_saver.Read<TweetRecords>().Records);
+      _records.Update(_saver.Read<TweetRecords>());
+      UpdateDataGridWithSavedBinary(_records);
 
       TweetDataGrid.AutoGenerateColumns = false;
       DatePicker.Value = DateTime.Now;
@@ -83,11 +84,24 @@ namespace UserInterface
         );
       _records.Add(record);
       _saver.UpdateBinary(_records);
-      
+
+      UpdateDataGrid(record);
+      SetUpTimerAndSendTweet(record);
+    }
+
+    private void UpdateDataGridWithSavedBinary(TweetRecords records)
+    {
+      foreach (TweetRecord record in records.Records)
+      {
+        UpdateDataGrid(record);
+        SetUpTimerAndSendTweet(record);
+      }
+    }
+    private void UpdateDataGrid(TweetRecord record)
+    {
       TweetDataGrid.Rows.Insert(0,
         record.ID, record.Tweet, record.DateString,
         record.TimeString, record.Status, "Delete");
-      SetUpTimerAndSendTweet(record);
     }
 
     private void SetUpTimerAndSendTweet(TweetRecord record)
@@ -136,7 +150,12 @@ namespace UserInterface
           "Are you sure want to delete this record ?",
           "Message",
           MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        {
+          int recordID = int.Parse(TweetDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
+          _records.Delete(recordID);
+          _saver.UpdateBinary(_records);
           TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
+        }
       }
     }
   }

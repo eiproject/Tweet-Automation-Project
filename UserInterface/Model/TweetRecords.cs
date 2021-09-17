@@ -18,10 +18,21 @@ namespace UserInterface.Model
       _records.Add(record);
     }
 
-    internal void Update(List<TweetRecord> lastTweetList)
+    internal void Update(TweetRecords lastTweetList)
     {
-      _records = lastTweetList;
+      if (lastTweetList != null) _records = lastTweetList.Records;
+    }
 
+    internal void Delete(int id)
+    {
+      foreach (TweetRecord record in _records)
+      {
+        if (record.ID == id)
+        {
+          _records.Remove(record);
+          return;
+        }
+      }
     }
   }
 }
