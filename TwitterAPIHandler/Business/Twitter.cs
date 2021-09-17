@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TwitterAPIHandler.Business
 {
-  public class Twitter
+  public class Twitter : ITwitter
   {
     private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
     private string _consumerKey;
