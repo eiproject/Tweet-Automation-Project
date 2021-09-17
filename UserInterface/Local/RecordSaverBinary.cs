@@ -6,17 +6,15 @@ using UserInterface.Model;
 
 namespace UserInterface.Local
 {
-  internal class RecordSaverBinary
+  public class RecordSaverBinary : ISaverBinary
   {
-    private TweetRecords _records;
     private string _filePath;
     private bool _overwrite = false;
-    internal RecordSaverBinary(TweetRecords records, string filePath) {
-      _records = records;
+    public RecordSaverBinary(string filePath) {
       _filePath = filePath;
     }
 
-    internal void CreateFileIfNotExist()
+    public void CreateFileIfNotExist()
     {
       if (!File.Exists(_filePath) || _overwrite)
         using (File.Create(_filePath))
@@ -25,7 +23,7 @@ namespace UserInterface.Local
         }
     }
 
-    internal TweetRecords Read<TweetRecord>()
+    public object Read<TweetRecord>()
     {
       using (Stream stream = File.Open(_filePath, FileMode.Open))
       {
@@ -36,7 +34,7 @@ namespace UserInterface.Local
       }
     }
 
-    internal void UpdateBinary<TweetRecords>(TweetRecords objectToWrite)
+    public void UpdateBinary<TweetRecords>(TweetRecords objectToWrite)
     {
       using (Stream stream = File.Open(_filePath, FileMode.Create))
       {
@@ -45,7 +43,7 @@ namespace UserInterface.Local
       }
     }
 
-    internal void Delete()
+    public void Delete()
     {
 
     }

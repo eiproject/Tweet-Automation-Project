@@ -12,7 +12,7 @@ namespace UserInterface
   {
     private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
     private const string _credentialsBinaryFilepath = "Credentials.bin";
-    private Twitter _twitter;
+    private ITwitter _twitter;
     private TweetRecords _records;
     private TweetRecordFactory _factory;
     private RecordSaverBinary _tweetRecordsSaver;
@@ -24,11 +24,11 @@ namespace UserInterface
       _twitter = new Twitter();
       _records = new TweetRecords();
       _factory = new TweetRecordFactory(_records);
-      _tweetRecordsSaver = new RecordSaverBinary(_records, _tweetRecordsBinaryFilepath);
+      _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
       _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
 
       _tweetRecordsSaver.CreateFileIfNotExist();
-      _records.Update(_tweetRecordsSaver.Read<TweetRecords>());
+      _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
       UpdateDataGridWithSavedBinary(_records);
       
       _credentialSaver.CreateFileIfNotExist();
@@ -80,7 +80,7 @@ namespace UserInterface
 
     private void UpdateCredentialsWithSavedBinary()
     {
-      Credentials credentials = _credentialSaver.Read<Credentials>();
+      Credentials credentials = (Credentials)_credentialSaver.Read<Credentials>();
       if (credentials != null)
       {
         ConsumerKey.Text = credentials.ConsumerKey;

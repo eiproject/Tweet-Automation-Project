@@ -6,16 +6,16 @@ using UserInterface.Model;
 
 namespace UserInterface.Local
 {
-  class CredentialSaverBinary
+  public class CredentialSaverBinary : ISaverBinary
   {
     private string _filePath;
     private bool _overwrite = false;
-    internal CredentialSaverBinary(string filePath)
+    public CredentialSaverBinary(string filePath)
     {
       _filePath = filePath;
     }
 
-    internal void CreateFileIfNotExist()
+    public void CreateFileIfNotExist()
     {
       if (!File.Exists(_filePath) || _overwrite)
         using (File.Create(_filePath))
@@ -24,7 +24,7 @@ namespace UserInterface.Local
         }
     }
 
-    internal Credentials Read<TweetRecord>()
+    public object Read<TweetRecord>()
     {
       using (Stream stream = File.Open(_filePath, FileMode.Open))
       {
@@ -35,7 +35,7 @@ namespace UserInterface.Local
       }
     }
 
-    internal void UpdateBinary<Credentials>(Credentials objectToWrite)
+    public void UpdateBinary<Credentials>(Credentials objectToWrite)
     {
       using (Stream stream = File.Open(_filePath, FileMode.Create))
       {
@@ -44,7 +44,7 @@ namespace UserInterface.Local
       }
     }
 
-    internal void Delete()
+    public void Delete()
     {
       if (File.Exists(_filePath))
         File.Delete(_filePath);
