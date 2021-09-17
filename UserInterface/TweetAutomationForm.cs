@@ -53,14 +53,7 @@ namespace UserInterface
 
     private void ButtonSave(object sender, EventArgs e)
     {
-      _credentialSaver.UpdateBinary(
-        new Credentials()
-        {
-          ConsumerKey = ConsumerKey.Text,
-          ConsumerSecret = ConsumerSecret.Text,
-          AccessTokenKey = AccessTokenKey.Text,
-          AccessTokenSecret = AccessTokenSecret.Text
-        });
+      SaveCredential();
     }
 
     private void ButtonClear(object sender, EventArgs e)
@@ -71,12 +64,25 @@ namespace UserInterface
 
     private void ButtonSend(object sender, EventArgs e)
     {
+      SaveCredential();
       _twitter.SetCredential(
         ConsumerKey.Text, ConsumerSecret.Text,
         AccessTokenKey.Text, AccessTokenSecret.Text);
 
       CreateDataFrameRecord();
       // _ = CreateTweetAsync(TweetText.Text);
+    }
+
+    private void SaveCredential()
+    {
+      _credentialSaver.UpdateBinary(
+        new Credentials()
+        {
+          ConsumerKey = ConsumerKey.Text,
+          ConsumerSecret = ConsumerSecret.Text,
+          AccessTokenKey = AccessTokenKey.Text,
+          AccessTokenSecret = AccessTokenSecret.Text
+        });
     }
 
     private void UpdateCredentialsWithSavedBinary()
