@@ -69,6 +69,7 @@ namespace UserInterface
         AccessTokenKey.Text, AccessTokenSecret.Text);
 
       CreateDataFrameRecord();
+      TweetText.Clear();
     }
 
     private void SaveCredential()
