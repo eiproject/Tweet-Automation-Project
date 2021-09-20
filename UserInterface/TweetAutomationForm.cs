@@ -143,6 +143,7 @@ namespace UserInterface
       {
         await CreateTweetAsync(record);
         ChangeStatusToSuccess(record);
+        _tweetRecordsSaver.UpdateBinary(_records);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
     }
 
