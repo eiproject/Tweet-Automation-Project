@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Business\CredentialSetting%28deprecrated%29.cs" />
+    <Compile Remove="Business\Encryption %28deprecrated%29.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TwitterAPIHandler\TwitterAPIHandler.csproj" />
   </ItemGroup>
 

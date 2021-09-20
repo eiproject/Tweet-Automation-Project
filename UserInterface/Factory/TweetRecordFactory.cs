@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UserInterface.Business;
 using UserInterface.Model;
 
 namespace UserInterface.Factory
@@ -21,8 +22,7 @@ namespace UserInterface.Factory
         GetLastID(),
         tweet,
         date,
-        time,
-        CheckStatus(tweet, date, time));
+        time);
     }
 
     private int GetLastID()
@@ -39,7 +39,7 @@ namespace UserInterface.Factory
       return id;
     }
 
-    private string CheckStatus(string tweet, DateTime date, DateTime time)
+    /*private string CheckStatus(string tweet, DateTime date, DateTime time)
     {
       string status = "On Queue";
       int dateDifference = (date - DateTime.Now).Days;
@@ -47,6 +47,6 @@ namespace UserInterface.Factory
       if (dateDifference < 0 || timeDifference < 0) status = "Time Error";
       if (tweet == null || tweet == "" || tweet == " ") status = "Tweet null";
       return status;
-    }
+    }*/
   }
 }

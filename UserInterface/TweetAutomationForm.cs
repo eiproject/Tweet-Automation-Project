@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
+using UserInterface.Business;
 using UserInterface.Factory;
 using UserInterface.Local;
 using UserInterface.Model;
@@ -17,6 +18,7 @@ namespace UserInterface
     private ITweetRecordFactory _factory;
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
+    private IStatusChecker _statusChecker;
     public TweetAutomationFrom()
     {
       InitializeComponent();
@@ -26,6 +28,7 @@ namespace UserInterface
       _factory = new TweetRecordFactory(_records);
       _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
       _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
+      _statusChecker = new StatusChecker();
 
       _tweetRecordsSaver.CreateFileIfNotExist();
       _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
@@ -109,6 +112,7 @@ namespace UserInterface
       TweetRecord record = _factory.Create(
         TweetText.Text, DatePicker.Value, TimePicker.Value
         );
+      _statusChecker.CheckStatus(record);
       _records.Add(record);
       _tweetRecordsSaver.UpdateBinary(_records);
 
@@ -120,6 +124,7 @@ namespace UserInterface
     {
       foreach (TweetRecord record in records.Records)
       {
+        _statusChecker.CheckStatus(record);
         UpdateDataGrid(record);
         SetUpTimerAndSendTweet(record);
       }
@@ -162,7 +167,7 @@ namespace UserInterface
         if (TweetDataGrid.Rows[i].Cells[0].Value.ToString() == record.ID.ToString())
         {
           TweetDataGrid.Rows[i].Cells[4].Value = "Success";
-          record.Status = "Success";
+          _statusChecker.ChangeToSuccess(record);
           // loggerText.Invoke(new Action(() => loggerText.Text = "Success"));
         }
       }

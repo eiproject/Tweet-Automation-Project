@@ -15,7 +15,7 @@ namespace UserInterface.Model
     public string Status { get; set; }
 
     public TweetRecord(
-      int id, string tweet, DateTime date, DateTime time, string status)
+      int id, string tweet, DateTime date, DateTime time)
     {
       ID = id;
       Tweet = tweet;
@@ -24,7 +24,7 @@ namespace UserInterface.Model
       TimeObject = time;
       TimeString = time.ToString("hh:mm tt");
       DateTimeCombined = date.Date + time.TimeOfDay;
-      Status = status;
+      Status = null;
     }
   }
 }
