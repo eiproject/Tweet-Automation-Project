@@ -39,6 +39,6 @@ Current progress and visual display
 
 ![alt text](https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/screenshot/Screenshot%202021-09-08%20165413.png?raw=true)
 
-> Window with a queue feature (bottom label is just a logger):
+> Window with a queue feature:
 
 ![alt text](https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/screenshot/Screenshot%202021-09-20%20102046.png?raw=true)

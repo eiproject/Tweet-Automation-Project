@@ -12,7 +12,7 @@ namespace UserInterface.Business
 
     public void CheckStatus(TweetRecord record)
     {
-      if(record.Status.ToLower() != "success")
+      if(record.Status != "Success")
       {
         SetDefault(record);
         CheckTimeError(record);
