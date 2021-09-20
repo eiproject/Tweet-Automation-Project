@@ -38,15 +38,5 @@ namespace UserInterface.Factory
       }
       return id;
     }
-
-    /*private string CheckStatus(string tweet, DateTime date, DateTime time)
-    {
-      string status = "On Queue";
-      int dateDifference = (date - DateTime.Now).Days;
-      double timeDifference = (time - DateTime.Now).TotalMinutes;
-      if (dateDifference < 0 || timeDifference < 0) status = "Time Error";
-      if (tweet == null || tweet == "" || tweet == " ") status = "Tweet null";
-      return status;
-    }*/
   }
 }

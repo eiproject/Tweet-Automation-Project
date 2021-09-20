@@ -39,11 +39,11 @@ namespace UnitTesting
       Assert.AreEqual(0, _tweetRecords.Records.Count);
     }
 
-    public static IEnumerable<TestCaseData> TestCaseSourceData()
+    private static IEnumerable<TestCaseData> TestCaseSourceData()
     {
       yield return new TestCaseData(0, "Test tweet", new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
-      yield return new TestCaseData(1, null, new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
-      yield return new TestCaseData(2, null, null, null);
+      yield return new TestCaseData(14354, null, new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
+      yield return new TestCaseData(234, null, null, null);
     }
   }
 }

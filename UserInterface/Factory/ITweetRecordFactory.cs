@@ -3,7 +3,7 @@ using UserInterface.Model;
 
 namespace UserInterface.Factory
 {
-  interface ITweetRecordFactory
+  public interface ITweetRecordFactory
   {
     TweetRecord Create(string tweet, DateTime date, DateTime time);
   }
