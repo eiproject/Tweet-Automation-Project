@@ -30,7 +30,7 @@ namespace UnitTesting
     [Test]
     [TestCaseSource("TestCaseSourceData")]
     public void DoDeleteRecordToRecords_ShouldBePass(
-  int id, string tweet, DateTime date, DateTime time)
+      int id, string tweet, DateTime date, DateTime time)
     {
       TweetRecord record = new TweetRecord(
         id, tweet, date, time);
