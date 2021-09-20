@@ -17,8 +17,8 @@ Few steps to run the project
 Several things to-do in this project
 
 - <strike>Create Tweet</strike> (Done)
-- Create Unit Test
-- Creating first release and setup file
+- <strike>Create Unit Test</strike> (Done)
+- <strike>Creating first release and setup file</strike> (Done)
 - Upload image in Tweet
 - Creating Tweets thread
 - Run in the background
