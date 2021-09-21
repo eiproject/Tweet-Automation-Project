@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
@@ -33,7 +34,7 @@ namespace UserInterface
       _tweetRecordsSaver.CreateFileIfNotExist();
       _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
       UpdateDataGridWithSavedBinary(_records);
-      
+
       _credentialSaver.CreateFileIfNotExist();
       UpdateCredentialsWithSavedBinary();
       TweetDataGrid.AutoGenerateColumns = false;
@@ -71,8 +72,42 @@ namespace UserInterface
         ConsumerKey.Text, ConsumerSecret.Text,
         AccessTokenKey.Text, AccessTokenSecret.Text);
 
-      CreateDataFrameRecord();
+      if (SendImmediatelyRadio.Checked)
+      {
+        SendImmediately();
+      }
+      else
+      {
+        PlaceOnQueue();
+      }
+
+    }
+
+    private void PlaceOnQueue()
+    {
+      TweetRecord record = 
+        _factory.Create(TweetText.Text, DatePicker.Value, TimePicker.Value);
+
+      _statusChecker.CheckStatus(record);
+      CreateDataFrameRecord(record);
+      SetUpTimerAndSendTweet(record);
       TweetText.Clear();
+    }
+
+    private void SendImmediately()
+    {
+      TweetRecord record = 
+        _factory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
+
+      CreateDataFrameRecord(record);
+      Task.Factory.StartNew(async () =>
+      {
+        loggerText.Invoke(new Action(() => loggerText.Text = "Task running..."));
+        HttpStatusCode response = await SendTweetAsync(record);
+        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
+        ChangeStatusToSuccess(record);
+        _tweetRecordsSaver.UpdateBinary(_records);
+      });
     }
 
     private void SaveCredential()
@@ -107,17 +142,12 @@ namespace UserInterface
       AccessTokenSecret.Clear();
     }
 
-    private void CreateDataFrameRecord()
+    private void CreateDataFrameRecord(TweetRecord record)
     {
-      TweetRecord record = _factory.Create(
-        TweetText.Text, DatePicker.Value, TimePicker.Value
-        );
-      _statusChecker.CheckStatus(record);
       _records.Add(record);
       _tweetRecordsSaver.UpdateBinary(_records);
 
       UpdateDataGrid(record);
-      SetUpTimerAndSendTweet(record);
     }
 
     private void UpdateDataGridWithSavedBinary(ITweetRecords records)
@@ -140,23 +170,22 @@ namespace UserInterface
     {
       System.Threading.Timer timer;
       TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
-      if (timeToGo < TimeSpan.Zero)
-      {
-        return;
-      }
+      if (timeToGo < TimeSpan.Zero) return;
+
       timer = new System.Threading.Timer(async x =>
       {
-        await CreateTweetAsync(record);
+        await SendTweetAsync(record);
         ChangeStatusToSuccess(record);
         _tweetRecordsSaver.UpdateBinary(_records);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
     }
 
-    private async Task CreateTweetAsync(TweetRecord record)
+    private async Task<HttpStatusCode> SendTweetAsync(TweetRecord record)
     {
-      string response = await _twitter.Tweet(record.Tweet);
-      loggerText.Invoke(new Action(() => loggerText.Text = response));
+      HttpStatusCode response = await _twitter.Tweet(record.Tweet);
       Console.WriteLine(response);
+
+      return response;
     }
 
     private void ChangeStatusToSuccess(TweetRecord record)
@@ -168,7 +197,6 @@ namespace UserInterface
         {
           TweetDataGrid.Rows[i].Cells[4].Value = "Success";
           _statusChecker.ChangeToSuccess(record);
-          // loggerText.Invoke(new Action(() => loggerText.Text = "Success"));
         }
       }
     }

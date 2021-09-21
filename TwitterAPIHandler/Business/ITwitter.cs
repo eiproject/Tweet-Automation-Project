@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace TwitterAPIHandler.Business
 {
@@ -7,6 +8,6 @@ namespace TwitterAPIHandler.Business
     void SetCredential(
       string consumerKey, string consumerKeySecret,
       string accessToken, string accessTokenSecret);
-    Task<string> Tweet(string text);
+    Task<HttpStatusCode> Tweet(string text);
   }
 }

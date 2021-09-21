@@ -66,6 +66,7 @@ namespace UserInterface
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.loggerText = new System.Windows.Forms.Label();
+      this.SendImmediatelyRadio = new System.Windows.Forms.RadioButton();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.SuspendLayout();
@@ -313,7 +314,7 @@ namespace UserInterface
       // 
       // DatePicker
       // 
-      this.DatePicker.Location = new System.Drawing.Point(442, 97);
+      this.DatePicker.Location = new System.Drawing.Point(441, 73);
       this.DatePicker.MinDate = new System.DateTime(2021, 9, 15, 0, 0, 0, 0);
       this.DatePicker.Name = "DatePicker";
       this.DatePicker.Size = new System.Drawing.Size(174, 23);
@@ -323,7 +324,7 @@ namespace UserInterface
       // TimePicker
       // 
       this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-      this.TimePicker.Location = new System.Drawing.Point(442, 145);
+      this.TimePicker.Location = new System.Drawing.Point(441, 121);
       this.TimePicker.Name = "TimePicker";
       this.TimePicker.ShowUpDown = true;
       this.TimePicker.Size = new System.Drawing.Size(174, 23);
@@ -333,7 +334,7 @@ namespace UserInterface
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(443, 79);
+      this.label1.Location = new System.Drawing.Point(442, 55);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(66, 15);
       this.label1.TabIndex = 13;
@@ -342,7 +343,7 @@ namespace UserInterface
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(443, 127);
+      this.label2.Location = new System.Drawing.Point(442, 103);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(68, 15);
       this.label2.TabIndex = 14;
@@ -356,13 +357,24 @@ namespace UserInterface
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
-      this.loggerText.Visible = false;
+      // 
+      // SendImmediatelyRadio
+      // 
+      this.SendImmediatelyRadio.AutoSize = true;
+      this.SendImmediatelyRadio.Location = new System.Drawing.Point(442, 150);
+      this.SendImmediatelyRadio.Name = "SendImmediatelyRadio";
+      this.SendImmediatelyRadio.Size = new System.Drawing.Size(120, 19);
+      this.SendImmediatelyRadio.TabIndex = 17;
+      this.SendImmediatelyRadio.TabStop = true;
+      this.SendImmediatelyRadio.Text = "Send Immediately";
+      this.SendImmediatelyRadio.UseVisualStyleBackColor = true;
       // 
       // TweetAutomationFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(959, 490);
+      this.Controls.Add(this.SendImmediatelyRadio);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
@@ -429,6 +441,7 @@ namespace UserInterface
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     private DataGridViewButtonColumn dataGridViewButtonColumn1;
+    private RadioButton SendImmediatelyRadio;
   }
 }
 

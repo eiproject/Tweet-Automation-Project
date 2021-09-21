@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,7 +34,7 @@ namespace TwitterAPIHandler.Business
         string.Format("{0}&{1}", consumerKeySecret, accessTokenSecret)));
     }
 
-    public Task<string> Tweet(string text)
+    public Task<HttpStatusCode> Tweet(string text)
     {
       var data = new Dictionary<string, string> {
             { "status", text },
@@ -43,7 +44,7 @@ namespace TwitterAPIHandler.Business
       return SendRequest("statuses/update.json", data);
     }
 
-    private Task<string> SendRequest(string url, Dictionary<string, string> data)
+    private Task<HttpStatusCode> SendRequest(string url, Dictionary<string, string> data)
     {
       var fullUrl = _twitterApiBaseUrl + url;
 
@@ -101,16 +102,16 @@ namespace TwitterAPIHandler.Business
       );
     }
 
-    private async Task<string> SendRequest(string fullUrl, string oAuthHeader, FormUrlEncodedContent formData)
+    private async Task<HttpStatusCode> SendRequest(string fullUrl, string oAuthHeader, FormUrlEncodedContent formData)
     {
       using (var http = new HttpClient())
       {
         http.DefaultRequestHeaders.Add("Authorization", oAuthHeader);
 
-        var httpResp = await http.PostAsync(fullUrl, formData);
+        HttpResponseMessage httpResp = await http.PostAsync(fullUrl, formData);
         var respBody = await httpResp.Content.ReadAsStringAsync();
 
-        return respBody;
+        return httpResp.StatusCode;
       }
     }
   }
