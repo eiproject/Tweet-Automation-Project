@@ -222,7 +222,7 @@ namespace UserInterface
       this.TweetDataGrid.RowTemplate.Height = 25;
       this.TweetDataGrid.Size = new System.Drawing.Size(888, 222);
       this.TweetDataGrid.TabIndex = 11;
-      this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TweetDataGrid_CellContentClick);
+      this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DeleteButton);
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -396,6 +396,7 @@ namespace UserInterface
       this.MainMenuStrip = this.menuStrip1;
       this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Tweet Automation";
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
