@@ -23,7 +23,7 @@ jobs:
       run: dotnet clean ./TweetAutomationProject.sln --configuration Debug && dotnet nuget locals all --clear     
   
     - name: Restore dependencies
-      run: dotnet restore --verbosity diag
+      run: dotnet restore ./UserInterface/UserInterface.csproj
     
     - name: Build
       run: dotnet build --no-restore
