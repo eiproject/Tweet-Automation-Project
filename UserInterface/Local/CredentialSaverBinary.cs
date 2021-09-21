@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using TwitterAPIHandler.Model;
 using UserInterface.Model;
 
 namespace UserInterface.Local
@@ -21,22 +23,22 @@ namespace UserInterface.Local
         }
     }
 
-    public object Read<TweetRecord>()
+    public object Read<T>()
     {
       using (Stream stream = File.Open(_filePath, FileMode.Open))
       {
-        Credentials readResult = null;
-        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        Credentials readResult = new Credentials();
+        var binaryFormatter = new BinaryFormatter();
         if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
         return readResult;
       }
     }
 
-    public void UpdateBinary<Credentials>(Credentials objectToWrite)
+    public void UpdateBinary<T>(T objectToWrite)
     {
       using (Stream stream = File.Open(_filePath, FileMode.Create))
       {
-        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        var binaryFormatter = new BinaryFormatter();
         binaryFormatter.Serialize(stream, objectToWrite);
       }
     }

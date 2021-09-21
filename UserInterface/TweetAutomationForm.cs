@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TwitterAPIHandler.Business;
+using TwitterAPIHandler.Model;
 using UserInterface.Business;
 using UserInterface.Factory;
 using UserInterface.Local;
@@ -14,7 +15,7 @@ namespace UserInterface
   {
     private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
     private const string _credentialsBinaryFilepath = "Credentials.bin";
-    private ITwitter _twitter;
+    // private ITwitter _twitter;
     private ITweetRecords _records;
     private ITweetRecordFactory _factory;
     private ISaverBinary _tweetRecordsSaver;
@@ -25,7 +26,7 @@ namespace UserInterface
     {
       InitializeComponent();
 
-      _twitter = new Twitter();
+      // _twitter = new Twitter();
       _records = new TweetRecords();
       _factory = new TweetRecordFactory(_records);
       _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
@@ -74,7 +75,7 @@ namespace UserInterface
     {
       UpdateCredentials();
       SaveCredentialToBinaryFile();
-      UpdateTwitterAPICredentials(_credentials);
+      // UpdateTwitterAPICredentials(_credentials);
       if (SendImmediatelyRadio.Checked == true)
       {
         SendImmediately();
@@ -105,7 +106,7 @@ namespace UserInterface
       Task.Factory.StartNew(async () =>
       {
         loggerText.Invoke(new Action(() => loggerText.Text = "Task running..."));
-        HttpStatusCode response = await SendTweetAsync(record);
+        HttpStatusCode response = await SendTweetAsync(new Twitter(_credentials), record);
         loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
         ChangeStatusToSuccess(record);
         _tweetRecordsSaver.UpdateBinary(_records);
@@ -125,13 +126,13 @@ namespace UserInterface
       _credentialSaver.UpdateBinary(_credentials);
     }
 
-    private void UpdateTwitterAPICredentials(Credentials credential)
+    /*private void UpdateTwitterAPICredentials(Credentials credential)
     {
       _twitter.SetCredential(
         credential.ConsumerKey, credential.ConsumerSecret,
         credential.AccessTokenKey, credential.AccessTokenSecret);
 
-    }
+    }*/
 
     private void UpdateCredentialsWithSavedBinary()
     {
@@ -185,15 +186,16 @@ namespace UserInterface
 
       timer = new System.Threading.Timer(async x =>
       {
-        await SendTweetAsync(record);
+        await SendTweetAsync(new Twitter(_credentials), record);
         ChangeStatusToSuccess(record);
         _tweetRecordsSaver.UpdateBinary(_records);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
     }
 
-    private async Task<HttpStatusCode> SendTweetAsync(TweetRecord record)
+    private async Task<HttpStatusCode> SendTweetAsync(
+      ITwitter twitterAPI, TweetRecord record)
     {
-      HttpStatusCode response = await _twitter.Tweet(record.Tweet);
+      HttpStatusCode response = await twitterAPI.Tweet(record.Tweet);
       Console.WriteLine(response);
 
       return response;
