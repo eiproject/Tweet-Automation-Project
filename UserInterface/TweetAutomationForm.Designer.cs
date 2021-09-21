@@ -66,7 +66,7 @@ namespace UserInterface
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.loggerText = new System.Windows.Forms.Label();
-      this.SendImmediatelyRadio = new System.Windows.Forms.RadioButton();
+      this.SendImmediatelyCheckBox = new System.Windows.Forms.CheckBox();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.SuspendLayout();
@@ -358,23 +358,22 @@ namespace UserInterface
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
       // 
-      // SendImmediatelyRadio
+      // SendImmediatelyCheckBox
       // 
-      this.SendImmediatelyRadio.AutoSize = true;
-      this.SendImmediatelyRadio.Location = new System.Drawing.Point(442, 150);
-      this.SendImmediatelyRadio.Name = "SendImmediatelyRadio";
-      this.SendImmediatelyRadio.Size = new System.Drawing.Size(120, 19);
-      this.SendImmediatelyRadio.TabIndex = 17;
-      this.SendImmediatelyRadio.TabStop = true;
-      this.SendImmediatelyRadio.Text = "Send Immediately";
-      this.SendImmediatelyRadio.UseVisualStyleBackColor = true;
+      this.SendImmediatelyCheckBox.AutoSize = true;
+      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(441, 152);
+      this.SendImmediatelyCheckBox.Name = "SendImmediatelyCheckBox";
+      this.SendImmediatelyCheckBox.Size = new System.Drawing.Size(121, 19);
+      this.SendImmediatelyCheckBox.TabIndex = 18;
+      this.SendImmediatelyCheckBox.Text = "Send Immediately";
+      this.SendImmediatelyCheckBox.UseVisualStyleBackColor = true;
       // 
       // TweetAutomationFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(959, 490);
-      this.Controls.Add(this.SendImmediatelyRadio);
+      this.Controls.Add(this.SendImmediatelyCheckBox);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
@@ -441,7 +440,7 @@ namespace UserInterface
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     private DataGridViewButtonColumn dataGridViewButtonColumn1;
-    private RadioButton SendImmediatelyRadio;
+    private CheckBox SendImmediatelyCheckBox;
   }
 }
 

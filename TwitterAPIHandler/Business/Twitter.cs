@@ -25,6 +25,7 @@ namespace TwitterAPIHandler.Business
       _consumerSecret = credentials.ConsumerSecret;
       _accessTokenKey = credentials.AccessTokenKey;
       _accessTokenSecret = credentials.AccessTokenSecret;
+      CreateSigHasher();
     }
 
 
@@ -37,7 +38,7 @@ namespace TwitterAPIHandler.Business
 
       return SendRequest("statuses/update.json", data);
     }
-    private void SetCredential()
+    private void CreateSigHasher()
     {
       _sigHasher = new HMACSHA1(new ASCIIEncoding().GetBytes(
         string.Format("{0}&{1}", _consumerSecret, _accessTokenSecret)));

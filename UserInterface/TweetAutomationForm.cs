@@ -76,7 +76,7 @@ namespace UserInterface
       UpdateCredentials();
       SaveCredentialToBinaryFile();
       // UpdateTwitterAPICredentials(_credentials);
-      if (SendImmediatelyRadio.Checked == true)
+      if (SendImmediatelyCheckBox.Checked == true)
       {
         SendImmediately();
       }
@@ -99,14 +99,17 @@ namespace UserInterface
 
     private void SendImmediately()
     {
+      ITwitter twtAPI = new Twitter(_credentials);
+
       TweetRecord record =
         _factory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
 
       CreateDataFrameRecord(record);
+
       Task.Factory.StartNew(async () =>
       {
         loggerText.Invoke(new Action(() => loggerText.Text = "Task running..."));
-        HttpStatusCode response = await SendTweetAsync(new Twitter(_credentials), record);
+        HttpStatusCode response = await SendTweetAsync(twtAPI, record);
         loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
         ChangeStatusToSuccess(record);
         _tweetRecordsSaver.UpdateBinary(_records);
@@ -180,13 +183,15 @@ namespace UserInterface
 
     private void SetUpTimerAndSendTweet(TweetRecord record)
     {
+      ITwitter twtAPI = new Twitter(_credentials);
+
       System.Threading.Timer timer;
       TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
       if (timeToGo < TimeSpan.Zero) return;
 
       timer = new System.Threading.Timer(async x =>
       {
-        await SendTweetAsync(new Twitter(_credentials), record);
+        await SendTweetAsync(twtAPI, record);
         ChangeStatusToSuccess(record);
         _tweetRecordsSaver.UpdateBinary(_records);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
