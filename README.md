@@ -12,13 +12,15 @@ An `open-source` project control Tweet using automation tools. Build with C# win
 
 ## Depedencies
 Thecnology used in this project
-- Visual Studio or any IDE that you comfort with
+- Visual Studio 2019 Community Edition
 - Microsoft .Net Core 3.1
+- To use `Setup-x64` and `Setup-x86` you should install VS Installer Project (https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects)
 
 ## How to Run?
 Few steps to run the project
 - Install Visual Studio 
 - Install .Net Core 3.1
+- Install VS Installer Project
 - Open the solution (*.sln)
 - Done
 
