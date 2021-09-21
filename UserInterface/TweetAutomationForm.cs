@@ -20,6 +20,7 @@ namespace UserInterface
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
     private IStatusChecker _statusChecker;
+    private Credentials _credentials;
     public TweetAutomationFrom()
     {
       InitializeComponent();
@@ -30,6 +31,8 @@ namespace UserInterface
       _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
       _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
       _statusChecker = new StatusChecker();
+      _credentials = new Credentials();
+
 
       _tweetRecordsSaver.CreateFileIfNotExist();
       _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
@@ -56,23 +59,23 @@ namespace UserInterface
 
     private void ButtonSave(object sender, EventArgs e)
     {
-      SaveCredential();
+      UpdateCredentials();
+      SaveCredentialToBinaryFile();
     }
 
     private void ButtonClear(object sender, EventArgs e)
     {
       ClearTwitterAPIForm();
+      UpdateCredentials();
       _credentialSaver.Delete();
     }
 
     private void ButtonSend(object sender, EventArgs e)
     {
-      SaveCredential();
-      _twitter.SetCredential(
-        ConsumerKey.Text, ConsumerSecret.Text,
-        AccessTokenKey.Text, AccessTokenSecret.Text);
-
-      if (SendImmediatelyRadio.Checked)
+      UpdateCredentials();
+      SaveCredentialToBinaryFile();
+      UpdateTwitterAPICredentials(_credentials);
+      if (SendImmediatelyRadio.Checked == true)
       {
         SendImmediately();
       }
@@ -80,12 +83,11 @@ namespace UserInterface
       {
         PlaceOnQueue();
       }
-
     }
 
     private void PlaceOnQueue()
     {
-      TweetRecord record = 
+      TweetRecord record =
         _factory.Create(TweetText.Text, DatePicker.Value, TimePicker.Value);
 
       _statusChecker.CheckStatus(record);
@@ -96,7 +98,7 @@ namespace UserInterface
 
     private void SendImmediately()
     {
-      TweetRecord record = 
+      TweetRecord record =
         _factory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
 
       CreateDataFrameRecord(record);
@@ -110,27 +112,36 @@ namespace UserInterface
       });
     }
 
-    private void SaveCredential()
+    private void UpdateCredentials()
     {
-      _credentialSaver.UpdateBinary(
-        new Credentials()
-        {
-          ConsumerKey = ConsumerKey.Text,
-          ConsumerSecret = ConsumerSecret.Text,
-          AccessTokenKey = AccessTokenKey.Text,
-          AccessTokenSecret = AccessTokenSecret.Text
-        });
+      _credentials.ConsumerKey = ConsumerKey.Text;
+      _credentials.ConsumerSecret = ConsumerSecret.Text;
+      _credentials.AccessTokenKey = AccessTokenKey.Text;
+      _credentials.AccessTokenSecret = AccessTokenSecret.Text;
+    }
+
+    private void SaveCredentialToBinaryFile()
+    {
+      _credentialSaver.UpdateBinary(_credentials);
+    }
+
+    private void UpdateTwitterAPICredentials(Credentials credential)
+    {
+      _twitter.SetCredential(
+        credential.ConsumerKey, credential.ConsumerSecret,
+        credential.AccessTokenKey, credential.AccessTokenSecret);
+
     }
 
     private void UpdateCredentialsWithSavedBinary()
     {
-      Credentials credentials = (Credentials)_credentialSaver.Read<Credentials>();
-      if (credentials != null)
+      _credentials = (Credentials)_credentialSaver.Read<Credentials>();
+      if (_credentials != null)
       {
-        ConsumerKey.Text = credentials.ConsumerKey;
-        ConsumerSecret.Text = credentials.ConsumerSecret;
-        AccessTokenKey.Text = credentials.AccessTokenKey;
-        AccessTokenSecret.Text = credentials.AccessTokenSecret;
+        ConsumerKey.Text = _credentials.ConsumerKey;
+        ConsumerSecret.Text = _credentials.ConsumerSecret;
+        AccessTokenKey.Text = _credentials.AccessTokenKey;
+        AccessTokenSecret.Text = _credentials.AccessTokenSecret;
       }
     }
 

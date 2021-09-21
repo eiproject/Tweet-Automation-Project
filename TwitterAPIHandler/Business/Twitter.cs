@@ -11,14 +11,14 @@ namespace TwitterAPIHandler.Business
 {
   public class Twitter : ITwitter
   {
+    private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private HMACSHA1 _sigHasher;
     private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
     private string _consumerKey;
     private string _consumerKeySecret;
     private string _accessToken;
     private string _accessTokenSecret;
-    private HMACSHA1 _sigHasher;
-    private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
+    
     public Twitter() { }
 
     public void SetCredential(
