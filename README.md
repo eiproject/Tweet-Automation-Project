@@ -2,6 +2,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/eiproject/Tweet-Automation-Project?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/eiproject/Tweet-Automation-Project)
 ![GitHub issues](https://img.shields.io/github/issues/eiproject/Tweet-Automation-Project?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/eiproject/Tweet-Automation-Project/.NET?style=flat-square)
 ![GitHub commit checks state](https://img.shields.io/github/checks-status/eiproject/Tweet-Automation-Project/114ff8500b01d8108c393fb25eb771eabf73e502?style=flat-square)
 ![GitHub all releases](https://img.shields.io/github/downloads/eiproject/Tweet-Automation-Project/total?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/eiproject/Tweet-Automation-Project?style=flat-square)
