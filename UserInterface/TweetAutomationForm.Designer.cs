@@ -66,6 +66,7 @@ namespace UserInterface
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.loggerText = new System.Windows.Forms.Label();
+      this.SendImmediatelyCheckBox = new System.Windows.Forms.CheckBox();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.SuspendLayout();
@@ -219,9 +220,9 @@ namespace UserInterface
       this.TweetDataGrid.Location = new System.Drawing.Point(37, 231);
       this.TweetDataGrid.Name = "TweetDataGrid";
       this.TweetDataGrid.RowTemplate.Height = 25;
-      this.TweetDataGrid.Size = new System.Drawing.Size(888, 150);
+      this.TweetDataGrid.Size = new System.Drawing.Size(888, 222);
       this.TweetDataGrid.TabIndex = 11;
-      this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TweetDataGrid_CellContentClick);
+      this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DeleteButton);
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -313,7 +314,7 @@ namespace UserInterface
       // 
       // DatePicker
       // 
-      this.DatePicker.Location = new System.Drawing.Point(442, 97);
+      this.DatePicker.Location = new System.Drawing.Point(441, 73);
       this.DatePicker.MinDate = new System.DateTime(2021, 9, 15, 0, 0, 0, 0);
       this.DatePicker.Name = "DatePicker";
       this.DatePicker.Size = new System.Drawing.Size(174, 23);
@@ -323,7 +324,7 @@ namespace UserInterface
       // TimePicker
       // 
       this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-      this.TimePicker.Location = new System.Drawing.Point(442, 145);
+      this.TimePicker.Location = new System.Drawing.Point(441, 121);
       this.TimePicker.Name = "TimePicker";
       this.TimePicker.ShowUpDown = true;
       this.TimePicker.Size = new System.Drawing.Size(174, 23);
@@ -333,7 +334,7 @@ namespace UserInterface
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(443, 79);
+      this.label1.Location = new System.Drawing.Point(442, 55);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(66, 15);
       this.label1.TabIndex = 13;
@@ -342,7 +343,7 @@ namespace UserInterface
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(443, 127);
+      this.label2.Location = new System.Drawing.Point(442, 103);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(68, 15);
       this.label2.TabIndex = 14;
@@ -351,18 +352,28 @@ namespace UserInterface
       // loggerText
       // 
       this.loggerText.AutoSize = true;
-      this.loggerText.Location = new System.Drawing.Point(37, 416);
+      this.loggerText.Location = new System.Drawing.Point(37, 466);
       this.loggerText.Name = "loggerText";
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
-      this.loggerText.Visible = false;
+      // 
+      // SendImmediatelyCheckBox
+      // 
+      this.SendImmediatelyCheckBox.AutoSize = true;
+      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(441, 152);
+      this.SendImmediatelyCheckBox.Name = "SendImmediatelyCheckBox";
+      this.SendImmediatelyCheckBox.Size = new System.Drawing.Size(121, 19);
+      this.SendImmediatelyCheckBox.TabIndex = 18;
+      this.SendImmediatelyCheckBox.Text = "Send Immediately";
+      this.SendImmediatelyCheckBox.UseVisualStyleBackColor = true;
       // 
       // TweetAutomationFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(959, 490);
+      this.Controls.Add(this.SendImmediatelyCheckBox);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
@@ -380,10 +391,12 @@ namespace UserInterface
       this.Controls.Add(this.ConsumerSecret);
       this.Controls.Add(this.ConsumerKey);
       this.Controls.Add(this.menuStrip1);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip1;
       this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Tweet Automation";
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
@@ -429,6 +442,7 @@ namespace UserInterface
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     private DataGridViewButtonColumn dataGridViewButtonColumn1;
+    private CheckBox SendImmediatelyCheckBox;
   }
 }
 

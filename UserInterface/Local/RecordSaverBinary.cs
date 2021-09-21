@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UserInterface.Model;
 
 namespace UserInterface.Local
@@ -25,7 +26,7 @@ namespace UserInterface.Local
       using (Stream stream = File.Open(_filePath, FileMode.Open))
       {
         TweetRecords readResult = null;
-        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        var binaryFormatter = new BinaryFormatter();
         if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
         return readResult;
       }
@@ -35,7 +36,7 @@ namespace UserInterface.Local
     {
       using (Stream stream = File.Open(_filePath, FileMode.Create))
       {
-        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        var binaryFormatter = new BinaryFormatter();
         binaryFormatter.Serialize(stream, objectToWrite);
       }
     }

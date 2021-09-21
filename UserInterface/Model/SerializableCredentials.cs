@@ -3,7 +3,7 @@
 namespace UserInterface.Model
 {
   [Serializable]
-  public class Credentials
+  public class SerializableCredentials
   {
     public string ConsumerKey { get; set; }
     public string ConsumerSecret { get; set; }
