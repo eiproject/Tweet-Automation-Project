@@ -220,7 +220,7 @@ namespace UserInterface
       this.TweetDataGrid.Location = new System.Drawing.Point(37, 231);
       this.TweetDataGrid.Name = "TweetDataGrid";
       this.TweetDataGrid.RowTemplate.Height = 25;
-      this.TweetDataGrid.Size = new System.Drawing.Size(888, 150);
+      this.TweetDataGrid.Size = new System.Drawing.Size(888, 222);
       this.TweetDataGrid.TabIndex = 11;
       this.TweetDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TweetDataGrid_CellContentClick);
       // 
@@ -352,7 +352,7 @@ namespace UserInterface
       // loggerText
       // 
       this.loggerText.AutoSize = true;
-      this.loggerText.Location = new System.Drawing.Point(37, 416);
+      this.loggerText.Location = new System.Drawing.Point(37, 466);
       this.loggerText.Name = "loggerText";
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
@@ -391,6 +391,7 @@ namespace UserInterface
       this.Controls.Add(this.ConsumerSecret);
       this.Controls.Add(this.ConsumerKey);
       this.Controls.Add(this.menuStrip1);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip1;
       this.MaximizeBox = false;

@@ -15,7 +15,6 @@ namespace UserInterface
   {
     private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
     private const string _credentialsBinaryFilepath = "Credentials.bin";
-    // private ITwitter _twitter;
     private ITweetRecords _records;
     private ITweetRecordFactory _factory;
     private ISaverBinary _tweetRecordsSaver;
@@ -26,14 +25,12 @@ namespace UserInterface
     {
       InitializeComponent();
 
-      // _twitter = new Twitter();
       _records = new TweetRecords();
       _factory = new TweetRecordFactory(_records);
       _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
       _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
       _statusChecker = new StatusChecker();
       _credentials = new Credentials();
-
 
       _tweetRecordsSaver.CreateFileIfNotExist();
       _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
@@ -75,7 +72,6 @@ namespace UserInterface
     {
       UpdateCredentials();
       SaveCredentialToBinaryFile();
-      // UpdateTwitterAPICredentials(_credentials);
       if (SendImmediatelyCheckBox.Checked == true)
       {
         SendImmediately();
@@ -103,15 +99,17 @@ namespace UserInterface
 
       TweetRecord record =
         _factory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
-
+      _statusChecker.CheckStatusOfSendImmediately(record);
       CreateDataFrameRecord(record);
+
+      if (record.Status != "Starting") return;
 
       Task.Factory.StartNew(async () =>
       {
-        loggerText.Invoke(new Action(() => loggerText.Text = "Task running..."));
         HttpStatusCode response = await SendTweetAsync(twtAPI, record);
         loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-        ChangeStatusToSuccess(record);
+        _statusChecker.ChangeStatusByResponse(record, response);
+        ChangeStatusOnDataGrid(record);
         _tweetRecordsSaver.UpdateBinary(_records);
       });
     }
@@ -128,14 +126,6 @@ namespace UserInterface
     {
       _credentialSaver.UpdateBinary(_credentials);
     }
-
-    /*private void UpdateTwitterAPICredentials(Credentials credential)
-    {
-      _twitter.SetCredential(
-        credential.ConsumerKey, credential.ConsumerSecret,
-        credential.AccessTokenKey, credential.AccessTokenSecret);
-
-    }*/
 
     private void UpdateCredentialsWithSavedBinary()
     {
@@ -191,8 +181,9 @@ namespace UserInterface
 
       timer = new System.Threading.Timer(async x =>
       {
-        await SendTweetAsync(twtAPI, record);
-        ChangeStatusToSuccess(record);
+        HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+        _statusChecker.ChangeStatusByResponse(record, response);
+        ChangeStatusOnDataGrid(record);
         _tweetRecordsSaver.UpdateBinary(_records);
       }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
     }
@@ -206,15 +197,15 @@ namespace UserInterface
       return response;
     }
 
-    private void ChangeStatusToSuccess(TweetRecord record)
+    private void ChangeStatusOnDataGrid(TweetRecord record)
     {
       int rowCount = TweetDataGrid.Rows.Count;
       for (int i = 0; i < rowCount - 1; i++)
       {
         if (TweetDataGrid.Rows[i].Cells[0].Value.ToString() == record.ID.ToString())
         {
-          TweetDataGrid.Rows[i].Cells[4].Value = "Success";
-          _statusChecker.ChangeToSuccess(record);
+          TweetDataGrid.Rows[i].Cells[4].Value = record.Status;
+          // _statusChecker.ChangeToSuccess(record);
         }
       }
     }
