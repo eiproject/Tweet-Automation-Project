@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BA5605FA14FC432FA99D8F3763409A2E"
+        "MsmKey" = "8:_EDDA61751F774B9687063256B4CE17EE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -80,6 +80,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -316,15 +324,15 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_17EF3667D3E4440283ED37C38ECDB11F"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1F7F9B4AEE634B44A897E9303E8C8871"
             {
-            "Name" = "8:TweetAutomation"
+            "Name" = "8:Tweet_Automation"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_BA5605FA14FC432FA99D8F3763409A2E"
+            "Target" = "8:_EDDA61751F774B9687063256B4CE17EE"
             "Folder" = "8:_ECD90B50C5E24695AD764DAD7A615A0A"
             "WorkingFolder" = "8:_C6ABE202D401404C8B22EAC30D41CA0E"
             "Icon" = "8:_0816D0F827D349FD8D25CAEF134135FA"
@@ -729,9 +737,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA5605FA14FC432FA99D8F3763409A2E"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDDA61751F774B9687063256B4CE17EE"
             {
-            "SourcePath" = "8:..\\UserInterface\\obj\\Debug\\netcoreapp3.1\\apphost.exe"
+            "SourcePath" = "8:..\\TweetAutomation.UserInterface\\obj\\Debug\\netcoreapp3.1\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_C6ABE202D401404C8B22EAC30D41CA0E"
@@ -751,7 +759,7 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
-            "OutputProjectGuid" = "8:{6F960F6F-8DA3-4641-98DB-00041BC4284D}"
+            "OutputProjectGuid" = "8:{8F807341-C206-40B4-85B8-F16FB9D2C78B}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

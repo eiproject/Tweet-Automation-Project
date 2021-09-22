@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>TweetAutomation.LoggingSystem</AssemblyName>
+    <RootNamespace>TweetAutomation.LoggingSystem</RootNamespace>
+    <StartupObject>TweetAutomation.LoggingSystem.Program</StartupObject>
+  </PropertyGroup>
+
+</Project>
