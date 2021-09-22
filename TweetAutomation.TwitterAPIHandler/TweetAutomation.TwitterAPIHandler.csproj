@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>TweetAutomation.TwitterAPIHandler</AssemblyName>
+    <RootNamespace>TweetAutomation.TwitterAPIHandler</RootNamespace>
+    <StartupObject>TweetAutomation.TwitterAPIHandler.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TweetAutomation.LoggingSystem\TweetAutomation.LoggingSystem.csproj" />
+  </ItemGroup>
+
+</Project>

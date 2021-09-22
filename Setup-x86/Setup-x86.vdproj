@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_A90AACD7BFF34F7A88CFB5D128597BFA"
+        "MsmKey" = "8:_8C81DDC9C0A74F7487DD5694923ECFB1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -87,6 +87,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -316,15 +324,15 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C77DF2A696C345F0945FB83842DF6A9E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_21BF91AD5A7B4762A690D1E70B1D8B59"
             {
-            "Name" = "8:TweetAutomation"
+            "Name" = "8:Tweet_Automation(x86)"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A90AACD7BFF34F7A88CFB5D128597BFA"
+            "Target" = "8:_8C81DDC9C0A74F7487DD5694923ECFB1"
             "Folder" = "8:_E4E9B7F183E940F495B727AFC706DDB3"
             "WorkingFolder" = "8:_62E394A965724F6383C0A55880B21C7C"
             "Icon" = "8:_E56325CE22A84822BF010357294C7FFB"
@@ -729,9 +737,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A90AACD7BFF34F7A88CFB5D128597BFA"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8C81DDC9C0A74F7487DD5694923ECFB1"
             {
-            "SourcePath" = "8:..\\UserInterface\\obj\\Debug\\netcoreapp3.1\\apphost.exe"
+            "SourcePath" = "8:..\\TweetAutomation.UserInterface\\obj\\Debug\\netcoreapp3.1\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_62E394A965724F6383C0A55880B21C7C"
@@ -751,7 +759,7 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
-            "OutputProjectGuid" = "8:{6F960F6F-8DA3-4641-98DB-00041BC4284D}"
+            "OutputProjectGuid" = "8:{8F807341-C206-40B4-85B8-F16FB9D2C78B}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

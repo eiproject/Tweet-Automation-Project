@@ -30,9 +30,11 @@ Several things to-do in this project
 - <strike>Create Tweet</strike> (Done)
 - <strike>Create Unit Test</strike> (Done)
 - <strike>Creating first release and setup file</strike> (Done)
-- Upload image in Tweet
+- Create logger
+- Feature to run on the background
+- Upload image on Tweet
 - Creating Tweets thread
-- Run in the background
+
 
 ## Current Feature
 Current completed feature (available for fix and test)
