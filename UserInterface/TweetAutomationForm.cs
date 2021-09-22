@@ -42,6 +42,12 @@ namespace UserInterface
       DatePicker.Value = DateTime.Now;
       DatePicker.MinDate = DateTime.Now;
       TimePicker.Value = DateTime.Now;
+
+#if DEBUG
+      loggerText.Visible = true;
+#else
+      loggerText.Visible = false;
+#endif
     }
 
     #region All Button Click Event
@@ -82,7 +88,7 @@ namespace UserInterface
         PlaceRequestOnQueue();
       }
     }
-    
+
     private void DeleteButton(object sender, DataGridViewCellEventArgs e)
     {
       if (e.RowIndex < 0 || e.ColumnIndex < 0) { return; }
