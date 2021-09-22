@@ -20,14 +20,11 @@ jobs:
         dotnet-version: 3.1.x
     
     - name: Clean
-      run: dotnet clean ./TweetAutomationProject.sln --configuration Debug && dotnet nuget locals all --clear     
+      run: dotnet clean ./TweetAutomation.sln --configuration Debug && dotnet nuget locals all --clear     
   
     - name: Restore dependencies
-      run: dotnet restore ./UserInterface/UserInterface.csproj
-      
-    - name: Restore dependencies
-      run: dotnet restore ./UnitTesting/UnitTesting.csproj
-    
+      run: dotnet restore ./TweetAutomation.sln
+
     - name: Build
       run: dotnet build --no-restore
     
