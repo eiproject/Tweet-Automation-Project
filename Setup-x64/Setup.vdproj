@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0816D0F827D349FD8D25CAEF134135FA"
+        "MsmKey" = "8:_9FCF6FECC0524EE18B06205E96701E38"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -87,6 +87,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -127,9 +135,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0816D0F827D349FD8D25CAEF134135FA"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9FCF6FECC0524EE18B06205E96701E38"
             {
-            "SourcePath" = "8:..\\blog_seo_optimization_search_icon_192465.ico"
+            "SourcePath" = "8:..\\icon.ico"
             "TargetName" = "8:icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_C6ABE202D401404C8B22EAC30D41CA0E"
@@ -335,7 +343,7 @@
             "Target" = "8:_EDDA61751F774B9687063256B4CE17EE"
             "Folder" = "8:_ECD90B50C5E24695AD764DAD7A615A0A"
             "WorkingFolder" = "8:_C6ABE202D401404C8B22EAC30D41CA0E"
-            "Icon" = "8:_0816D0F827D349FD8D25CAEF134135FA"
+            "Icon" = "8:_9FCF6FECC0524EE18B06205E96701E38"
             "Feature" = "8:"
             }
         }

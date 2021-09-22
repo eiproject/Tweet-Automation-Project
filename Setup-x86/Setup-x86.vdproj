@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E56325CE22A84822BF010357294C7FFB"
+        "MsmKey" = "8:_FD4D5F369E534273B2F0852B11FCD5C6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -127,9 +127,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E56325CE22A84822BF010357294C7FFB"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FD4D5F369E534273B2F0852B11FCD5C6"
             {
-            "SourcePath" = "8:..\\blog_seo_optimization_search_icon_192465.ico"
+            "SourcePath" = "8:..\\icon.ico"
             "TargetName" = "8:icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_62E394A965724F6383C0A55880B21C7C"
@@ -324,7 +324,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_21BF91AD5A7B4762A690D1E70B1D8B59"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_504F42DD94E0466FA6E98FD80F326AF2"
             {
             "Name" = "8:Tweet_Automation(x86)"
             "Arguments" = "8:"
@@ -335,7 +335,7 @@
             "Target" = "8:_8C81DDC9C0A74F7487DD5694923ECFB1"
             "Folder" = "8:_E4E9B7F183E940F495B727AFC706DDB3"
             "WorkingFolder" = "8:_62E394A965724F6383C0A55880B21C7C"
-            "Icon" = "8:_E56325CE22A84822BF010357294C7FFB"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }
