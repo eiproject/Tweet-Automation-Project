@@ -6,6 +6,8 @@ namespace UserInterface.Local
 {
   public class RecordSaverBinary : ISaverBinary
   {
+    private object _readLoker = new object();
+    private object _updateLoker = new object();
     private string _filePath;
     private bool _overwrite = false;
     public RecordSaverBinary(string filePath) {
@@ -21,23 +23,29 @@ namespace UserInterface.Local
         }
     }
 
-    public object Read<TweetRecord>()
+    public object Read<T>()
     {
-      using (Stream stream = File.Open(_filePath, FileMode.Open))
+      lock (_readLoker)
       {
-        TweetRecords readResult = null;
-        var binaryFormatter = new BinaryFormatter();
-        if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
-        return readResult;
+        using (Stream stream = File.Open(_filePath, FileMode.Open))
+        {
+          TweetRecords readResult = null;
+          var binaryFormatter = new BinaryFormatter();
+          if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
+          return readResult;
+        }
       }
     }
 
-    public void UpdateBinary<TweetRecords>(TweetRecords objectToWrite)
+    public void UpdateBinary<T>(T objectToWrite)
     {
-      using (Stream stream = File.Open(_filePath, FileMode.Create))
+      lock (_updateLoker)
       {
-        var binaryFormatter = new BinaryFormatter();
-        binaryFormatter.Serialize(stream, objectToWrite);
+        using (Stream stream = File.Open(_filePath, FileMode.Create))
+        {
+          var binaryFormatter = new BinaryFormatter();
+          binaryFormatter.Serialize(stream, objectToWrite);
+        }
       }
     }
 

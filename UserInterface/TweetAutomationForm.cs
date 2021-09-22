@@ -164,11 +164,17 @@ namespace UserInterface
 
       Task.Factory.StartNew(async () =>
       {
-        HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-        _statusChecker.ChangeStatusByResponse(record, response);
-        UpdateStatusOnDataGrid(record);
-        _tweetRecordsSaver.UpdateBinary(_records);
+        try
+        {
+          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+          _statusChecker.ChangeStatusByResponse(record, response);
+          UpdateStatusOnDataGrid(record);
+          _tweetRecordsSaver.UpdateBinary(_records);
+        }
+        catch (Exception e)
+        {
+          // Console.WriteLine(e.ToString());
+        }
       });
     }
 
@@ -183,6 +189,7 @@ namespace UserInterface
       timer = new System.Threading.Timer(async x =>
       {
         HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
         _statusChecker.ChangeStatusByResponse(record, response);
         UpdateStatusOnDataGrid(record);
         _tweetRecordsSaver.UpdateBinary(_records);
@@ -193,7 +200,7 @@ namespace UserInterface
       ITwitter twitterAPI, TweetRecord record)
     {
       HttpStatusCode response = await twitterAPI.Tweet(record.Tweet);
-      Console.WriteLine(response);
+      loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
 
       return response;
     }

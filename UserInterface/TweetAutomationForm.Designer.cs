@@ -78,7 +78,7 @@ namespace UserInterface
             this.helpToolStripMenuItem});
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(959, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(922, 24);
       this.menuStrip1.TabIndex = 0;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -114,7 +114,7 @@ namespace UserInterface
       // 
       // ConsumerKey
       // 
-      this.ConsumerKey.Location = new System.Drawing.Point(623, 56);
+      this.ConsumerKey.Location = new System.Drawing.Point(604, 56);
       this.ConsumerKey.Name = "ConsumerKey";
       this.ConsumerKey.PlaceholderText = "Consumer Key";
       this.ConsumerKey.Size = new System.Drawing.Size(302, 23);
@@ -122,7 +122,7 @@ namespace UserInterface
       // 
       // ConsumerSecret
       // 
-      this.ConsumerSecret.Location = new System.Drawing.Point(623, 86);
+      this.ConsumerSecret.Location = new System.Drawing.Point(604, 86);
       this.ConsumerSecret.Name = "ConsumerSecret";
       this.ConsumerSecret.PlaceholderText = "Consumer Secret";
       this.ConsumerSecret.Size = new System.Drawing.Size(302, 23);
@@ -131,7 +131,7 @@ namespace UserInterface
       // CredentialLabel
       // 
       this.CredentialLabel.AutoSize = true;
-      this.CredentialLabel.Location = new System.Drawing.Point(622, 38);
+      this.CredentialLabel.Location = new System.Drawing.Point(603, 38);
       this.CredentialLabel.Name = "CredentialLabel";
       this.CredentialLabel.Size = new System.Drawing.Size(147, 15);
       this.CredentialLabel.TabIndex = 3;
@@ -140,7 +140,7 @@ namespace UserInterface
       // SaveButton
       // 
       this.SaveButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.SaveButton.Location = new System.Drawing.Point(622, 174);
+      this.SaveButton.Location = new System.Drawing.Point(603, 174);
       this.SaveButton.Name = "SaveButton";
       this.SaveButton.Size = new System.Drawing.Size(75, 23);
       this.SaveButton.TabIndex = 4;
@@ -151,7 +151,7 @@ namespace UserInterface
       // ClearButton
       // 
       this.ClearButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.ClearButton.Location = new System.Drawing.Point(703, 174);
+      this.ClearButton.Location = new System.Drawing.Point(684, 174);
       this.ClearButton.Name = "ClearButton";
       this.ClearButton.Size = new System.Drawing.Size(75, 23);
       this.ClearButton.TabIndex = 5;
@@ -161,7 +161,7 @@ namespace UserInterface
       // 
       // AccessTokenSecret
       // 
-      this.AccessTokenSecret.Location = new System.Drawing.Point(623, 145);
+      this.AccessTokenSecret.Location = new System.Drawing.Point(604, 145);
       this.AccessTokenSecret.Name = "AccessTokenSecret";
       this.AccessTokenSecret.PlaceholderText = "Access Token Secret";
       this.AccessTokenSecret.Size = new System.Drawing.Size(302, 23);
@@ -169,7 +169,7 @@ namespace UserInterface
       // 
       // AccessTokenKey
       // 
-      this.AccessTokenKey.Location = new System.Drawing.Point(623, 115);
+      this.AccessTokenKey.Location = new System.Drawing.Point(604, 115);
       this.AccessTokenKey.Name = "AccessTokenKey";
       this.AccessTokenKey.PlaceholderText = "Access Token Key";
       this.AccessTokenKey.Size = new System.Drawing.Size(302, 23);
@@ -177,7 +177,7 @@ namespace UserInterface
       // 
       // TweetText
       // 
-      this.TweetText.Location = new System.Drawing.Point(37, 56);
+      this.TweetText.Location = new System.Drawing.Point(18, 56);
       this.TweetText.MaxLength = 250;
       this.TweetText.Multiline = true;
       this.TweetText.Name = "TweetText";
@@ -188,7 +188,7 @@ namespace UserInterface
       // TweetLabel
       // 
       this.TweetLabel.AutoSize = true;
-      this.TweetLabel.Location = new System.Drawing.Point(37, 38);
+      this.TweetLabel.Location = new System.Drawing.Point(18, 38);
       this.TweetLabel.Name = "TweetLabel";
       this.TweetLabel.Size = new System.Drawing.Size(64, 15);
       this.TweetLabel.TabIndex = 9;
@@ -197,7 +197,7 @@ namespace UserInterface
       // SendButton
       // 
       this.SendButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.SendButton.Location = new System.Drawing.Point(37, 174);
+      this.SendButton.Location = new System.Drawing.Point(18, 174);
       this.SendButton.Name = "SendButton";
       this.SendButton.Size = new System.Drawing.Size(75, 23);
       this.SendButton.TabIndex = 10;
@@ -217,7 +217,7 @@ namespace UserInterface
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewButtonColumn1});
-      this.TweetDataGrid.Location = new System.Drawing.Point(37, 231);
+      this.TweetDataGrid.Location = new System.Drawing.Point(18, 231);
       this.TweetDataGrid.Name = "TweetDataGrid";
       this.TweetDataGrid.RowTemplate.Height = 25;
       this.TweetDataGrid.Size = new System.Drawing.Size(888, 222);
@@ -314,7 +314,7 @@ namespace UserInterface
       // 
       // DatePicker
       // 
-      this.DatePicker.Location = new System.Drawing.Point(441, 73);
+      this.DatePicker.Location = new System.Drawing.Point(422, 73);
       this.DatePicker.MinDate = new System.DateTime(2021, 9, 15, 0, 0, 0, 0);
       this.DatePicker.Name = "DatePicker";
       this.DatePicker.Size = new System.Drawing.Size(174, 23);
@@ -324,7 +324,7 @@ namespace UserInterface
       // TimePicker
       // 
       this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-      this.TimePicker.Location = new System.Drawing.Point(441, 121);
+      this.TimePicker.Location = new System.Drawing.Point(422, 121);
       this.TimePicker.Name = "TimePicker";
       this.TimePicker.ShowUpDown = true;
       this.TimePicker.Size = new System.Drawing.Size(174, 23);
@@ -334,7 +334,7 @@ namespace UserInterface
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(442, 55);
+      this.label1.Location = new System.Drawing.Point(423, 55);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(66, 15);
       this.label1.TabIndex = 13;
@@ -343,7 +343,7 @@ namespace UserInterface
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(442, 103);
+      this.label2.Location = new System.Drawing.Point(423, 103);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(68, 15);
       this.label2.TabIndex = 14;
@@ -352,7 +352,7 @@ namespace UserInterface
       // loggerText
       // 
       this.loggerText.AutoSize = true;
-      this.loggerText.Location = new System.Drawing.Point(37, 466);
+      this.loggerText.Location = new System.Drawing.Point(18, 466);
       this.loggerText.Name = "loggerText";
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
@@ -361,7 +361,7 @@ namespace UserInterface
       // SendImmediatelyCheckBox
       // 
       this.SendImmediatelyCheckBox.AutoSize = true;
-      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(441, 152);
+      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(422, 152);
       this.SendImmediatelyCheckBox.Name = "SendImmediatelyCheckBox";
       this.SendImmediatelyCheckBox.Size = new System.Drawing.Size(121, 19);
       this.SendImmediatelyCheckBox.TabIndex = 18;
@@ -372,7 +372,7 @@ namespace UserInterface
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(959, 490);
+      this.ClientSize = new System.Drawing.Size(922, 512);
       this.Controls.Add(this.SendImmediatelyCheckBox);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
