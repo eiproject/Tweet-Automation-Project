@@ -42,6 +42,12 @@ namespace UserInterface
       DatePicker.Value = DateTime.Now;
       DatePicker.MinDate = DateTime.Now;
       TimePicker.Value = DateTime.Now;
+
+#if DEBUG
+      loggerText.Visible = true;
+#else
+      loggerText.Visible = false;
+#endif
     }
 
     #region All Button Click Event
@@ -82,7 +88,7 @@ namespace UserInterface
         PlaceRequestOnQueue();
       }
     }
-    
+
     private void DeleteButton(object sender, DataGridViewCellEventArgs e)
     {
       if (e.RowIndex < 0 || e.ColumnIndex < 0) { return; }
@@ -164,11 +170,17 @@ namespace UserInterface
 
       Task.Factory.StartNew(async () =>
       {
-        HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-        _statusChecker.ChangeStatusByResponse(record, response);
-        UpdateStatusOnDataGrid(record);
-        _tweetRecordsSaver.UpdateBinary(_records);
+        try
+        {
+          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+          _statusChecker.ChangeStatusByResponse(record, response);
+          UpdateStatusOnDataGrid(record);
+          _tweetRecordsSaver.UpdateBinary(_records);
+        }
+        catch (Exception e)
+        {
+          // Console.WriteLine(e.ToString());
+        }
       });
     }
 
@@ -183,6 +195,7 @@ namespace UserInterface
       timer = new System.Threading.Timer(async x =>
       {
         HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
         _statusChecker.ChangeStatusByResponse(record, response);
         UpdateStatusOnDataGrid(record);
         _tweetRecordsSaver.UpdateBinary(_records);
@@ -193,7 +206,7 @@ namespace UserInterface
       ITwitter twitterAPI, TweetRecord record)
     {
       HttpStatusCode response = await twitterAPI.Tweet(record.Tweet);
-      Console.WriteLine(response);
+      loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
 
       return response;
     }

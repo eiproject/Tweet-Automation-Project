@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace TwitterAPIHandler.Business
     private string _consumerSecret;
     private string _accessTokenKey;
     private string _accessTokenSecret;
-    
-    public Twitter(Credentials credentials) {
+
+    public Twitter(Credentials credentials)
+    {
       _consumerKey = credentials.ConsumerKey;
       _consumerSecret = credentials.ConsumerSecret;
       _accessTokenKey = credentials.AccessTokenKey;
@@ -80,7 +82,7 @@ namespace TwitterAPIHandler.Business
           data
               .Union(data)
               .Select(kvp => string.Format(
-                "{0}={1}", Uri.EscapeDataString(kvp.Key), 
+                "{0}={1}", Uri.EscapeDataString(kvp.Key),
                 Uri.EscapeDataString(kvp.Value)))
               .OrderBy(s => s)
       );
@@ -102,7 +104,7 @@ namespace TwitterAPIHandler.Business
           ", ",
           data
               .Where(kvp => kvp.Key.StartsWith("oauth_"))
-              .Select(kvp => string.Format("{0}=\"{1}\"", 
+              .Select(kvp => string.Format("{0}=\"{1}\"",
               Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value)))
               .OrderBy(s => s)
       );
@@ -113,11 +115,21 @@ namespace TwitterAPIHandler.Business
     {
       using (var http = new HttpClient())
       {
+        HttpResponseMessage httpResp = new HttpResponseMessage();
         http.DefaultRequestHeaders.Add("Authorization", oAuthHeader);
-
-        HttpResponseMessage httpResp = await http.PostAsync(fullUrl, formData);
-        var respBody = await httpResp.Content.ReadAsStringAsync();
-
+        try
+        {
+          httpResp = await http.PostAsync(fullUrl, formData);
+          // var respBody = await httpResp.Content.ReadAsStringAsync();
+        }
+        catch (SocketException error)
+        {
+          httpResp.StatusCode = HttpStatusCode.RequestTimeout;
+        }
+        catch (HttpRequestException error)
+        {
+          httpResp.StatusCode = HttpStatusCode.RequestTimeout;
+        }
         return httpResp.StatusCode;
       }
     }

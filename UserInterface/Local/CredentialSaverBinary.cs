@@ -7,6 +7,8 @@ namespace UserInterface.Local
 {
   public class CredentialSaverBinary : ISaverBinary
   {
+    private object _readLoker = new object();
+    private object _updateLoker = new object();
     private string _filePath;
     private bool _overwrite = false;
     public CredentialSaverBinary(string filePath)
@@ -25,21 +27,27 @@ namespace UserInterface.Local
 
     public object Read<T>()
     {
-      using (Stream stream = File.Open(_filePath, FileMode.Open))
+      lock (_readLoker)
       {
-        Credentials readResult = new Credentials();
-        var binaryFormatter = new BinaryFormatter();
-        if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
-        return readResult;
+        using (Stream stream = File.Open(_filePath, FileMode.Open))
+        {
+          Credentials readResult = new Credentials();
+          var binaryFormatter = new BinaryFormatter();
+          if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
+          return readResult;
+        }
       }
     }
 
     public void UpdateBinary<T>(T objectToWrite)
     {
-      using (Stream stream = File.Open(_filePath, FileMode.Create))
+      lock (_updateLoker)
       {
-        var binaryFormatter = new BinaryFormatter();
-        binaryFormatter.Serialize(stream, objectToWrite);
+        using (Stream stream = File.Open(_filePath, FileMode.Create))
+        {
+          var binaryFormatter = new BinaryFormatter();
+          binaryFormatter.Serialize(stream, objectToWrite);
+        }
       }
     }
 

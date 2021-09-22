@@ -51,6 +51,10 @@ namespace UserInterface.Business
       {
         record.Status = "Bad Request";
       }
+      else if (response == HttpStatusCode.RequestTimeout)
+      {
+        record.Status = "Timeout";
+      }
       else
       {
         record.Status = "Unknown Error";
