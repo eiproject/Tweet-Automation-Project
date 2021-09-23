@@ -13,6 +13,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
 {
   public class Twitter : ITwitter
   {
+    private object _lockerSendRequest = new object();
     private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     private HMACSHA1 _sigHasher;
     private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
@@ -33,12 +34,15 @@ namespace TweetAutomation.TwitterAPIHandler.Business
 
     public Task<HttpStatusCode> Tweet(string text)
     {
-      var data = new Dictionary<string, string> {
+      lock (_lockerSendRequest)
+      {
+        var data = new Dictionary<string, string> {
             { "status", text },
             { "trim_user", "1" }
         };
 
-      return SendRequest("statuses/update.json", data);
+        return SendRequest("statuses/update.json", data);
+      }
     }
     private void CreateSigHasher()
     {

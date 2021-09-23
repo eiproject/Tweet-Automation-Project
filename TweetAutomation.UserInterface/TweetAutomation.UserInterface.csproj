@@ -4,11 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject></StartupObject>
-    <ApplicationIcon>blog_seo_optimization_search_icon_192465.ico</ApplicationIcon>
+    <StartupObject>TweetAutomation.UserInterface.Program</StartupObject>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>TweetAutomation.UserInterface</AssemblyName>
     <RootNamespace>TweetAutomation.UserInterface</RootNamespace>
+    <Version>1.0.12</Version>
   </PropertyGroup>
 
   <ItemGroup>

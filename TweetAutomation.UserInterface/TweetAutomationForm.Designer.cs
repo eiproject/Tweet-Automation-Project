@@ -397,7 +397,7 @@ namespace TweetAutomation.UserInterface
       this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Tweet Automation";
+      this.Text = "Tweet Automation 1.0.12";
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();

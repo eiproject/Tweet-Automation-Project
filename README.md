@@ -24,17 +24,6 @@ Few steps to run the project
 - Open the solution (*.sln)
 - Done
 
-## To-Do
-Several things to-do in this project
-
-- <strike>Create Tweet</strike> (Done)
-- <strike>Create Unit Test</strike> (Done)
-- <strike>Creating first release and setup file</strike> (Done)
-- Create logger
-- Feature to run on the background
-- Upload image on Tweet
-- Creating Tweets thread
-
 
 ## Current Feature
 Current completed feature (available for fix and test)
