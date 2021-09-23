@@ -34,13 +34,6 @@ Current completed feature (available for fix and test)
 - Remove Tweet queue
 - Save Tweet queue records
 
-## User Interface Progress
-Current progress and visual display
+## User Interface
 
-> Initial window: 
-
-![alt text](https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/screenshot/Screenshot%202021-09-08%20165413.png?raw=true)
-
-> Window with a queue feature:
-
-![alt text](https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/screenshot/Screenshot%202021-09-20%20102046.png?raw=true)
+![Tweet Automation v1.0.12](https://raw.githubusercontent.com/eiproject/Tweet-Automation-Project/master/asset/screenshot/Screenshot%202021-09-23%20134907.png)
