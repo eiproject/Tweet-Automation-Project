@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TweetAutomation.TwitterAPIHandler.Model;
 using TweetAutomation.UserInterface.Model;
@@ -29,13 +30,28 @@ namespace TweetAutomation.UserInterface.Local
     {
       lock (_readLoker)
       {
-        using (Stream stream = File.Open(_filePath, FileMode.Open))
+        Credentials readResult = new Credentials();
+        try
         {
-          Credentials readResult = new Credentials();
-          var binaryFormatter = new BinaryFormatter();
-          if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
-          return readResult;
+          using (Stream stream = File.Open(_filePath, FileMode.Open))
+          {
+            var binaryFormatter = new BinaryFormatter();
+            if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
+          }
         }
+        catch (SerializationException)
+        {
+          ForceCreateNewBinary();
+        }
+        return readResult;
+      }
+    }
+
+    private void ForceCreateNewBinary()
+    {
+      using (File.Create(_filePath))
+      {
+
       }
     }
 

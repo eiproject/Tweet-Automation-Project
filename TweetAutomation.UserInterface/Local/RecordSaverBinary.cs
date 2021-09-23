@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TweetAutomation.UserInterface.Model;
 
@@ -10,7 +11,8 @@ namespace TweetAutomation.UserInterface.Local
     private object _updateLoker = new object();
     private string _filePath;
     private bool _overwrite = false;
-    public RecordSaverBinary(string filePath) {
+    public RecordSaverBinary(string filePath)
+    {
       _filePath = filePath;
     }
 
@@ -27,13 +29,28 @@ namespace TweetAutomation.UserInterface.Local
     {
       lock (_readLoker)
       {
-        using (Stream stream = File.Open(_filePath, FileMode.Open))
+        TweetRecords readResult = new TweetRecords();
+        try
         {
-          TweetRecords readResult = null;
-          var binaryFormatter = new BinaryFormatter();
-          if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
-          return readResult;
+          using (Stream stream = File.Open(_filePath, FileMode.Open))
+          {
+            var binaryFormatter = new BinaryFormatter();
+            if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
+          }
         }
+        catch (SerializationException error)
+        {
+          ForceCreateNewBinary();
+        }
+        return readResult;
+      }
+    }
+
+    private void ForceCreateNewBinary()
+    {
+      using (File.Create(_filePath))
+      {
+
       }
     }
 
