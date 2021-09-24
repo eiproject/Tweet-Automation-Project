@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TweetAutomation.LoggingSystem.Business;
 using TweetAutomation.TwitterAPIHandler.Model;
 
 namespace TweetAutomation.TwitterAPIHandler.Business
@@ -15,6 +16,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
   {
     private object _lockerSendRequest = new object();
     private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private LogRepository _logger = LogRepository.LogInstance();
     private HMACSHA1 _sigHasher;
     private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
     private string _consumerKey;
@@ -24,6 +26,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
 
     public Twitter(Credentials credentials)
     {
+      _logger.Update("DEBUG", "Creating Twitter API instance.");
       _consumerKey = credentials.ConsumerKey;
       _consumerSecret = credentials.ConsumerSecret;
       _accessTokenKey = credentials.AccessTokenKey;
@@ -36,6 +39,9 @@ namespace TweetAutomation.TwitterAPIHandler.Business
     {
       lock (_lockerSendRequest)
       {
+        int maxLength = 20;
+        if (text.Length < maxLength) maxLength = text.Length;
+        _logger.Update("DEBUG", $"Sending Tweet. {text.Substring(0, maxLength)}");
         var data = new Dictionary<string, string> {
             { "status", text },
             { "trim_user", "1" }
@@ -128,10 +134,12 @@ namespace TweetAutomation.TwitterAPIHandler.Business
         }
         catch (SocketException error)
         {
+          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
           httpResp.StatusCode = HttpStatusCode.RequestTimeout;
         }
         catch (HttpRequestException error)
         {
+          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
           httpResp.StatusCode = HttpStatusCode.RequestTimeout;
         }
         return httpResp.StatusCode;
