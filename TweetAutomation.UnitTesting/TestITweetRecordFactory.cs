@@ -24,7 +24,7 @@ namespace UnitTesting
       Assert.AreEqual(record.ID, 0);
       Assert.AreEqual(record.Tweet, tweet);
       Assert.AreEqual(record.DateObject, date);
-      Assert.AreEqual(record.DateString, "20/09/2021");
+      Assert.AreEqual(record.DateString, "09/20/2021");
       Assert.AreEqual(record.TimeObject, time);
       Assert.AreEqual(record.TimeString, "11:59 PM");
       Assert.AreEqual(record.DateTimeCombined, date.Date + time.TimeOfDay);
