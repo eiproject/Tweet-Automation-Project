@@ -17,7 +17,7 @@ namespace TweetAutomation.UserInterface.Factory
     public TweetRecord Create(
       string tweet, DateTime date, DateTime time)
     {
-
+      time = date + time.TimeOfDay;
       return new TweetRecord(
         GetLastID(),
         tweet,

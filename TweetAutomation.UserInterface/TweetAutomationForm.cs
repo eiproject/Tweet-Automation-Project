@@ -43,8 +43,8 @@ namespace TweetAutomation.UserInterface
       _credentialSaver.CreateFileIfNotExist();
       UpdateCredentialsWithSavedBinary();
       TweetDataGrid.AutoGenerateColumns = false;
-      DatePicker.Value = DateTime.Now;
-      DatePicker.MinDate = DateTime.Now;
+      DatePicker.Value = DateTime.Today;
+      DatePicker.MinDate = DateTime.Today;
       TimePicker.Value = DateTime.Now;
 
 #if DEBUG
@@ -190,8 +190,7 @@ namespace TweetAutomation.UserInterface
         {
           HttpStatusCode response = await SendTweetAsync(twtAPI, record);
           _statusChecker.ChangeStatusByResponse(record, response);
-          UpdateStatusOnDataGrid(record);
-          _tweetRecordsSaver.UpdateBinary(_records);
+          UpdateRecords(record);
         }
         catch (Exception e)
         {
@@ -202,21 +201,29 @@ namespace TweetAutomation.UserInterface
 
     private void SetUpTimerAndSendTweet(TweetRecord record)
     {
-      _logger.Update("DEBUG", $"Setup timer and sending Tweet. ID: {record.ID}");
-      ITwitter twtAPI = new Twitter(_credentials);
-
-      System.Threading.Timer timer;
-      TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
-      if (timeToGo < TimeSpan.Zero) return;
-
-      timer = new System.Threading.Timer(async x =>
+      try
       {
-        HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-        loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-        _statusChecker.ChangeStatusByResponse(record, response);
-        UpdateStatusOnDataGrid(record);
-        _tweetRecordsSaver.UpdateBinary(_records);
-      }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
+        _logger.Update("DEBUG", $"Setup timer and sending Tweet. ID: {record.ID}");
+        ITwitter twtAPI = new Twitter(_credentials);
+
+        System.Threading.Timer timer;
+        TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
+        if (timeToGo < TimeSpan.Zero) return;
+
+        timer = new System.Threading.Timer(async x =>
+        {
+          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
+          loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
+          _statusChecker.ChangeStatusByResponse(record, response);
+          UpdateRecords(record);
+        }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+        _statusChecker.ChangeStatusByResponse(record, HttpStatusCode.Forbidden);
+        UpdateRecords(record);
+        _logger.Update("ERROR", $"Timer out of range. ID: {record.ID}");
+      }
     }
 
     private async Task<HttpStatusCode> SendTweetAsync(
@@ -260,6 +267,12 @@ namespace TweetAutomation.UserInterface
       TweetDataGrid.Rows.Insert(0,
         record.ID, record.Tweet, record.DateString,
         record.TimeString, record.Status, "Delete");
+    }
+
+    private void UpdateRecords(TweetRecord record)
+    {
+      UpdateStatusOnDataGrid(record);
+      _tweetRecordsSaver.UpdateBinary(_records);
     }
 
     private void UpdateStatusOnDataGrid(TweetRecord record)
