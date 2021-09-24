@@ -20,7 +20,7 @@ namespace TweetAutomation.UserInterface.Model
       ID = id;
       Tweet = tweet;
       DateObject = date;
-      DateString = date.ToString("dd/MM/yyyy");
+      DateString = date.ToString("MM/dd/yyyy");
       TimeObject = time;
       TimeString = time.ToString("hh:mm tt");
       DateTimeCombined = date.Date + time.TimeOfDay;
