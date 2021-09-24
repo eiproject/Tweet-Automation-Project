@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using TweetAutomation.LoggingSystem.Business;
 using TweetAutomation.TwitterAPIHandler.Model;
 using TweetAutomation.UserInterface.Model;
 
@@ -8,6 +9,7 @@ namespace TweetAutomation.UserInterface.Local
 {
   public class CredentialSaverBinary : ISaverBinary
   {
+    private LogRepository _logger = LogRepository.LogInstance();
     private object _readLoker = new object();
     private object _updateLoker = new object();
     private string _filePath;
@@ -39,8 +41,9 @@ namespace TweetAutomation.UserInterface.Local
             if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
           }
         }
-        catch (SerializationException)
+        catch (SerializationException error)
         {
+          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
           ForceCreateNewBinary();
         }
         return readResult;

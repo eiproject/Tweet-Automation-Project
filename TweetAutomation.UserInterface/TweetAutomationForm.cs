@@ -22,13 +22,11 @@ namespace TweetAutomation.UserInterface
     private ISaverBinary _credentialSaver;
     private IStatusChecker _statusChecker;
     private Credentials _credentials;
-    private LogRepository _logger;
+    private LogRepository _logger = LogRepository.LogInstance();
 
     public TweetAutomationFrom()
     {
       InitializeComponent();
-
-      _logger = LogRepository.LogInstance();
       _logger.Update("DEBUG", "New Tweet Automation instance called.");
 
       _records = new TweetRecords();

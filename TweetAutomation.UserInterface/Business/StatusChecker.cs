@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using TweetAutomation.LoggingSystem.Business;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.Business
 {
   public class StatusChecker : IStatusChecker
   {
+    private LogRepository _logger = LogRepository.LogInstance();
     public StatusChecker() { }
 
     public void CheckStatus(TweetRecord record)
@@ -18,6 +20,7 @@ namespace TweetAutomation.UserInterface.Business
         CheckTimeError(record);
         CheckNull(record);
       }
+      _logger.Update("DEBUG", $"Status ID: {record.ID} is Status: {record.Status}");
     }
 
     public void CheckStatusOfSendImmediately(TweetRecord record)
@@ -27,6 +30,7 @@ namespace TweetAutomation.UserInterface.Business
         SetDefaultSendImmediately(record);
         CheckNull(record);
       }
+      _logger.Update("DEBUG", $"Status ID: {record.ID} is Status: {record.Status}");
     }
 
     public void ChangeStatusByResponse(TweetRecord record, HttpStatusCode response)

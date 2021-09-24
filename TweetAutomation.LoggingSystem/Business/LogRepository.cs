@@ -37,7 +37,6 @@ namespace TweetAutomation.LoggingSystem.Business
       {
 
       }
-
     }
 
     public void Read()
