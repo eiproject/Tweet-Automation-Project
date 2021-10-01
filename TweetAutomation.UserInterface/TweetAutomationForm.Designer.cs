@@ -31,8 +31,9 @@ namespace TweetAutomation.UserInterface
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TweetAutomationFrom));
-      this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+      this.main_menu = new System.Windows.Forms.MenuStrip();
       this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,20 +68,25 @@ namespace TweetAutomation.UserInterface
       this.label2 = new System.Windows.Forms.Label();
       this.loggerText = new System.Windows.Forms.Label();
       this.SendImmediatelyCheckBox = new System.Windows.Forms.CheckBox();
-      this.menuStrip1.SuspendLayout();
+      this.tweet_automation_notify = new System.Windows.Forms.NotifyIcon(this.components);
+      this.TweetAutomation = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.Restore = new System.Windows.Forms.ToolStripMenuItem();
+      this.Exit = new System.Windows.Forms.ToolStripMenuItem();
+      this.main_menu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
+      this.TweetAutomation.SuspendLayout();
       this.SuspendLayout();
       // 
-      // menuStrip1
+      // main_menu
       // 
-      this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.main_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.helpToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-      this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(922, 24);
-      this.menuStrip1.TabIndex = 0;
-      this.menuStrip1.Text = "menuStrip1";
+      this.main_menu.Location = new System.Drawing.Point(0, 0);
+      this.main_menu.Name = "main_menu";
+      this.main_menu.Size = new System.Drawing.Size(922, 24);
+      this.main_menu.TabIndex = 0;
+      this.main_menu.Text = "mainMenu";
       // 
       // fileToolStripMenuItem
       // 
@@ -368,6 +374,34 @@ namespace TweetAutomation.UserInterface
       this.SendImmediatelyCheckBox.Text = "Send Immediately";
       this.SendImmediatelyCheckBox.UseVisualStyleBackColor = true;
       // 
+      // tweet_automation_notify
+      // 
+      this.tweet_automation_notify.ContextMenuStrip = this.TweetAutomation;
+      this.tweet_automation_notify.Icon = ((System.Drawing.Icon)(resources.GetObject("tweet_automation_notify.Icon")));
+      this.tweet_automation_notify.Text = "Tweet Automation";
+      // 
+      // TweetAutomation
+      // 
+      this.TweetAutomation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Restore,
+            this.Exit});
+      this.TweetAutomation.Name = "contextMenuStrip1";
+      this.TweetAutomation.Size = new System.Drawing.Size(114, 48);
+      // 
+      // Restore
+      // 
+      this.Restore.Name = "Restore";
+      this.Restore.Size = new System.Drawing.Size(113, 22);
+      this.Restore.Text = "Restore";
+      this.Restore.Click += new System.EventHandler(this.Restore_Click);
+      // 
+      // Exit
+      // 
+      this.Exit.Name = "Exit";
+      this.Exit.Size = new System.Drawing.Size(113, 22);
+      this.Exit.Text = "Exit";
+      this.Exit.Click += new System.EventHandler(this.Exit_Click);
+      // 
       // TweetAutomationFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -390,17 +424,18 @@ namespace TweetAutomation.UserInterface
       this.Controls.Add(this.CredentialLabel);
       this.Controls.Add(this.ConsumerSecret);
       this.Controls.Add(this.ConsumerKey);
-      this.Controls.Add(this.menuStrip1);
+      this.Controls.Add(this.main_menu);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MainMenuStrip = this.menuStrip1;
+      this.MainMenuStrip = this.main_menu;
       this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Tweet Automation 1.0.12";
-      this.menuStrip1.ResumeLayout(false);
-      this.menuStrip1.PerformLayout();
+      this.main_menu.ResumeLayout(false);
+      this.main_menu.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();
+      this.TweetAutomation.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -408,7 +443,7 @@ namespace TweetAutomation.UserInterface
 
     #endregion
 
-    private System.Windows.Forms.MenuStrip menuStrip1;
+    private System.Windows.Forms.MenuStrip main_menu;
     private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     private System.Windows.Forms.TextBox ConsumerKey;
@@ -443,6 +478,10 @@ namespace TweetAutomation.UserInterface
     private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     private DataGridViewButtonColumn dataGridViewButtonColumn1;
     private CheckBox SendImmediatelyCheckBox;
+    private NotifyIcon tweet_automation_notify;
+    private ContextMenuStrip TweetAutomation;
+    private ToolStripMenuItem Restore;
+    private ToolStripMenuItem Exit;
   }
 }
 
