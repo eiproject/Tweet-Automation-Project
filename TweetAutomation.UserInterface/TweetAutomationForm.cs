@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +24,6 @@ namespace TweetAutomation.UserInterface
     private IStatusChecker _statusChecker;
     private Credentials _credentials;
     private LogRepository _logger = LogRepository.LogInstance();
-
     public TweetAutomationFrom()
     {
       InitializeComponent();
@@ -46,6 +46,10 @@ namespace TweetAutomation.UserInterface
       DatePicker.Value = DateTime.Today;
       DatePicker.MinDate = DateTime.Today;
       TimePicker.Value = DateTime.Now;
+
+      // Custom event args
+      this.Closing += minimizeToTray;
+      tweet_automation_notify.MouseClick += restoreWindow;
 
 #if DEBUG
       loggerText.Visible = true;
@@ -291,14 +295,33 @@ namespace TweetAutomation.UserInterface
 
     #endregion
 
-    private void Restore_Click(object sender, EventArgs e)
+    #region Tray Icon Control
+    private void TrayContextRestore(object sender, EventArgs e)
     {
+      tweet_automation_notify.Visible = false;
       this.Show();
     }
 
-    private void Exit_Click(object sender, EventArgs e)
+    private void TrayContextExit(object sender, EventArgs e)
     {
       this.Close();
     }
+
+    void minimizeToTray(object sender, CancelEventArgs e)
+    {
+      e.Cancel = true;
+      tweet_automation_notify.Visible = true;
+      this.Hide();
+    }
+
+    void restoreWindow(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Left)
+      {
+        this.Show();
+        tweet_automation_notify.Visible = false;
+      }
+    }
+    #endregion
   }
 }

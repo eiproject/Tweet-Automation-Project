@@ -69,12 +69,12 @@ namespace TweetAutomation.UserInterface
       this.loggerText = new System.Windows.Forms.Label();
       this.SendImmediatelyCheckBox = new System.Windows.Forms.CheckBox();
       this.tweet_automation_notify = new System.Windows.Forms.NotifyIcon(this.components);
-      this.TweetAutomation = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.Restore = new System.Windows.Forms.ToolStripMenuItem();
       this.Exit = new System.Windows.Forms.ToolStripMenuItem();
       this.main_menu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
-      this.TweetAutomation.SuspendLayout();
+      this.TrayContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // main_menu
@@ -376,31 +376,31 @@ namespace TweetAutomation.UserInterface
       // 
       // tweet_automation_notify
       // 
-      this.tweet_automation_notify.ContextMenuStrip = this.TweetAutomation;
+      this.tweet_automation_notify.ContextMenuStrip = this.TrayContextMenu;
       this.tweet_automation_notify.Icon = ((System.Drawing.Icon)(resources.GetObject("tweet_automation_notify.Icon")));
       this.tweet_automation_notify.Text = "Tweet Automation";
       // 
-      // TweetAutomation
+      // TrayContextMenu
       // 
-      this.TweetAutomation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Restore,
             this.Exit});
-      this.TweetAutomation.Name = "contextMenuStrip1";
-      this.TweetAutomation.Size = new System.Drawing.Size(114, 48);
+      this.TrayContextMenu.Name = "contextMenuStrip1";
+      this.TrayContextMenu.Size = new System.Drawing.Size(181, 70);
       // 
       // Restore
       // 
       this.Restore.Name = "Restore";
-      this.Restore.Size = new System.Drawing.Size(113, 22);
+      this.Restore.Size = new System.Drawing.Size(180, 22);
       this.Restore.Text = "Restore";
-      this.Restore.Click += new System.EventHandler(this.Restore_Click);
+      this.Restore.Click += new System.EventHandler(this.TrayContextRestore);
       // 
       // Exit
       // 
       this.Exit.Name = "Exit";
-      this.Exit.Size = new System.Drawing.Size(113, 22);
+      this.Exit.Size = new System.Drawing.Size(180, 22);
       this.Exit.Text = "Exit";
-      this.Exit.Click += new System.EventHandler(this.Exit_Click);
+      this.Exit.Click += new System.EventHandler(this.TrayContextExit);
       // 
       // TweetAutomationFrom
       // 
@@ -435,7 +435,7 @@ namespace TweetAutomation.UserInterface
       this.main_menu.ResumeLayout(false);
       this.main_menu.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();
-      this.TweetAutomation.ResumeLayout(false);
+      this.TrayContextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -479,7 +479,7 @@ namespace TweetAutomation.UserInterface
     private DataGridViewButtonColumn dataGridViewButtonColumn1;
     private CheckBox SendImmediatelyCheckBox;
     private NotifyIcon tweet_automation_notify;
-    private ContextMenuStrip TweetAutomation;
+    private ContextMenuStrip TrayContextMenu;
     private ToolStripMenuItem Restore;
     private ToolStripMenuItem Exit;
   }
