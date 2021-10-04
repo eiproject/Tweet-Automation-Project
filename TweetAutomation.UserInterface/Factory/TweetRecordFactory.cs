@@ -1,40 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TweetAutomation.UserInterface.Business;
+using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.Database;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.Factory
 {
   public class TweetRecordFactory : ITweetRecordFactory
   {
-    ITweetRecords _records;
-    public TweetRecordFactory(ITweetRecords records)
+    Tweets _db;
+    public TweetRecordFactory(Tweets db)
     {
-      _records = records;
+      _db = db;
     }
 
-    public TweetRecord Create(
-      string tweet, DateTime date, DateTime time)
+    public Tweet Create(
+      string tweet, DateTime date, DateTime time, bool isImmediately)
     {
       time = date + time.TimeOfDay;
-      return new TweetRecord(
-        GetLastID(),
-        tweet,
-        date,
-        time);
+      return new Tweet(GetLastID(), tweet, date, time, isImmediately);
     }
 
     private int GetLastID()
     {
       int id;
-      if (_records.Records.Count == 0)
+      if (_db.Records.Count == 0)
       {
         id = 0;
       }
       else
       {
-        id = _records.Records[_records.Records.Count - 1].ID + 1;
+        id = _db.Records[_db.Records.Count - 1].ID + 1;
       }
       return id;
     }

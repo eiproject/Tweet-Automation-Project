@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Business\CredentialSetting%28deprecrated%29.cs" />
-    <Compile Remove="Business\Encryption %28deprecrated%29.cs" />
+    <Compile Remove="BLL\CredentialSetting%28deprecrated%29.cs" />
+    <Compile Remove="BLL\Encryption %28deprecrated%29.cs" />
   </ItemGroup>
 
   <ItemGroup>

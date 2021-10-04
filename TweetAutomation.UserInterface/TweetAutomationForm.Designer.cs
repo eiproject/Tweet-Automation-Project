@@ -72,9 +72,12 @@ namespace TweetAutomation.UserInterface
       this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.Restore = new System.Windows.Forms.ToolStripMenuItem();
       this.Exit = new System.Windows.Forms.ToolStripMenuItem();
+      this.pictureBox1 = new System.Windows.Forms.PictureBox();
+      this.TweetImage = new System.Windows.Forms.Button();
       this.main_menu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.TrayContextMenu.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
       // 
       // main_menu
@@ -120,24 +123,24 @@ namespace TweetAutomation.UserInterface
       // 
       // ConsumerKey
       // 
-      this.ConsumerKey.Location = new System.Drawing.Point(604, 56);
+      this.ConsumerKey.Location = new System.Drawing.Point(692, 61);
       this.ConsumerKey.Name = "ConsumerKey";
       this.ConsumerKey.PlaceholderText = "Consumer Key";
-      this.ConsumerKey.Size = new System.Drawing.Size(302, 23);
+      this.ConsumerKey.Size = new System.Drawing.Size(215, 23);
       this.ConsumerKey.TabIndex = 1;
       // 
       // ConsumerSecret
       // 
-      this.ConsumerSecret.Location = new System.Drawing.Point(604, 86);
+      this.ConsumerSecret.Location = new System.Drawing.Point(692, 91);
       this.ConsumerSecret.Name = "ConsumerSecret";
       this.ConsumerSecret.PlaceholderText = "Consumer Secret";
-      this.ConsumerSecret.Size = new System.Drawing.Size(302, 23);
+      this.ConsumerSecret.Size = new System.Drawing.Size(215, 23);
       this.ConsumerSecret.TabIndex = 2;
       // 
       // CredentialLabel
       // 
       this.CredentialLabel.AutoSize = true;
-      this.CredentialLabel.Location = new System.Drawing.Point(603, 38);
+      this.CredentialLabel.Location = new System.Drawing.Point(691, 43);
       this.CredentialLabel.Name = "CredentialLabel";
       this.CredentialLabel.Size = new System.Drawing.Size(147, 15);
       this.CredentialLabel.TabIndex = 3;
@@ -146,7 +149,7 @@ namespace TweetAutomation.UserInterface
       // SaveButton
       // 
       this.SaveButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.SaveButton.Location = new System.Drawing.Point(603, 174);
+      this.SaveButton.Location = new System.Drawing.Point(691, 179);
       this.SaveButton.Name = "SaveButton";
       this.SaveButton.Size = new System.Drawing.Size(75, 23);
       this.SaveButton.TabIndex = 4;
@@ -157,7 +160,7 @@ namespace TweetAutomation.UserInterface
       // ClearButton
       // 
       this.ClearButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.ClearButton.Location = new System.Drawing.Point(684, 174);
+      this.ClearButton.Location = new System.Drawing.Point(772, 179);
       this.ClearButton.Name = "ClearButton";
       this.ClearButton.Size = new System.Drawing.Size(75, 23);
       this.ClearButton.TabIndex = 5;
@@ -167,34 +170,34 @@ namespace TweetAutomation.UserInterface
       // 
       // AccessTokenSecret
       // 
-      this.AccessTokenSecret.Location = new System.Drawing.Point(604, 145);
+      this.AccessTokenSecret.Location = new System.Drawing.Point(692, 150);
       this.AccessTokenSecret.Name = "AccessTokenSecret";
       this.AccessTokenSecret.PlaceholderText = "Access Token Secret";
-      this.AccessTokenSecret.Size = new System.Drawing.Size(302, 23);
+      this.AccessTokenSecret.Size = new System.Drawing.Size(215, 23);
       this.AccessTokenSecret.TabIndex = 7;
       // 
       // AccessTokenKey
       // 
-      this.AccessTokenKey.Location = new System.Drawing.Point(604, 115);
+      this.AccessTokenKey.Location = new System.Drawing.Point(692, 120);
       this.AccessTokenKey.Name = "AccessTokenKey";
       this.AccessTokenKey.PlaceholderText = "Access Token Key";
-      this.AccessTokenKey.Size = new System.Drawing.Size(302, 23);
+      this.AccessTokenKey.Size = new System.Drawing.Size(215, 23);
       this.AccessTokenKey.TabIndex = 6;
       // 
       // TweetText
       // 
-      this.TweetText.Location = new System.Drawing.Point(18, 56);
+      this.TweetText.Location = new System.Drawing.Point(209, 60);
       this.TweetText.MaxLength = 250;
       this.TweetText.Multiline = true;
       this.TweetText.Name = "TweetText";
       this.TweetText.PlaceholderText = "Enter your tweet here...";
-      this.TweetText.Size = new System.Drawing.Size(399, 112);
+      this.TweetText.Size = new System.Drawing.Size(295, 112);
       this.TweetText.TabIndex = 8;
       // 
       // TweetLabel
       // 
       this.TweetLabel.AutoSize = true;
-      this.TweetLabel.Location = new System.Drawing.Point(18, 38);
+      this.TweetLabel.Location = new System.Drawing.Point(209, 42);
       this.TweetLabel.Name = "TweetLabel";
       this.TweetLabel.Size = new System.Drawing.Size(64, 15);
       this.TweetLabel.TabIndex = 9;
@@ -203,7 +206,7 @@ namespace TweetAutomation.UserInterface
       // SendButton
       // 
       this.SendButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      this.SendButton.Location = new System.Drawing.Point(18, 174);
+      this.SendButton.Location = new System.Drawing.Point(209, 178);
       this.SendButton.Name = "SendButton";
       this.SendButton.Size = new System.Drawing.Size(75, 23);
       this.SendButton.TabIndex = 10;
@@ -320,7 +323,7 @@ namespace TweetAutomation.UserInterface
       // 
       // DatePicker
       // 
-      this.DatePicker.Location = new System.Drawing.Point(422, 73);
+      this.DatePicker.Location = new System.Drawing.Point(510, 78);
       this.DatePicker.MinDate = new System.DateTime(2021, 9, 15, 0, 0, 0, 0);
       this.DatePicker.Name = "DatePicker";
       this.DatePicker.Size = new System.Drawing.Size(174, 23);
@@ -330,7 +333,7 @@ namespace TweetAutomation.UserInterface
       // TimePicker
       // 
       this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-      this.TimePicker.Location = new System.Drawing.Point(422, 121);
+      this.TimePicker.Location = new System.Drawing.Point(510, 126);
       this.TimePicker.Name = "TimePicker";
       this.TimePicker.ShowUpDown = true;
       this.TimePicker.Size = new System.Drawing.Size(174, 23);
@@ -340,7 +343,7 @@ namespace TweetAutomation.UserInterface
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(423, 55);
+      this.label1.Location = new System.Drawing.Point(511, 60);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(66, 15);
       this.label1.TabIndex = 13;
@@ -349,7 +352,7 @@ namespace TweetAutomation.UserInterface
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(423, 103);
+      this.label2.Location = new System.Drawing.Point(511, 108);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(68, 15);
       this.label2.TabIndex = 14;
@@ -367,7 +370,7 @@ namespace TweetAutomation.UserInterface
       // SendImmediatelyCheckBox
       // 
       this.SendImmediatelyCheckBox.AutoSize = true;
-      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(422, 152);
+      this.SendImmediatelyCheckBox.Location = new System.Drawing.Point(510, 157);
       this.SendImmediatelyCheckBox.Name = "SendImmediatelyCheckBox";
       this.SendImmediatelyCheckBox.Size = new System.Drawing.Size(121, 19);
       this.SendImmediatelyCheckBox.TabIndex = 18;
@@ -386,27 +389,48 @@ namespace TweetAutomation.UserInterface
             this.Restore,
             this.Exit});
       this.TrayContextMenu.Name = "contextMenuStrip1";
-      this.TrayContextMenu.Size = new System.Drawing.Size(181, 70);
+      this.TrayContextMenu.Size = new System.Drawing.Size(114, 48);
       // 
       // Restore
       // 
       this.Restore.Name = "Restore";
-      this.Restore.Size = new System.Drawing.Size(180, 22);
+      this.Restore.Size = new System.Drawing.Size(113, 22);
       this.Restore.Text = "Restore";
       this.Restore.Click += new System.EventHandler(this.TrayContextRestore);
       // 
       // Exit
       // 
       this.Exit.Name = "Exit";
-      this.Exit.Size = new System.Drawing.Size(180, 22);
+      this.Exit.Size = new System.Drawing.Size(113, 22);
       this.Exit.Text = "Exit";
       this.Exit.Click += new System.EventHandler(this.TrayContextExit);
+      // 
+      // pictureBox1
+      // 
+      this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
+      this.pictureBox1.Location = new System.Drawing.Point(18, 60);
+      this.pictureBox1.Name = "pictureBox1";
+      this.pictureBox1.Size = new System.Drawing.Size(185, 113);
+      this.pictureBox1.TabIndex = 19;
+      this.pictureBox1.TabStop = false;
+      // 
+      // TweetImage
+      // 
+      this.TweetImage.BackColor = System.Drawing.SystemColors.ButtonFace;
+      this.TweetImage.Location = new System.Drawing.Point(18, 178);
+      this.TweetImage.Name = "TweetImage";
+      this.TweetImage.Size = new System.Drawing.Size(185, 23);
+      this.TweetImage.TabIndex = 20;
+      this.TweetImage.Text = "Choose image";
+      this.TweetImage.UseVisualStyleBackColor = false;
       // 
       // TweetAutomationFrom
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(922, 512);
+      this.Controls.Add(this.TweetImage);
+      this.Controls.Add(this.pictureBox1);
       this.Controls.Add(this.SendImmediatelyCheckBox);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
@@ -436,6 +460,7 @@ namespace TweetAutomation.UserInterface
       this.main_menu.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();
       this.TrayContextMenu.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -482,6 +507,8 @@ namespace TweetAutomation.UserInterface
     private ContextMenuStrip TrayContextMenu;
     private ToolStripMenuItem Restore;
     private ToolStripMenuItem Exit;
+    private PictureBox pictureBox1;
+    private Button TweetImage;
   }
 }
 

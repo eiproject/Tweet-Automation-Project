@@ -5,14 +5,14 @@ using System.Text;
 using TweetAutomation.LoggingSystem.Business;
 using TweetAutomation.UserInterface.Model;
 
-namespace TweetAutomation.UserInterface.Business
+namespace TweetAutomation.UserInterface.BLL
 {
   public class StatusChecker : IStatusChecker
   {
     private LogRepository _logger = LogRepository.LogInstance();
     public StatusChecker() { }
 
-    public void CheckStatus(TweetRecord record)
+    public void CheckStatus(Tweet record)
     {
       if (record.Status != "Success")
       {
@@ -23,7 +23,7 @@ namespace TweetAutomation.UserInterface.Business
       _logger.Update("DEBUG", $"Status ID: {record.ID} is Status: {record.Status}");
     }
 
-    public void CheckStatusOfSendImmediately(TweetRecord record)
+    public void CheckStatusOfSendImmediately(Tweet record)
     {
       if (record.Status != "Success")
       {
@@ -33,7 +33,7 @@ namespace TweetAutomation.UserInterface.Business
       _logger.Update("DEBUG", $"Status ID: {record.ID} is Status: {record.Status}");
     }
 
-    public void ChangeStatusByResponse(TweetRecord record, HttpStatusCode response)
+    public void ChangeStatusByResponse(Tweet record, HttpStatusCode response)
     {
       if (response == HttpStatusCode.OK)
       {
@@ -65,23 +65,23 @@ namespace TweetAutomation.UserInterface.Business
       }
     }
 
-    private void SetDefault(TweetRecord record)
+    private void SetDefault(Tweet record)
     {
       record.Status = "On Queue";
     }
 
-    private void SetDefaultSendImmediately(TweetRecord record)
+    private void SetDefaultSendImmediately(Tweet record)
     {
       record.Status = "Starting";
     }
 
-    private void CheckNull(TweetRecord record)
+    private void CheckNull(Tweet record)
     {
-      string tweet = record.Tweet;
+      string tweet = record.FullText;
       if (tweet == null || tweet == "" || tweet == " ") record.Status = "Tweet Null";
     }
 
-    private void CheckTimeError(TweetRecord record)
+    private void CheckTimeError(Tweet record)
     {
       int dateDifference = (record.DateObject - DateTime.Now).Days;
       double timeDifference = (record.TimeObject - DateTime.Now).TotalMinutes;

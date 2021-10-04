@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TweetAutomation.LoggingSystem.Business
 {
-  public class LogRepository
+  public class LogRepository : ILogRepository
   {
     private const string _loggerFileName = "TweetAutomation.log";
     private static object _locker = new object(); // threadsafe

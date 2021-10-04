@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.UserInterface.Database;
 using TweetAutomation.UserInterface.Model;
 
-namespace TweetAutomation.UserInterface.Local
+namespace TweetAutomation.UserInterface.DataAccessLocal
 {
   public class RecordSaverBinary : ISaverBinary
   {
@@ -27,28 +29,6 @@ namespace TweetAutomation.UserInterface.Local
         }
     }
 
-    public object Read<T>()
-    {
-      lock (_readLoker)
-      {
-        TweetRecords readResult = new TweetRecords();
-        try
-        {
-          using (Stream stream = File.Open(_filePath, FileMode.Open))
-          {
-            var binaryFormatter = new BinaryFormatter();
-            if (stream.Length != 0) readResult = (TweetRecords)binaryFormatter.Deserialize(stream);
-          }
-        }
-        catch (SerializationException error)
-        {
-          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
-          ForceCreateNewBinary();
-        }
-        return readResult;
-      }
-    }
-
     private void ForceCreateNewBinary()
     {
       using (File.Create(_filePath))
@@ -57,21 +37,50 @@ namespace TweetAutomation.UserInterface.Local
       }
     }
 
-    public void UpdateBinary<T>(T objectToWrite)
+    public object Read<T>()
+    {
+      lock (_readLoker)
+      {
+        Tweets db = null;
+        try
+        {
+          using (Stream stream = File.Open(_filePath, FileMode.Open))
+          {
+            var binaryFormatter = new BinaryFormatter();
+            if (stream.Length != 0) db = (Tweets)binaryFormatter.Deserialize(stream);
+          }
+        }
+        catch (SerializationException error)
+        {
+          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
+          ForceCreateNewBinary();
+        }
+        return db;
+      }
+    }
+
+    public void UpdateBinary<T>(T db)
     {
       lock (_updateLoker)
       {
         using (Stream stream = File.Open(_filePath, FileMode.Create))
         {
           var binaryFormatter = new BinaryFormatter();
-          binaryFormatter.Serialize(stream, objectToWrite);
+          try
+          {
+            binaryFormatter.Serialize(stream, db);
+          }
+          catch (SerializationException error)
+          {
+            _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
+          }
         }
       }
     }
 
-    public void Delete()
+    public void DeleteBinaryFile()
     {
-
+      throw new NotImplementedException();
     }
   }
 }

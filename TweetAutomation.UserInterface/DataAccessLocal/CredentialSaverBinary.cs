@@ -1,11 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TweetAutomation.LoggingSystem.Business;
-using TweetAutomation.TwitterAPIHandler.Model;
 using TweetAutomation.UserInterface.Model;
 
-namespace TweetAutomation.UserInterface.Local
+namespace TweetAutomation.UserInterface.DataAccessLocal
 {
   public class CredentialSaverBinary : ISaverBinary
   {
@@ -32,25 +32,30 @@ namespace TweetAutomation.UserInterface.Local
     {
       lock (_readLoker)
       {
-        Credentials readResult = new Credentials();
+        Credentials readResult = null;
         try
         {
           using (Stream stream = File.Open(_filePath, FileMode.Open))
           {
             var binaryFormatter = new BinaryFormatter();
-            if (stream.Length != 0) readResult = (Credentials)binaryFormatter.Deserialize(stream);
+            if (stream.Length != 0)
+              readResult = (Credentials)binaryFormatter.Deserialize(stream);
           }
         }
         catch (SerializationException error)
         {
           _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
-          ForceCreateNewBinary();
         }
+        catch (InvalidCastException error)
+        {
+          _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
+        }
+        if (readResult == null) CreateNewBinary();
         return readResult;
       }
     }
 
-    private void ForceCreateNewBinary()
+    private void CreateNewBinary()
     {
       using (File.Create(_filePath))
       {
@@ -70,7 +75,7 @@ namespace TweetAutomation.UserInterface.Local
       }
     }
 
-    public void Delete()
+    public void DeleteBinaryFile()
     {
       if (File.Exists(_filePath))
         File.Delete(_filePath);
