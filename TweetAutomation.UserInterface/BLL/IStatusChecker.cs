@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using TweetAutomation.UserInterface.Model;
 
-namespace TweetAutomation.UserInterface.BLL
+namespace TweetAutomation.UserInterface.BusinessLogic
 {
   public interface IStatusChecker
   {

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UnitTesting.Example

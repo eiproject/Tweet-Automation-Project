@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.TwitterAPIHandler.Business;
-using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.DataAccessOnline

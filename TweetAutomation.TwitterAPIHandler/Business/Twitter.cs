@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.TwitterAPIHandler.Model;
 
 namespace TweetAutomation.TwitterAPIHandler.Business

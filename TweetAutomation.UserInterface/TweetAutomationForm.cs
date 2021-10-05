@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TweetAutomation.LoggingSystem.Business;
-using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.LoggingSystem.BusinessLogic;
+using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.DataAccessLocal;
 using TweetAutomation.UserInterface.DataAccessOnline;
 using TweetAutomation.UserInterface.Database;
@@ -142,6 +143,16 @@ namespace TweetAutomation.UserInterface
         }
       }
     }
+
+    private void ChooseImageButtonClick(object sender, EventArgs e)
+    {
+      ChooseImage();
+    }
+
+    private void ImageBoxClick(object sender, EventArgs e)
+    {
+      ChooseImage();
+    }
     #endregion
 
     #region Credential
@@ -201,6 +212,18 @@ namespace TweetAutomation.UserInterface
       });
     }
 
+    private void ChooseImage()
+    {
+      OpenFileDialog open = new OpenFileDialog();
+      open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+      if (open.ShowDialog() == DialogResult.OK)
+      {
+        TweetImageBox.Image = new Bitmap(open.FileName);
+        TweetImageBox.BackColor = Color.WhiteSmoke;
+        loggerText.Invoke(new Action(() => loggerText.Text = open.FileName));
+      }
+    }
+
     #endregion
 
     #region Data Grid
@@ -247,7 +270,7 @@ namespace TweetAutomation.UserInterface
       {
         if (TweetDataGrid.Rows[i].Cells[0].Value.ToString() == record.ID.ToString())
         {
-          TweetDataGrid.Rows[i].Cells[4].Value = record.Status;
+          TweetDataGrid.Rows[i].Cells[4].Value = record.Status.ToString().Replace('_', ' ');
           return;
         }
       }

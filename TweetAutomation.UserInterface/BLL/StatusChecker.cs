@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
-using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
-namespace TweetAutomation.UserInterface.BLL
+namespace TweetAutomation.UserInterface.BusinessLogic
 {
 
   public class StatusChecker : IStatusChecker

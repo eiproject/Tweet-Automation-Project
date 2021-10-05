@@ -72,12 +72,12 @@ namespace TweetAutomation.UserInterface
       this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.Restore = new System.Windows.Forms.ToolStripMenuItem();
       this.Exit = new System.Windows.Forms.ToolStripMenuItem();
-      this.pictureBox1 = new System.Windows.Forms.PictureBox();
+      this.TweetImageBox = new System.Windows.Forms.PictureBox();
       this.TweetImage = new System.Windows.Forms.Button();
       this.main_menu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).BeginInit();
       this.TrayContextMenu.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweetImageBox)).BeginInit();
       this.SuspendLayout();
       // 
       // main_menu
@@ -409,14 +409,17 @@ namespace TweetAutomation.UserInterface
       this.Exit.Text = "Exit";
       this.Exit.Click += new System.EventHandler(this.TrayContextExit);
       // 
-      // pictureBox1
+      // TweetImageBox
       // 
-      this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-      this.pictureBox1.Location = new System.Drawing.Point(18, 60);
-      this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(185, 113);
-      this.pictureBox1.TabIndex = 19;
-      this.pictureBox1.TabStop = false;
+      this.TweetImageBox.BackColor = System.Drawing.SystemColors.ControlDark;
+      this.TweetImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.TweetImageBox.Location = new System.Drawing.Point(18, 60);
+      this.TweetImageBox.Name = "TweetImageBox";
+      this.TweetImageBox.Size = new System.Drawing.Size(185, 113);
+      this.TweetImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      this.TweetImageBox.TabIndex = 19;
+      this.TweetImageBox.TabStop = false;
+      this.TweetImageBox.Click += new System.EventHandler(this.ImageBoxClick);
       // 
       // TweetImage
       // 
@@ -427,6 +430,7 @@ namespace TweetAutomation.UserInterface
       this.TweetImage.TabIndex = 20;
       this.TweetImage.Text = "Choose image";
       this.TweetImage.UseVisualStyleBackColor = false;
+      this.TweetImage.Click += new System.EventHandler(this.ChooseImageButtonClick);
       // 
       // TweetAutomationFrom
       // 
@@ -434,7 +438,7 @@ namespace TweetAutomation.UserInterface
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(922, 512);
       this.Controls.Add(this.TweetImage);
-      this.Controls.Add(this.pictureBox1);
+      this.Controls.Add(this.TweetImageBox);
       this.Controls.Add(this.SendImmediatelyCheckBox);
       this.Controls.Add(this.loggerText);
       this.Controls.Add(this.label2);
@@ -464,7 +468,7 @@ namespace TweetAutomation.UserInterface
       this.main_menu.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();
       this.TrayContextMenu.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweetImageBox)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -511,7 +515,7 @@ namespace TweetAutomation.UserInterface
     private ContextMenuStrip TrayContextMenu;
     private ToolStripMenuItem Restore;
     private ToolStripMenuItem Exit;
-    private PictureBox pictureBox1;
+    private PictureBox TweetImageBox;
     private Button TweetImage;
   }
 }

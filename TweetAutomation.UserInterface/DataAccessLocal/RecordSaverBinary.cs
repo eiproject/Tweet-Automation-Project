@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.UserInterface.Database;
 
 namespace TweetAutomation.UserInterface.DataAccessLocal
