@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using TweetAutomation.UserInterface.Database;
 using TweetAutomation.UserInterface.Factory;
 using TweetAutomation.UserInterface.Model;
 
@@ -13,16 +14,16 @@ namespace UnitTesting
     [SetUp]
     public void Setup()
     {
-      _factory = new TweetRecordFactory(new TweetRecords());
+      _factory = new TweetRecordFactory(Tweets.GetInstance());
     }
 
     [Test]
     [TestCaseSource("TestCaseSourceData")]
     public void CreateRecord_ShouldBeCreated(string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = _factory.Create(tweet, date, time);
+      Tweet record = _factory.Create(tweet, date, time);
       Assert.AreEqual(record.ID, 0);
-      Assert.AreEqual(record.Tweet, tweet);
+      Assert.AreEqual(record.FullText, tweet);
       Assert.AreEqual(record.DateObject, date);
       Assert.AreEqual(record.DateString, "09/20/2021");
       Assert.AreEqual(record.TimeObject, time);

@@ -1,57 +1,90 @@
 ﻿using System;
-using System.Net;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TweetAutomation.LoggingSystem.Business;
-using TweetAutomation.TwitterAPIHandler.Business;
-using TweetAutomation.TwitterAPIHandler.Model;
-using TweetAutomation.UserInterface.Business;
+using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.DataAccessLocal;
+using TweetAutomation.UserInterface.DataAccessOnline;
+using TweetAutomation.UserInterface.Database;
 using TweetAutomation.UserInterface.Factory;
-using TweetAutomation.UserInterface.Local;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface
 {
   public partial class TweetAutomationFrom : Form
   {
-    private const string _tweetRecordsBinaryFilepath = "TweetRecords.bin";
+    private const string _tweetRecordsBinaryFilepath = "Tweets.bin";
     private const string _credentialsBinaryFilepath = "Credentials.bin";
-    private ITweetRecords _records;
-    private ITweetRecordFactory _factory;
+    private ILogRepository _logger = LogRepository.LogInstance();
+    private ITweetsRepository _tweetsRepository;
+    private ITweetRecordFactory _tweetFactory;
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
     private IStatusChecker _statusChecker;
-    private Credentials _credentials;
-    private LogRepository _logger = LogRepository.LogInstance();
+    private CredentialsAdapter _adapter;
+    private Tweets _dbInstance;
+    private TwitterAPIAccess _api;
 
     public TweetAutomationFrom()
     {
-      InitializeComponent();
       _logger.Update("DEBUG", "New Tweet Automation instance called.");
+      InitializeComponent();
 
-      _records = new TweetRecords();
-      _factory = new TweetRecordFactory(_records);
+      _statusChecker = new StatusChecker();
+      _adapter = new CredentialsAdapter();
+      _api = new TwitterAPIAccess(_statusChecker, _adapter);
+
+      InitializeDatabase();
+      InitializeCustomProperties();
+
+      _tweetsRepository = new TweetsRepository(_dbInstance);
+      _tweetFactory = new TweetRecordFactory(_dbInstance);
+    }
+
+    private void InitializeDatabase()
+    {
       _tweetRecordsSaver = new RecordSaverBinary(_tweetRecordsBinaryFilepath);
       _credentialSaver = new CredentialSaverBinary(_credentialsBinaryFilepath);
-      _statusChecker = new StatusChecker();
-      _credentials = new Credentials();
-
       _tweetRecordsSaver.CreateFileIfNotExist();
-      _records.Update((TweetRecords)_tweetRecordsSaver.Read<TweetRecords>());
-      UpdateDataGridWithSavedBinary(_records);
-
       _credentialSaver.CreateFileIfNotExist();
+      LoadDatabaseInstane();
+      UpdateDataGridWithSavedBinary();
       UpdateCredentialsWithSavedBinary();
+    }
+
+    private void InitializeCustomProperties()
+    {
       TweetDataGrid.AutoGenerateColumns = false;
+
       DatePicker.Value = DateTime.Today;
       DatePicker.MinDate = DateTime.Today;
       TimePicker.Value = DateTime.Now;
+
+      ConsumerKey.GotFocus += ChangeToNoAsterisk;
+      ConsumerKey.LostFocus += ChangeToAsterisk;
+      ConsumerSecret.GotFocus += ChangeToNoAsterisk;
+      ConsumerSecret.LostFocus += ChangeToAsterisk;
+      AccessTokenKey.GotFocus += ChangeToNoAsterisk;
+      AccessTokenKey.LostFocus += ChangeToAsterisk;
+      AccessTokenSecret.GotFocus += ChangeToNoAsterisk;
+      AccessTokenSecret.LostFocus += ChangeToAsterisk;
+
+      // Custom event args
+      this.Closing += minimizeToTray;
+      tweet_automation_notify.MouseClick += restoreWindow;
 
 #if DEBUG
       loggerText.Visible = true;
 #else
       loggerText.Visible = false;
 #endif
+    }
+
+    private void LoadDatabaseInstane()
+    {
+      _dbInstance = (Tweets)_tweetRecordsSaver.Read<Tweets>();
+      if (_dbInstance == null) _dbInstance = Tweets.GetInstance();
     }
 
     #region All Button Click Event
@@ -70,32 +103,24 @@ namespace TweetAutomation.UserInterface
 
     private void ButtonSave(object sender, EventArgs e)
     {
-      _logger.Update("ACCESS", "Saving credential.");
-      UpdateCredentials();
-      SaveCredentialToBinaryFile();
+      SaveCredentialToBinary();
     }
 
     private void ButtonClear(object sender, EventArgs e)
     {
-      _logger.Update("ACCESS", "Clearing credential.");
-      ClearTwitterAPICredentialForm();
-      UpdateCredentials();
-      _credentialSaver.Delete();
+      CredentialsFieldClear();
+      _credentialSaver.DeleteBinaryFile();
     }
 
     private void ButtonSend(object sender, EventArgs e)
     {
-      _logger.Update("ACCESS", "Sending Tweet.");
-      UpdateCredentials();
-      SaveCredentialToBinaryFile();
-      if (SendImmediatelyCheckBox.Checked == true)
-      {
-        SendRequestImmediately();
-      }
-      else
-      {
-        PlaceRequestOnQueue();
-      }
+      Tweet tweet = GetTweet();
+      SaveCredentialToBinary();
+      Sendtweet(tweet);
+
+      // _statusChecker.CheckStatus(tweet);
+      UpdateDataGridRecord(tweet);
+      TweetText.Clear();
     }
 
     private void DeleteButton(object sender, DataGridViewCellEventArgs e)
@@ -111,8 +136,8 @@ namespace TweetAutomation.UserInterface
           MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
         {
           int recordID = int.Parse(TweetDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
-          _records.Delete(recordID);
-          _tweetRecordsSaver.UpdateBinary(_records);
+          _tweetsRepository.Delete(recordID);
+          _tweetRecordsSaver.UpdateBinary(_dbInstance);
           TweetDataGrid.Rows.Remove(TweetDataGrid.CurrentRow);
         }
       }
@@ -120,35 +145,34 @@ namespace TweetAutomation.UserInterface
     #endregion
 
     #region Credential
+    private Credentials GetCredentials()
+    {
+      return new Credentials()
+      {
+        ConsumerKey = ConsumerKey.Text,
+        ConsumerSecret = ConsumerSecret.Text,
+        AccessTokenKey = AccessTokenKey.Text,
+        AccessTokenSecret = AccessTokenSecret.Text
+      };
+    }
     private void UpdateCredentialsWithSavedBinary()
     {
       _logger.Update("DEBUG", "Updating credential with saved bin.");
-      _credentials = (Credentials)_credentialSaver.Read<Credentials>();
-      if (_credentials != null)
-      {
-        ConsumerKey.Text = _credentials.ConsumerKey;
-        ConsumerSecret.Text = _credentials.ConsumerSecret;
-        AccessTokenKey.Text = _credentials.AccessTokenKey;
-        AccessTokenSecret.Text = _credentials.AccessTokenSecret;
-      }
+      Credentials loadedCredentials = (Credentials)_credentialSaver.Read<TwitterAPIHandler.Model.Credentials>();
+      if (loadedCredentials == null) loadedCredentials = new Credentials();
+      ConsumerKey.Text = loadedCredentials.ConsumerKey;
+      ConsumerSecret.Text = loadedCredentials.ConsumerSecret;
+      AccessTokenKey.Text = loadedCredentials.AccessTokenKey;
+      AccessTokenSecret.Text = loadedCredentials.AccessTokenSecret;
     }
 
-    private void SaveCredentialToBinaryFile()
+    private void SaveCredentialToBinary()
     {
       _logger.Update("DEBUG", "Saving credential to bin.");
-      _credentialSaver.UpdateBinary(_credentials);
+      _credentialSaver.UpdateBinary(GetCredentials());
     }
 
-    private void UpdateCredentials()
-    {
-      _logger.Update("DEBUG", "Updating credential object.");
-      _credentials.ConsumerKey = ConsumerKey.Text;
-      _credentials.ConsumerSecret = ConsumerSecret.Text;
-      _credentials.AccessTokenKey = AccessTokenKey.Text;
-      _credentials.AccessTokenSecret = AccessTokenSecret.Text;
-    }
-
-    private void ClearTwitterAPICredentialForm()
+    private void CredentialsFieldClear()
     {
       _logger.Update("DEBUG", "Clear credential form.");
       ConsumerKey.Clear();
@@ -160,122 +184,62 @@ namespace TweetAutomation.UserInterface
     #endregion
 
     #region Tweet Command
-    private void PlaceRequestOnQueue()
+    private Tweet GetTweet()
     {
-      _logger.Update("ACCESS", "Queueing Tweet.");
-      TweetRecord record =
-        _factory.Create(TweetText.Text, DatePicker.Value, TimePicker.Value);
-
-      _statusChecker.CheckStatus(record);
-      UpdateDataGridRecord(record);
-      SetUpTimerAndSendTweet(record);
-      TweetText.Clear();
+      return _tweetFactory.Create(
+        TweetText.Text, DatePicker.Value, TimePicker.Value,
+        SendImmediatelyCheckBox.Checked);
     }
 
-    private void SendRequestImmediately()
+    private void Sendtweet(Tweet tweet)
     {
-      _logger.Update("ACCESS", "Sending Tweet immediately.");
-      ITwitter twtAPI = new Twitter(_credentials);
-
-      TweetRecord record =
-        _factory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
-      _statusChecker.CheckStatusOfSendImmediately(record);
-      UpdateDataGridRecord(record);
-
-      if (record.Status != "Starting") return;
-
+      _logger.Update("ACCESS", "Sending Tweet.");
       Task.Factory.StartNew(async () =>
       {
-        try
-        {
-          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-          _statusChecker.ChangeStatusByResponse(record, response);
-          UpdateRecords(record);
-        }
-        catch (Exception e)
-        {
-          _logger.Update("ERROR", e.Message);
-        }
+        Tweet response = await _api.SendTweet(GetCredentials(), tweet);
+        UpdateRecords(response);
       });
     }
-
-    private void SetUpTimerAndSendTweet(TweetRecord record)
-    {
-      try
-      {
-        _logger.Update("DEBUG", $"Setup timer and sending Tweet. ID: {record.ID}");
-        ITwitter twtAPI = new Twitter(_credentials);
-
-        System.Threading.Timer timer;
-        TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
-        if (timeToGo < TimeSpan.Zero) return;
-
-        timer = new System.Threading.Timer(async x =>
-        {
-          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-          loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-          _statusChecker.ChangeStatusByResponse(record, response);
-          UpdateRecords(record);
-        }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
-      }
-      catch (ArgumentOutOfRangeException e)
-      {
-        _statusChecker.ChangeStatusByResponse(record, HttpStatusCode.Forbidden);
-        UpdateRecords(record);
-        _logger.Update("ERROR", $"Timer out of range. ID: {record.ID}");
-      }
-    }
-
-    private async Task<HttpStatusCode> SendTweetAsync(
-      ITwitter twitterAPI, TweetRecord record)
-    {
-      _logger.Update("DEBUG", $"Calling Twitter API. ID: {record.ID}");
-      HttpStatusCode response = await twitterAPI.Tweet(record.Tweet);
-      loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-
-      return response;
-    }
-
 
     #endregion
 
     #region Data Grid
-    private void UpdateDataGridWithSavedBinary(ITweetRecords records)
+    private void UpdateDataGridWithSavedBinary()
     {
       _logger.Update("DEBUG", "Updating DataGrid with saved binary.");
-      foreach (TweetRecord record in records.Records)
+      foreach (Tweet tweet in _dbInstance.Records)
       {
-        _statusChecker.CheckStatus(record);
-        InsertRecordToDataGrid(record);
-        SetUpTimerAndSendTweet(record);
+        _statusChecker.CheckStatus(tweet);
+        Sendtweet(tweet);
+        InsertRecordToDataGrid(tweet);
       }
     }
 
-    private void UpdateDataGridRecord(TweetRecord record)
+    private void UpdateDataGridRecord(Tweet record)
     {
       _logger.Update("DEBUG", $"Updating DataGrid with new record. ID: {record.ID}");
-      _records.Add(record);
-      _tweetRecordsSaver.UpdateBinary(_records);
+      _tweetsRepository.Append(record);
+      _tweetRecordsSaver.UpdateBinary(_dbInstance);
 
       InsertRecordToDataGrid(record);
     }
 
 
-    private void InsertRecordToDataGrid(TweetRecord record)
+    private void InsertRecordToDataGrid(Tweet record)
     {
       _logger.Update("DEBUG", $"Insert record on DataGrid. ID: {record.ID}");
       TweetDataGrid.Rows.Insert(0,
-        record.ID, record.Tweet, record.DateString,
+        record.ID, record.FullText, record.DateString,
         record.TimeString, record.Status, "Delete");
     }
 
-    private void UpdateRecords(TweetRecord record)
+    internal void UpdateRecords(Tweet record)
     {
       UpdateStatusOnDataGrid(record);
-      _tweetRecordsSaver.UpdateBinary(_records);
+      _tweetRecordsSaver.UpdateBinary(_dbInstance);
     }
 
-    private void UpdateStatusOnDataGrid(TweetRecord record)
+    private void UpdateStatusOnDataGrid(Tweet record)
     {
       _logger.Update("DEBUG", $"Updating status on DataGrid. ID: {record.ID}");
       int rowCount = TweetDataGrid.Rows.Count;
@@ -288,7 +252,45 @@ namespace TweetAutomation.UserInterface
         }
       }
     }
+    #endregion
 
+    #region Tray Icon Control
+    private void TrayContextRestore(object sender, EventArgs e)
+    {
+      tweet_automation_notify.Visible = false;
+      this.Show();
+    }
+
+    private void TrayContextExit(object sender, EventArgs e)
+    {
+      this.Close();
+    }
+
+    void minimizeToTray(object sender, CancelEventArgs e)
+    {
+      e.Cancel = true;
+      tweet_automation_notify.Visible = true;
+      this.Hide();
+    }
+
+    void restoreWindow(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Left)
+      {
+        this.Show();
+        tweet_automation_notify.Visible = false;
+      }
+    }
+
+    private void ChangeToAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '*';
+    }
+
+    private void ChangeToNoAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '\0';
+    }
     #endregion
   }
 }

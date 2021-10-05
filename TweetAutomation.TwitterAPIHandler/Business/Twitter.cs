@@ -34,7 +34,6 @@ namespace TweetAutomation.TwitterAPIHandler.Business
       CreateSigHasher();
     }
 
-
     public Task<HttpStatusCode> Tweet(string text)
     {
       lock (_lockerSendRequest)
@@ -50,6 +49,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
         return SendRequest("statuses/update.json", data);
       }
     }
+
     private void CreateSigHasher()
     {
       _sigHasher = new HMACSHA1(new ASCIIEncoding().GetBytes(

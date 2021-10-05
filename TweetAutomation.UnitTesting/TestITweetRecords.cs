@@ -9,11 +9,11 @@ namespace UnitTesting
 {
   class TestITweetRecords
   {
-    ITweetRecords _tweetRecords;
+    ITweetsRepository _tweetRecords;
     [SetUp]
     public void Setup()
     {
-      _tweetRecords = new TweetRecords();
+      _tweetRecords = new TweetsRepository();
     }
 
     [Test]
@@ -21,9 +21,9 @@ namespace UnitTesting
     public void DoAddRecordToRecords_ShouldBePass(
       int id, string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = new TweetRecord(
+      Tweet record = new Tweet(
         id, tweet, date, time);
-      _tweetRecords.Add(record);
+      _tweetRecords.Append(record);
       Assert.AreEqual(1, _tweetRecords.Records.Count);
     }
 
@@ -32,9 +32,9 @@ namespace UnitTesting
     public void DoDeleteRecordToRecords_ShouldBePass(
       int id, string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = new TweetRecord(
+      Tweet record = new Tweet(
         id, tweet, date, time);
-      _tweetRecords.Add(record);
+      _tweetRecords.Append(record);
       _tweetRecords.Delete(id);
       Assert.AreEqual(0, _tweetRecords.Records.Count);
     }

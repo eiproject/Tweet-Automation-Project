@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using TweetAutomation.UserInterface.Business;
+using TweetAutomation.UserInterface.BLL;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UnitTesting.Example
@@ -20,7 +20,7 @@ namespace TweetAutomation.UnitTesting.Example
     public void CheckStatus_ShouldBeOnQueue(
       int id, string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = new TweetRecord(
+      Tweet record = new Tweet(
         id, tweet, date, time);
       _checker.CheckStatus(record);
       Assert.AreEqual("On Queue", record.Status);
@@ -37,7 +37,7 @@ namespace TweetAutomation.UnitTesting.Example
     public void CheckStatus_ShouldBeTimeError(
       int id, string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = new TweetRecord(
+      Tweet record = new Tweet(
         id, tweet, date, time);
       _checker.CheckStatus(record);
       Assert.AreEqual("Time Error", record.Status);
@@ -54,7 +54,7 @@ namespace TweetAutomation.UnitTesting.Example
     public void CheckStatus_ShouldBeTweetNull(
       int id, string tweet, DateTime date, DateTime time)
     {
-      TweetRecord record = new TweetRecord(
+      Tweet record = new Tweet(
         id, tweet, date, time);
       _checker.CheckStatus(record);
       Assert.AreEqual("Tweet Null", record.Status);
