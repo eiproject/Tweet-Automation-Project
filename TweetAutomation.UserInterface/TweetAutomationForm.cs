@@ -30,7 +30,7 @@ namespace TweetAutomation.UserInterface
     {
       _logger.Update("DEBUG", "New Tweet Automation instance called.");
       InitializeComponent();
-      
+
       _statusChecker = new StatusChecker();
       _adapter = new CredentialsAdapter();
       _api = new TwitterAPIAccess(_statusChecker, _adapter);
@@ -64,11 +64,11 @@ namespace TweetAutomation.UserInterface
       this.Closing += minimizeToTray;
       tweet_automation_notify.MouseClick += restoreWindow;
 
-      #if DEBUG
+#if DEBUG
       loggerText.Visible = true;
-      #else
+#else
       loggerText.Visible = false;
-      #endif
+#endif
     }
 
     private void LoadDatabaseInstane()
@@ -99,7 +99,6 @@ namespace TweetAutomation.UserInterface
     private void ButtonClear(object sender, EventArgs e)
     {
       CredentialsFieldClear();
-      // CredentialsFieldUpdate();
       _credentialSaver.DeleteBinaryFile();
     }
 
@@ -109,9 +108,8 @@ namespace TweetAutomation.UserInterface
       SaveCredentialToBinary();
       Sendtweet(tweet);
 
-      _statusChecker.CheckStatus(tweet);
+      // _statusChecker.CheckStatus(tweet);
       UpdateDataGridRecord(tweet);
-      loggerText.Invoke(new Action(() => loggerText.Text = _dbInstance.Records.Count.ToString()));
       TweetText.Clear();
     }
 
@@ -165,15 +163,6 @@ namespace TweetAutomation.UserInterface
       _credentialSaver.UpdateBinary(GetCredentials());
     }
 
-    /*private void CredentialsFieldUpdate(Credentials credentials)
-    {
-      _logger.Update("DEBUG", "Updating credential object.");
-      credentials.ConsumerKey = ConsumerKey.Text;
-      credentials.ConsumerSecret = ConsumerSecret.Text;
-      credentials.AccessTokenKey = AccessTokenKey.Text;
-      credentials.AccessTokenSecret = AccessTokenSecret.Text;
-    }*/
-
     private void CredentialsFieldClear()
     {
       _logger.Update("DEBUG", "Clear credential form.");
@@ -189,7 +178,7 @@ namespace TweetAutomation.UserInterface
     private Tweet GetTweet()
     {
       return _tweetFactory.Create(
-        TweetText.Text, DateTime.Now, DateTime.Now,
+        TweetText.Text, DatePicker.Value, TimePicker.Value,
         SendImmediatelyCheckBox.Checked);
     }
 
@@ -200,86 +189,9 @@ namespace TweetAutomation.UserInterface
       {
         Tweet response = await _api.SendTweet(GetCredentials(), tweet);
         UpdateRecords(response);
+        loggerText.Invoke(new Action(() => loggerText.Text = "Update: " + response.FullText.ToString()));
       });
     }
-
-    /*private void PlaceRequestOnQueue()
-    {
-      _logger.Update("DEBUG", "Placing Tweet on Queue table.");
-      Tweet record = GetTweet();
-
-      _statusChecker.CheckStatus(record);
-      UpdateDataGridRecord(record);
-
-      // SetUpTimerAndSendTweet(edit this);
-
-      TweetText.Clear();
-    }*/
-
-    /*private void SendRequestImmediately()
-    {
-      _logger.Update("ACCESS", "Sending Tweet immediately.");
-      ITwitter twtAPI = new Twitter(_credentials);
-
-      Tweet record =
-        _tweetFactory.Create(TweetText.Text, DateTime.Now, DateTime.Now);
-      _statusChecker.CheckStatusOfSendImmediately(record);
-      UpdateDataGridRecord(record);
-
-      if (record.Status != "Starting") return;
-
-      Task.Factory.StartNew(async () =>
-      {
-        try
-        {
-          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-          _statusChecker.ChangeStatusByResponse(record, response);
-          UpdateRecords(record);
-        }
-        catch (Exception e)
-        {
-          _logger.Update("ERROR", e.Message);
-        }
-      });
-    }*/
-
-    /*private void SetUpTimerAndSendTweet(Tweet record)
-    {
-      try
-      {
-        _logger.Update("DEBUG", $"Setup timer and sending Tweet. ID: {record.ID}");
-        ITwitter twtAPI = new Twitter(_credentials);
-
-        System.Threading.Timer timer;
-        TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
-        if (timeToGo < TimeSpan.Zero) return;
-
-        timer = new System.Threading.Timer(async x =>
-        {
-          HttpStatusCode response = await SendTweetAsync(twtAPI, record);
-          loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-          _statusChecker.ChangeStatusByResponse(record, response);
-          UpdateRecords(record);
-        }, null, timeToGo, System.Threading.Timeout.InfiniteTimeSpan);
-      }
-      catch (ArgumentOutOfRangeException e)
-      {
-        _statusChecker.ChangeStatusByResponse(record, HttpStatusCode.Forbidden);
-        UpdateRecords(record);
-        _logger.Update("ERROR", $"Timer out of range. ID: {record.ID} : {e}");
-      }
-    }*/
-
-    /*private async Task<HttpStatusCode> SendTweetAsync(
-      ITwitter twitterAPI, Tweet record)
-    {
-      _logger.Update("DEBUG", $"Calling Twitter API. ID: {record.ID}");
-      HttpStatusCode response = await twitterAPI.Tweet(record.FullText);
-      loggerText.Invoke(new Action(() => loggerText.Text = response.ToString()));
-
-      return response;
-    }*/
-
 
     #endregion
 
@@ -292,8 +204,6 @@ namespace TweetAutomation.UserInterface
         _statusChecker.CheckStatus(tweet);
         Sendtweet(tweet);
         InsertRecordToDataGrid(tweet);
-
-        // SetUpTimerAndSendTweet(record);
       }
     }
 
@@ -334,7 +244,6 @@ namespace TweetAutomation.UserInterface
         }
       }
     }
-
     #endregion
 
     #region Tray Icon Control

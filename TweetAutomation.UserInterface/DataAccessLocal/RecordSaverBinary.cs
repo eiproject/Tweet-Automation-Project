@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using TweetAutomation.LoggingSystem.Business;
 using TweetAutomation.UserInterface.Database;
-using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.DataAccessLocal
 {

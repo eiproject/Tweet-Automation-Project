@@ -7,6 +7,7 @@ using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.BLL
 {
+
   public class StatusChecker : IStatusChecker
   {
     private LogRepository _logger = LogRepository.LogInstance();
@@ -14,9 +15,9 @@ namespace TweetAutomation.UserInterface.BLL
 
     public void CheckStatus(Tweet record)
     {
-      if (record.Status != "Success")
+      if (record.IsStatusPermanent != true)
       {
-        SetDefault(record);
+        SetOnQueue(record);
         CheckTimeError(record);
         CheckNull(record);
       }
@@ -25,9 +26,9 @@ namespace TweetAutomation.UserInterface.BLL
 
     public void CheckStatusOfSendImmediately(Tweet record)
     {
-      if (record.Status != "Success")
+      if (record.IsStatusPermanent != true)
       {
-        SetDefaultSendImmediately(record);
+        SetStarting(record);
         CheckNull(record);
       }
       _logger.Update("DEBUG", $"Status ID: {record.ID} is Status: {record.Status}");
@@ -37,55 +38,53 @@ namespace TweetAutomation.UserInterface.BLL
     {
       if (response == HttpStatusCode.OK)
       {
-        record.Status = "Success";
+        record.Status = TweetStatus.Success;
       }
       else if (response == HttpStatusCode.Unauthorized)
       {
-        record.Status = "Credential Error";
+        record.Status = TweetStatus.Credential_Error;
       }
       else if (response == HttpStatusCode.RequestTimeout)
       {
-        record.Status = "Request Timeout";
+        record.Status = TweetStatus.Request_Timeout;
       }
       else if (response == HttpStatusCode.Forbidden)
       {
-        record.Status = "Forbidden";
+        record.Status = TweetStatus.Forbidden;
       }
       else if (response == HttpStatusCode.BadRequest)
       {
-        record.Status = "Bad Request";
-      }
-      else if (response == HttpStatusCode.RequestTimeout)
-      {
-        record.Status = "Timeout";
+        record.Status = TweetStatus.Bad_Request;
       }
       else
       {
-        record.Status = "Unknown Error";
+        record.Status = TweetStatus.Unknown;
       }
+      record.IsStatusPermanent = true;
     }
 
-    private void SetDefault(Tweet record)
+    private void SetOnQueue(Tweet record)
     {
-      record.Status = "On Queue";
+      record.Status = TweetStatus.On_Queue;
     }
 
-    private void SetDefaultSendImmediately(Tweet record)
+    private void SetStarting(Tweet record)
     {
-      record.Status = "Starting";
+      record.Status = TweetStatus.Starting;
     }
 
     private void CheckNull(Tweet record)
     {
       string tweet = record.FullText;
-      if (tweet == null || tweet == "" || tweet == " ") record.Status = "Tweet Null";
+      if (tweet == null || tweet == "" || tweet == " ") record.Status = TweetStatus.Tweet_Null;
+      record.IsStatusPermanent = true;
     }
 
     private void CheckTimeError(Tweet record)
     {
-      int dateDifference = (record.DateObject - DateTime.Now).Days;
-      double timeDifference = (record.TimeObject - DateTime.Now).TotalMinutes;
-      if (dateDifference < 0 || timeDifference < 0) record.Status = "Time Error";
+      TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
+      if (timeToGo.TotalMilliseconds < 0 ) record.Status = TweetStatus.Time_Error;
+      record.IsStatusPermanent = true;
     }
   }
 }

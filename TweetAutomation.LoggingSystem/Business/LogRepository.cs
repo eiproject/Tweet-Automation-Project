@@ -9,7 +9,8 @@ namespace TweetAutomation.LoggingSystem.Business
   public class LogRepository : ILogRepository
   {
     private const string _loggerFileName = "TweetAutomation.log";
-    private static object _locker = new object(); // threadsafe
+    private static object _instanceLocker = new object(); // threadsafe
+    private static object _updateLocker = new object(); // threadsafe
     private static LogRepository _repository;
     private LogRepository()
     {
@@ -20,7 +21,7 @@ namespace TweetAutomation.LoggingSystem.Business
       if (_repository == null)
       {
         // threadsafe
-        lock (_locker)
+        lock (_instanceLocker)
         {
           if (_repository == null)
           {
@@ -46,11 +47,14 @@ namespace TweetAutomation.LoggingSystem.Business
 
     public void Update(string status, string log)
     {
-      string loggerQuery = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ff tt")
-        + " | " + status + " | " + log;
-      using (StreamWriter file = new StreamWriter(_loggerFileName, append: true))
+      lock (_updateLocker)
       {
-        file.WriteLine(loggerQuery);
+        string loggerQuery = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ff tt")
+        + " | " + status + " | " + log;
+        using (StreamWriter file = new StreamWriter(_loggerFileName, append: true))
+        {
+          file.WriteLine(loggerQuery);
+        }
       }
     }
 

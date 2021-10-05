@@ -12,8 +12,9 @@ namespace TweetAutomation.UserInterface.Model
     public DateTime TimeObject { get; set; }
     public string TimeString { get; set; }
     public DateTime DateTimeCombined { get; set; }
-    public string Status { get; set; }
+    public TweetStatus Status { get; set; }
     public bool IsImmediately { get; set; }
+    public bool IsStatusPermanent { get; set; }
 
     public Tweet(
       int id, string tweet, DateTime date, DateTime time, bool isImmediately)
@@ -25,7 +26,7 @@ namespace TweetAutomation.UserInterface.Model
       TimeObject = time;
       TimeString = time.ToString("hh:mm tt");
       DateTimeCombined = date.Date + time.TimeOfDay;
-      Status = null;
+      Status = TweetStatus.Starting;
       IsImmediately = isImmediately;
     }
   }

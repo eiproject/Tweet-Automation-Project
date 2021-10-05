@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TweetAutomation.UserInterface.BLL;
 using TweetAutomation.UserInterface.Database;
 using TweetAutomation.UserInterface.Model;
 
@@ -18,6 +15,11 @@ namespace TweetAutomation.UserInterface.Factory
     public Tweet Create(
       string tweet, DateTime date, DateTime time, bool isImmediately)
     {
+      if (isImmediately)
+      {
+        date = DateTime.Now;
+        time = DateTime.Now;
+      }
       time = date + time.TimeOfDay;
       return new Tweet(GetLastID(), tweet, date, time, isImmediately);
     }

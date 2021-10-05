@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TweetAutomation.LoggingSystem.Business;
@@ -36,7 +34,7 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
       if (record.IsImmediately == true)
       {
         _statusChecker.CheckStatusOfSendImmediately(record);
-        if (record.Status == "Starting")
+        if (record.Status == TweetStatus.Starting)
         {
           HttpStatusCode response = await SendTweetAsync(_api, record);
           _statusChecker.ChangeStatusByResponse(record, response);
@@ -45,15 +43,17 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
       }
       else
       {
+        _statusChecker.CheckStatus(record);
         TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
-        if (timeToGo < TimeSpan.Zero)
+        if (timeToGo > TimeSpan.Zero)
         {
           // Not sure. Maybe causing thread error, test this 
-          Timer timer = new Timer(async x =>
-          {
-            HttpStatusCode response = await SendTweetAsync(_api, record);
-            _statusChecker.ChangeStatusByResponse(record, response);
-          }, null, timeToGo, Timeout.InfiniteTimeSpan);
+          /*Timer timer = new Timer(async x =>
+          {*/
+          Thread.Sleep((int)timeToGo.TotalMilliseconds);
+          HttpStatusCode response = await SendTweetAsync(_api, record);
+          _statusChecker.ChangeStatusByResponse(record, response);
+          // }, null, timeToGo, Timeout.InfiniteTimeSpan);
         }
       }
       return record;
