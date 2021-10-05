@@ -125,6 +125,7 @@ namespace TweetAutomation.UserInterface
       // 
       this.ConsumerKey.Location = new System.Drawing.Point(692, 61);
       this.ConsumerKey.Name = "ConsumerKey";
+      this.ConsumerKey.PasswordChar = '*';
       this.ConsumerKey.PlaceholderText = "Consumer Key";
       this.ConsumerKey.Size = new System.Drawing.Size(215, 23);
       this.ConsumerKey.TabIndex = 1;
@@ -133,6 +134,7 @@ namespace TweetAutomation.UserInterface
       // 
       this.ConsumerSecret.Location = new System.Drawing.Point(692, 91);
       this.ConsumerSecret.Name = "ConsumerSecret";
+      this.ConsumerSecret.PasswordChar = '*';
       this.ConsumerSecret.PlaceholderText = "Consumer Secret";
       this.ConsumerSecret.Size = new System.Drawing.Size(215, 23);
       this.ConsumerSecret.TabIndex = 2;
@@ -172,6 +174,7 @@ namespace TweetAutomation.UserInterface
       // 
       this.AccessTokenSecret.Location = new System.Drawing.Point(692, 150);
       this.AccessTokenSecret.Name = "AccessTokenSecret";
+      this.AccessTokenSecret.PasswordChar = '*';
       this.AccessTokenSecret.PlaceholderText = "Access Token Secret";
       this.AccessTokenSecret.Size = new System.Drawing.Size(215, 23);
       this.AccessTokenSecret.TabIndex = 7;
@@ -180,6 +183,7 @@ namespace TweetAutomation.UserInterface
       // 
       this.AccessTokenKey.Location = new System.Drawing.Point(692, 120);
       this.AccessTokenKey.Name = "AccessTokenKey";
+      this.AccessTokenKey.PasswordChar = '*';
       this.AccessTokenKey.PlaceholderText = "Access Token Key";
       this.AccessTokenKey.Size = new System.Drawing.Size(215, 23);
       this.AccessTokenKey.TabIndex = 6;

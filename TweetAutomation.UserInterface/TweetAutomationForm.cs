@@ -56,9 +56,19 @@ namespace TweetAutomation.UserInterface
     private void InitializeCustomProperties()
     {
       TweetDataGrid.AutoGenerateColumns = false;
+
       DatePicker.Value = DateTime.Today;
       DatePicker.MinDate = DateTime.Today;
       TimePicker.Value = DateTime.Now;
+
+      ConsumerKey.GotFocus += ChangeToNoAsterisk;
+      ConsumerKey.LostFocus += ChangeToAsterisk;
+      ConsumerSecret.GotFocus += ChangeToNoAsterisk;
+      ConsumerSecret.LostFocus += ChangeToAsterisk;
+      AccessTokenKey.GotFocus += ChangeToNoAsterisk;
+      AccessTokenKey.LostFocus += ChangeToAsterisk;
+      AccessTokenSecret.GotFocus += ChangeToNoAsterisk;
+      AccessTokenSecret.LostFocus += ChangeToAsterisk;
 
       // Custom event args
       this.Closing += minimizeToTray;
@@ -135,7 +145,6 @@ namespace TweetAutomation.UserInterface
     #endregion
 
     #region Credential
-
     private Credentials GetCredentials()
     {
       return new Credentials()
@@ -189,7 +198,6 @@ namespace TweetAutomation.UserInterface
       {
         Tweet response = await _api.SendTweet(GetCredentials(), tweet);
         UpdateRecords(response);
-        loggerText.Invoke(new Action(() => loggerText.Text = "Update: " + response.FullText.ToString()));
       });
     }
 
@@ -272,6 +280,16 @@ namespace TweetAutomation.UserInterface
         this.Show();
         tweet_automation_notify.Visible = false;
       }
+    }
+
+    private void ChangeToAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '*';
+    }
+
+    private void ChangeToNoAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '\0';
     }
     #endregion
   }
