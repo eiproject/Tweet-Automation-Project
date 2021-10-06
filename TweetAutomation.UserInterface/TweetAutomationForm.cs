@@ -26,7 +26,6 @@ namespace TweetAutomation.UserInterface
     private CredentialsAdapter _adapter;
     private Tweets _dbInstance;
     private TwitterAPIAccess _api;
-    private string _imagePath;
 
     public TweetAutomationFrom()
     {
@@ -119,10 +118,8 @@ namespace TweetAutomation.UserInterface
       Tweet tweet = GetTweet();
       SaveCredentialToBinary();
       Sendtweet(tweet);
-
-      // _statusChecker.CheckStatus(tweet);
       UpdateDataGridRecord(tweet);
-      TweetText.Clear();
+      ClearTweetForm();
     }
 
     private void DeleteButton(object sender, DataGridViewCellEventArgs e)
@@ -200,13 +197,13 @@ namespace TweetAutomation.UserInterface
     {
       return _tweetFactory.Create(
         TweetText.Text, DatePicker.Value, TimePicker.Value,
-        SendImmediatelyCheckBox.Checked, _imagePath);
+        SendImmediatelyCheckBox.Checked, TweetImageBox.ImageLocation);
     }
 
     private void Sendtweet(Tweet tweet)
     {
       _logger.Update("ACCESS", "Sending Tweet.");
-      Task.Factory.StartNew(async () =>
+      Task.Factory.StartNew(() =>
       {
         Tweet response = _api.SendTweet(GetCredentials(), tweet);
         UpdateRecords(response);
@@ -220,10 +217,18 @@ namespace TweetAutomation.UserInterface
       if (open.ShowDialog() == DialogResult.OK)
       {
         TweetImageBox.Image = new Bitmap(open.FileName);
-        _imagePath = open.FileName;
         TweetImageBox.BackColor = Color.WhiteSmoke;
+        TweetImageBox.ImageLocation = open.FileName;
         loggerText.Invoke(new Action(() => loggerText.Text = open.FileName));
       }
+    }
+
+    private void ClearTweetForm()
+    {
+      TweetText.Clear();
+      TweetImageBox.Image = null;
+      TweetImageBox.ImageLocation = null;
+      TweetImageBox.BackColor = Color.Gray;
     }
 
     #endregion
@@ -289,6 +294,7 @@ namespace TweetAutomation.UserInterface
     private void TrayContextExit(object sender, EventArgs e)
     {
       this.Close();
+      Application.Exit();
     }
 
     void minimizeToTray(object sender, CancelEventArgs e)
