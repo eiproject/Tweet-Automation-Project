@@ -13,7 +13,7 @@ namespace TweetAutomation.UserInterface.Factory
     }
 
     public Tweet Create(
-      string tweet, DateTime date, DateTime time, bool isImmediately)
+      string tweet, DateTime date, DateTime time, bool isImmediately, string imagePath)
     {
       if (isImmediately)
       {
@@ -21,7 +21,7 @@ namespace TweetAutomation.UserInterface.Factory
         time = DateTime.Now;
       }
       time = date + time.TimeOfDay;
-      return new Tweet(GetLastID(), tweet, date, time, isImmediately);
+      return new Tweet(GetLastID(), tweet, date, time, isImmediately, imagePath);
     }
 
     private int GetLastID()

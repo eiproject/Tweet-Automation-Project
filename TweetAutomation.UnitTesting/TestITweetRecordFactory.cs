@@ -19,9 +19,9 @@ namespace UnitTesting
 
     [Test]
     [TestCaseSource("TestCaseSourceData")]
-    public void CreateRecord_ShouldBeCreated(string tweet, DateTime date, DateTime time)
+    public void CreateRecord_ShouldBeCreated(string tweet, DateTime date, DateTime time, bool isImmediately, string imagePath)
     {
-      Tweet record = _factory.Create(tweet, date, time);
+      Tweet record = _factory.Create(tweet, date, time, isImmediately, imagePath);
       Assert.AreEqual(record.ID, 0);
       Assert.AreEqual(record.FullText, tweet);
       Assert.AreEqual(record.DateObject, date);

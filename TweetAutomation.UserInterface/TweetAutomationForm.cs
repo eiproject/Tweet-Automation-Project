@@ -26,6 +26,7 @@ namespace TweetAutomation.UserInterface
     private CredentialsAdapter _adapter;
     private Tweets _dbInstance;
     private TwitterAPIAccess _api;
+    private string _imagePath;
 
     public TweetAutomationFrom()
     {
@@ -199,7 +200,7 @@ namespace TweetAutomation.UserInterface
     {
       return _tweetFactory.Create(
         TweetText.Text, DatePicker.Value, TimePicker.Value,
-        SendImmediatelyCheckBox.Checked);
+        SendImmediatelyCheckBox.Checked, _imagePath);
     }
 
     private void Sendtweet(Tweet tweet)
@@ -207,7 +208,7 @@ namespace TweetAutomation.UserInterface
       _logger.Update("ACCESS", "Sending Tweet.");
       Task.Factory.StartNew(async () =>
       {
-        Tweet response = await _api.SendTweet(GetCredentials(), tweet);
+        Tweet response = _api.SendTweet(GetCredentials(), tweet);
         UpdateRecords(response);
       });
     }
@@ -219,6 +220,7 @@ namespace TweetAutomation.UserInterface
       if (open.ShowDialog() == DialogResult.OK)
       {
         TweetImageBox.Image = new Bitmap(open.FileName);
+        _imagePath = open.FileName;
         TweetImageBox.BackColor = Color.WhiteSmoke;
         loggerText.Invoke(new Action(() => loggerText.Text = open.FileName));
       }

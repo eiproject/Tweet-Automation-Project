@@ -15,9 +15,10 @@ namespace TweetAutomation.UserInterface.Model
     public TweetStatus Status { get; set; }
     public bool IsImmediately { get; set; }
     public bool IsStatusPermanent { get; set; }
+    public string ImagePath { get; set; }
 
     public Tweet(
-      int id, string tweet, DateTime date, DateTime time, bool isImmediately)
+      int id, string tweet, DateTime date, DateTime time, bool isImmediately, string imagePath)
     {
       ID = id;
       FullText = tweet;
@@ -28,6 +29,7 @@ namespace TweetAutomation.UserInterface.Model
       DateTimeCombined = date.Date + time.TimeOfDay;
       Status = TweetStatus.Starting;
       IsImmediately = isImmediately;
+      ImagePath = imagePath;
     }
   }
 }

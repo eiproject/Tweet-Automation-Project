@@ -61,23 +61,27 @@ namespace TweetAutomation.TwitterAPIHandler.Business
     {
       lock (_lockerSendRequest)
       {
+        int maxLength = 20;
+        if (text.Length < maxLength) maxLength = text.Length;
+        _logger.Update("DEBUG", $"Twitter Tweet. {text.Substring(0, maxLength)}");
+
         HttpResponseMessage response = Init(filePath);
         string JsonString = response.Content.ReadAsStringAsync().Result;
+        _logger.Update("DEBUG", $"Twitter Tweet. {JsonString}");
         MediaInitResponse media = JsonSerializer.Deserialize<MediaInitResponse>(JsonString);
         List<HttpResponseMessage> append = Append(media.media_id_string, filePath);
         HttpResponseMessage finalize = Finalize(media.media_id_string);
         HttpResponseMessage status = Status(media.media_id_string);
 
-        int maxLength = 20;
-        if (text.Length < maxLength) maxLength = text.Length;
-        _logger.Update("DEBUG", $"Sending Tweet. {text.Substring(0, maxLength)}");
+        _logger.Update("DEBUG", $"Twitter Tweet. {media.media_id_string}");
+
         var data = new Dictionary<string, string> {
           { "status", text },
           { "trim_user", "1" },
-          { "media_ids", media.media_id_string}
+          { "media_ids", media.media_id_string }
         };
 
-        return SendRequest(_twitterApiUploadUrl + "statuses/update.json", data).StatusCode;
+        return SendRequest(_twitterApiBaseUrl + "statuses/update.json", data).StatusCode;
       }
     }
 
@@ -245,6 +249,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
           response = httpResp.Result;
 
           var respBody = response.Content.ReadAsStringAsync();
+          _logger.Update("DEBUG", $"Twitter SendRequest. {respBody.Result.ToString()}");
           Console.WriteLine(respBody.Result.ToString());
         }
         catch (SocketException error)
