@@ -7,7 +7,7 @@ using TweetAutomation.UserInterface.Model;
 
 namespace UnitTesting
 {
-  public class TestITweetRecordFactory
+  /*public class TestITweetRecordFactory
   {
     ITweetRecordFactory _factory;
 
@@ -21,7 +21,7 @@ namespace UnitTesting
     [TestCaseSource("TestCaseSourceData")]
     public void CreateRecord_ShouldBeCreated(string tweet, DateTime date, DateTime time, bool isImmediately, string imagePath)
     {
-      Tweet record = _factory.Create(tweet, date, time, isImmediately, imagePath);
+      Tweet record = _factory.Create(tweet, date, time, , imagePath);
       Assert.AreEqual(record.ID, 0);
       Assert.AreEqual(record.FullText, tweet);
       Assert.AreEqual(record.DateObject, date);
@@ -37,5 +37,5 @@ namespace UnitTesting
       yield return new TestCaseData("Test tweet", new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
       yield return new TestCaseData(null, new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
     }
-  }
+  }*/
 }
