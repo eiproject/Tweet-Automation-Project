@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using TweetAutomation.LoggingSystem.Business;
+using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.TwitterAPIHandler.Business;
-using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.DataAccessOnline
@@ -26,7 +26,7 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
       _statusChecker = statusChecker;
     }
 
-    public async Task<Tweet> SendTweet(Credentials credentials, Tweet record)
+    public Tweet SendTweet(Credentials credentials, Tweet record)
     {
       _logger.Update("DEBUG", "Start sending Tweet.");
 
@@ -36,7 +36,7 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
         _statusChecker.CheckStatusOfSendImmediately(record);
         if (record.Status == TweetStatus.Starting)
         {
-          HttpStatusCode response = await SendTweetAsync(_api, record);
+          HttpStatusCode response = SendTweetAsync(record);
           _statusChecker.ChangeStatusByResponse(record, response);
           _logger.Update("DEBUG", $"Done sending Tweet immediately. {record.Status}");
         }
@@ -51,7 +51,7 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
           /*Timer timer = new Timer(async x =>
           {*/
           Thread.Sleep((int)timeToGo.TotalMilliseconds);
-          HttpStatusCode response = await SendTweetAsync(_api, record);
+          HttpStatusCode response = SendTweetAsync(record);
           _statusChecker.ChangeStatusByResponse(record, response);
           // }, null, timeToGo, Timeout.InfiniteTimeSpan);
         }
@@ -64,10 +64,18 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
       _api = new Twitter(_adapter.Adaptee(credentials));
     }
 
-    private async Task<HttpStatusCode> SendTweetAsync(ITwitter api, Tweet tweet)
+    private HttpStatusCode SendTweetAsync(Tweet tweet)
     {
+      HttpStatusCode response;
       _logger.Update("DEBUG", $"Calling Twitter API. ID: {tweet.ID}");
-      HttpStatusCode response = await api.Tweet(tweet.FullText);
+      if (tweet.ImagePath == null)
+      {
+        response = _api.Tweet(tweet.FullText);
+      }
+      else
+      {
+        response = _api.Tweet(tweet.FullText, tweet.ImagePath);
+      }
       _logger.Update("DEBUG", $"Response sending Tweet async. {response}");
 
       return response;

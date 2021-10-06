@@ -5,6 +5,6 @@ namespace TweetAutomation.UserInterface.Factory
 {
   public interface ITweetRecordFactory
   {
-    Tweet Create(string tweet, DateTime date, DateTime time, bool isImmediately);
+    Tweet Create(string tweet, DateTime date, DateTime time, bool isImmediately, string imagePath);
   }
 }

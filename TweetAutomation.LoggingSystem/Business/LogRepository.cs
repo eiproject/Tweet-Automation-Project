@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TweetAutomation.LoggingSystem.Business
+namespace TweetAutomation.LoggingSystem.BusinessLogic
 {
   public class LogRepository : ILogRepository
   {

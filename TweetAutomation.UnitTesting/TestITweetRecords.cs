@@ -7,7 +7,7 @@ using TweetAutomation.UserInterface.Model;
 
 namespace UnitTesting
 {
-  class TestITweetRecords
+  /*class TestITweetRecords
   {
     ITweetsRepository _tweetRecords;
     [SetUp]
@@ -45,5 +45,5 @@ namespace UnitTesting
       yield return new TestCaseData(14354, null, new DateTime(2021, 09, 20), new DateTime(2021, 09, 20, 23, 59, 00));
       yield return new TestCaseData(234, null, null, null);
     }
-  }
+  }*/
 }

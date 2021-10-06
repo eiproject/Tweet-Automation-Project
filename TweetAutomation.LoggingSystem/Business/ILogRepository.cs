@@ -1,4 +1,4 @@
-﻿namespace TweetAutomation.LoggingSystem.Business
+﻿namespace TweetAutomation.LoggingSystem.BusinessLogic
 {
   public interface ILogRepository
   {

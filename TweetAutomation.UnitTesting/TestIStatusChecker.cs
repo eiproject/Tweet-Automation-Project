@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using TweetAutomation.UserInterface.BLL;
+using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UnitTesting.Example
 {
-  public class TestIStatusChecker
+  /*public class TestIStatusChecker
   {
     IStatusChecker _checker;
     [SetUp]
@@ -65,5 +65,5 @@ namespace TweetAutomation.UnitTesting.Example
       yield return new TestCaseData(0, null, new DateTime(2019, 09, 20), new DateTime(2022, 09, 20, 23, 59, 00));
       yield return new TestCaseData(14354, null, new DateTime(1990, 10, 20), new DateTime(2022, 10, 20, 23, 59, 00));
     }
-  }
+  }*/
 }
