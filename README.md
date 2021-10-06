@@ -1,4 +1,8 @@
-# Tweet-Automation-Project
+<p align="center">
+  <img src="https://github.com/eiproject/Tweet-Automation-Project/blob/dev/asset/img/TweetAutomation-Logo.png?raw=true" width=300px />
+</p>
+
+# Tweet Automation Project
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/eiproject/Tweet-Automation-Project?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/eiproject/Tweet-Automation-Project)
 ![GitHub issues](https://img.shields.io/github/issues/eiproject/Tweet-Automation-Project?style=flat-square)
@@ -24,12 +28,14 @@ Few steps to run the project
 - Done
 
 
-## Current Feature
-Current completed feature (v1.0.12):
-- Post a Tweet in specific targeted time
-- CRUD Tweet Developer Credentials
-- CRUD Tweet queue records
+## Current Feature v1.0.12
+Current feature available:
+- Post Tweet in scheduled time
 - Post a Tweet immediately after send button clicked
+- Manage Twitter developer credentials
+- Tweet queue records to see tweet history
+- Tweet with image that you choose from local storage
+- Minimize Tweet Automation to run on the background, check in your tray icon
 
 ## User Interface
 
