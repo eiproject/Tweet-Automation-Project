@@ -64,10 +64,10 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
       _api = new Twitter(_adapter.Adaptee(credentials));
     }
 
-    private async Task<HttpStatusCode> SendTweetAsync(ITwitter api, Tweet tweet)
+    private Task<HttpStatusCode> SendTweetAsync(ITwitter api, Tweet tweet)
     {
       _logger.Update("DEBUG", $"Calling Twitter API. ID: {tweet.ID}");
-      HttpStatusCode response = await api.Tweet(tweet.FullText);
+      HttpStatusCode response = api.Tweet(tweet.FullText);
       _logger.Update("DEBUG", $"Response sending Tweet async. {response}");
 
       return response;

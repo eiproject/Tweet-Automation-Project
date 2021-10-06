@@ -1,86 +1,40 @@
-﻿using MimeMapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MimeMapping;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.TwitterAPIHandler.Model;
 
 namespace TweetAutomation.TwitterAPIHandler.Business
 {
-  public class Twitter : ITwitter
+  public class UploadMedia
   {
     private object _lockerSendRequest = new object();
     private readonly DateTime epochUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     private LogRepository _logger = LogRepository.LogInstance();
     private HMACSHA1 _sigHasher;
-    private Credentials _credentials;
-    private const string _twitterApiBaseUrl = "https://api.twitter.com/1.1/";
-    private const string _twitterApiUploadUrl = "https://upload.twitter.com/1.1/";
+    private const string _twitterApiBaseUrl = "https://upload.twitter.com/1.1/";
     private string _consumerKey;
     private string _consumerSecret;
     private string _accessTokenKey;
     private string _accessTokenSecret;
 
-    public Twitter(Credentials credentials)
+    public UploadMedia(Credentials credentials)
     {
       _logger.Update("DEBUG", "Creating Twitter API instance.");
       _consumerKey = credentials.ConsumerKey;
       _consumerSecret = credentials.ConsumerSecret;
       _accessTokenKey = credentials.AccessTokenKey;
       _accessTokenSecret = credentials.AccessTokenSecret;
-      _credentials = credentials;
-
       CreateSigHasher();
     }
-
-    public HttpStatusCode Tweet(string text)
-    {
-      lock (_lockerSendRequest)
-      {
-        int maxLength = 20;
-        if (text.Length < maxLength) maxLength = text.Length;
-        _logger.Update("DEBUG", $"Sending Tweet. {text.Substring(0, maxLength)}");
-        var data = new Dictionary<string, string> {
-          { "status", text },
-          { "trim_user", "1" }
-        };
-
-        return SendRequest(_twitterApiBaseUrl + "statuses/update.json", data).StatusCode;
-      }
-    }
-
-    public HttpStatusCode Tweet(string text, string filePath)
-    {
-      lock (_lockerSendRequest)
-      {
-        HttpResponseMessage response = Init(filePath);
-        string JsonString = response.Content.ReadAsStringAsync().Result;
-        MediaInitResponse media = JsonSerializer.Deserialize<MediaInitResponse>(JsonString);
-        List<HttpResponseMessage> append = Append(media.media_id_string, filePath);
-        HttpResponseMessage finalize = Finalize(media.media_id_string);
-        HttpResponseMessage status = Status(media.media_id_string);
-
-        int maxLength = 20;
-        if (text.Length < maxLength) maxLength = text.Length;
-        _logger.Update("DEBUG", $"Sending Tweet. {text.Substring(0, maxLength)}");
-        var data = new Dictionary<string, string> {
-          { "status", text },
-          { "trim_user", "1" },
-          { "media_ids", media.media_id_string}
-        };
-
-        return SendRequest(_twitterApiUploadUrl + "statuses/update.json", data).StatusCode;
-      }
-    }
-
 
     public HttpResponseMessage Init(string mediaPath)
     {
@@ -93,19 +47,19 @@ namespace TweetAutomation.TwitterAPIHandler.Business
             { "media_type", $"{mimeType}" }
         };
 
-      return SendRequest(_twitterApiUploadUrl + "media/upload.json", data);
+      return ConfigureOauth("media/upload.json", data);
     }
 
-    public List<HttpResponseMessage> Append(string mediaID, string mediaPath)
+    public void Append(string mediaID, string mediaPath)
     {
-      List<HttpResponseMessage> responses = new List<HttpResponseMessage>();
+
       const int chunkSize = 40 * 1024; // read the file by chunks
       using (var file = File.OpenRead(mediaPath))
       {
         int bytesRead = 0;
         int chunkID = 0;
         byte[] buffer = new byte[chunkSize];
-
+        
         while ((bytesRead = file.Read(buffer, 0, buffer.Length)) > 0)
         {
           if (bytesRead < chunkSize)
@@ -121,11 +75,9 @@ namespace TweetAutomation.TwitterAPIHandler.Business
             mediaID,
             chunkID
             );
-          responses.Add(response);
           chunkID++;
         }
       }
-      return responses;
     }
 
     public HttpResponseMessage Finalize(string mediaID)
@@ -134,7 +86,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
             { "command", "FINALIZE" },
             { "media_id", $"{mediaID}" }
         };
-      return SendRequest(_twitterApiUploadUrl + "media/upload.json", data);
+      return ConfigureOauth("media/upload.json", data);
     }
 
     public HttpResponseMessage Status(string mediaID)
@@ -143,7 +95,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
             { "command", "STATUS" },
             { "media_id", $"{mediaID}" }
         };
-      return SendRequest(_twitterApiUploadUrl + "media/upload.json", data);
+      return ConfigureOauth("media/upload.json", data);
     }
 
     private HttpResponseMessage SendAppend(byte[] chunk, string mediaID, int chunkID)
@@ -158,7 +110,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
             { "media_data", $"{videoBase64}" },
             { "segment_index", $"{chunkID}" }
         };
-        return SendRequest(_twitterApiUploadUrl + "media/upload.json", data);
+        return ConfigureOauth("media/upload.json", data);
       }
     }
 
@@ -168,10 +120,10 @@ namespace TweetAutomation.TwitterAPIHandler.Business
         string.Format("{0}&{1}", _consumerSecret, _accessTokenSecret)));
     }
 
-    private HttpResponseMessage SendRequest(
-      string fullUrl, Dictionary<string, string> data)
+    private HttpResponseMessage ConfigureOauth(
+      string url, Dictionary<string, string> data)
     {
-      // var fullUrl = _twitterApiBaseUrl + url;
+      var fullUrl = _twitterApiBaseUrl + url;
 
       // Timestamps are in seconds since 1/1/1970.
       var timestamp = (int)((DateTime.UtcNow - epochUtc).TotalSeconds);
@@ -194,7 +146,7 @@ namespace TweetAutomation.TwitterAPIHandler.Business
       var formData = new FormUrlEncodedContent(
         data.Where(kvp => !kvp.Key.StartsWith("oauth_")));
 
-      return SendRequest(fullUrl, oAuthHeader, formData);
+      return PostRequest(fullUrl, oAuthHeader, formData);
     }
 
     private string GenerateSignature(string url, Dictionary<string, string> data)
@@ -232,32 +184,34 @@ namespace TweetAutomation.TwitterAPIHandler.Business
       );
     }
 
-    private HttpResponseMessage SendRequest(
+    private HttpResponseMessage PostRequest(
       string fullUrl, string oAuthHeader, FormUrlEncodedContent formData)
     {
       using (var http = new HttpClient())
       {
-        HttpResponseMessage response = new HttpResponseMessage();
+        HttpResponseMessage httpResp = new HttpResponseMessage();
         http.DefaultRequestHeaders.Add("Authorization", oAuthHeader);
         try
         {
-          var httpResp = http.PostAsync(fullUrl, formData);
-          response = httpResp.Result;
+          var request = http.PostAsync(fullUrl, formData);
+          request.Wait();
 
-          var respBody = response.Content.ReadAsStringAsync();
+          httpResp = request.Result;
+          var respBody = httpResp.Content.ReadAsStringAsync();
+
           Console.WriteLine(respBody.Result.ToString());
         }
         catch (SocketException error)
         {
           _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
-          response.StatusCode = HttpStatusCode.RequestTimeout;
+          httpResp.StatusCode = HttpStatusCode.RequestTimeout;
         }
         catch (HttpRequestException error)
         {
           _logger.Update("ERROR", error.GetType().Name + " " + error.Message);
-          response.StatusCode = HttpStatusCode.RequestTimeout;
+          httpResp.StatusCode = HttpStatusCode.RequestTimeout;
         }
-        return response;
+        return httpResp;
       }
     }
   }
