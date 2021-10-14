@@ -14,31 +14,40 @@
 An `open-source` project control Tweet using automation tools. Build with C# winform for running in Windows Desktop. Feel free to contribute and open pull requests.
 
 ## Depedencies
+
 Thecnology used in this project
+
 - Visual Studio 2019 Community Edition
 - Microsoft .Net Core 3.1
-- To use `Setup-x64` and `Setup-x86` you should install VS Installer Project (https://marketplace.visualstudio.com/items?itemName=VisualStudioClient.MicrosoftVisualStudio2017InstallerProjects)
 
-## How to Run?
+## How to Run the project?
+
 Few steps to run the project
+
 - Install Visual Studio 
 - Install .Net Core 3.1
 - Install VS Installer Project
 - Open the solution (*.sln)
 - Done
 
+## Installer
 
-## Current Feature v1.0.12
+There are available installers for x86 and x64 computer, check the release!
+
+## Current Feature v1.1.0
+
 Current feature available:
+
 - Post Tweet in scheduled time
 - Post a Tweet immediately after send button clicked
 - Manage Twitter developer credentials
 - Tweet queue records to see tweet history
+- Hide Twitter credentials (more secure)
 - Tweet with image that you choose from local storage
 - Minimize Tweet Automation to run on the background, check in your tray icon
 
 ## User Interface
 
-![Tweet Automation v1.0.12](https://raw.githubusercontent.com/eiproject/Tweet-Automation-Project/master/asset/screenshot/Screenshot%202021-09-23%20134907.png)
+![Tweet Automation v1.1.0](https://raw.githubusercontent.com/eiproject/Tweet-Automation-Project/master/asset/screenshot/Screenshot%202021-09-23%20134907.png)
 
 ## Thanks

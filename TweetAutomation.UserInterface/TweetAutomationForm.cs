@@ -74,7 +74,7 @@ namespace TweetAutomation.UserInterface
       tweet_automation_notify.MouseClick += restoreWindow;
 
 #if DEBUG
-      loggerText.Visible = true;
+      loggerText.Visible = false;
 #else
       loggerText.Visible = false;
 #endif

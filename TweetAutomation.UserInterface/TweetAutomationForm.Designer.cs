@@ -370,6 +370,7 @@ namespace TweetAutomation.UserInterface
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
+      this.loggerText.Visible = false;
       // 
       // SendImmediatelyCheckBox
       // 

@@ -12,6 +12,7 @@
     <ROW Property="ARPCONTACT" Value="razifrizqullah@gmail.com"/>
     <ROW Property="ARPHELPLINK" Value="https://github.com/eiproject/Tweet-Automation-Project"/>
     <ROW Property="ARPHELPTELEPHONE" Value="+6282238639221"/>
+    <ROW Property="ARPPRODUCTICON" Value="TweetAutomation.UserInterface.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/eiproject/Tweet-Automation-Project"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/eiproject/Tweet-Automation-Project"/>
     <ROW Property="CTRLS" Value="2"/>
@@ -66,7 +67,7 @@
     <ROW Component="NUnit3.TestAdapter.dll" ComponentId="{79EB67B5-F90A-409C-8A54-44D3C87C96FF}" Directory_="APPDIR" Attributes="0" KeyPath="NUnit3.TestAdapter.dll"/>
     <ROW Component="Newtonsoft.Json.dll" ComponentId="{D37C2751-D79C-466E-B454-1091D6556887}" Directory_="APPDIR" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
     <ROW Component="NuGet.Frameworks.dll" ComponentId="{562247B9-4CFD-46A7-9662-41FF34181E3F}" Directory_="APPDIR" Attributes="0" KeyPath="NuGet.Frameworks.dll"/>
-    <ROW Component="ProductInformation" ComponentId="{0AD50D59-9C9A-4884-B449-355FE5230E38}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="ProductInformation" ComponentId="{0AD50D59-9C9A-4884-B449-355FE5230E38}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{0340DD19-186B-4109-B556-D65580FFCD24}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.AppContext.dll" ComponentId="{80AED761-C5CD-4AF0-8CD6-8C6454B54D58}" Directory_="APPDIR" Attributes="0" KeyPath="System.AppContext.dll"/>
     <ROW Component="System.Buffers.dll" ComponentId="{AB008389-F49A-45AB-AD18-C4837474038E}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
@@ -493,7 +494,7 @@
     <ROW Action="AI_DetectSoftware" Sequence="151"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="AnyCPU_Release" BuildName="AnyCPU_Release" BuildOrder="1" BuildType="0" PackageFolder="x64" PackageFileName="TweetAutomation" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="AnyCPU_Release" BuildName="release" BuildOrder="1" BuildType="0" PackageFolder="x86" PackageFileName="TweetAutomation" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -566,7 +567,7 @@
     <ROW Action="AI_UnpinFromStartScreen" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromStartScreen" WithoutSeq="true"/>
     <ROW Action="AI_UnpinFromTaskbar" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromTaskbar" WithoutSeq="true"/>
     <ROW Action="AI_UnpinShortcuts" Type="1" Source="ShortcutFlags.dll" Target="UnpinShortcuts"/>
-    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="AnyCPU_Release:[AppDataFolder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
