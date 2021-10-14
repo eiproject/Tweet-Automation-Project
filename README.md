@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/eiproject/Tweet-Automation-Project/blob/dev/asset/img/TweetAutomation-Logo.png?raw=true" width=300px />
+  <img src="https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/img/TweetAutomation-Logo.png?raw=true" width=300px />
 </p>
 
 # Tweet Automation Project
@@ -49,6 +49,6 @@ Current feature available:
 
 ## User Interface
 
-![Tweet Automation v1.1.0](https://github.com/eiproject/Tweet-Automation-Project/blob/dev/asset/screenshot/Screenshot%202021-10-14%20125808.png?raw=true)
+![Tweet Automation v1.1.0](https://github.com/eiproject/Tweet-Automation-Project/blob/master/asset/screenshot/Screenshot%202021-10-14%20125808.png?raw=true)
 
 ## Thanks
