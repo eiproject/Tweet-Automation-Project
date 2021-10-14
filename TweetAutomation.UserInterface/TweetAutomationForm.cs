@@ -23,7 +23,6 @@ namespace TweetAutomation.UserInterface
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
     private IStatusChecker _statusChecker;
-    private CredentialsAdapter _adapter;
     private Tweets _dbInstance;
     private TwitterAPIAccess _api;
 
@@ -33,8 +32,7 @@ namespace TweetAutomation.UserInterface
       InitializeComponent();
 
       _statusChecker = new StatusChecker();
-      _adapter = new CredentialsAdapter();
-      _api = new TwitterAPIAccess(_statusChecker, _adapter);
+      _api = new TwitterAPIAccess();
 
       InitializeDatabase();
       InitializeCustomProperties();
@@ -88,7 +86,7 @@ namespace TweetAutomation.UserInterface
       if (_dbInstance == null) _dbInstance = Tweets.GetInstance();
     }
 
-    #region All Button Click Event
+    #region All Buttons Click Event
     private void ExitButtonStripMenuItem(object sender, EventArgs e)
     {
       _logger.Update("ACCESS", "Exit button clicked.");
@@ -190,6 +188,16 @@ namespace TweetAutomation.UserInterface
       AccessTokenSecret.Clear();
     }
 
+    private void ChangeToAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '*';
+    }
+
+    private void ChangeToNoAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '\0';
+    }
+
     #endregion
 
     #region Tweet Command
@@ -205,7 +213,7 @@ namespace TweetAutomation.UserInterface
       _logger.Update("ACCESS", "Sending Tweet.");
       Task.Factory.StartNew(() =>
       {
-        Tweet response = _api.SendTweet(GetCredentials(), tweet);
+        Tweet response = _api.SendTweet(GetCredentials(), tweet, TweetDataGrid);
         UpdateRecords(response);
       });
     }
@@ -265,7 +273,7 @@ namespace TweetAutomation.UserInterface
 
     internal void UpdateRecords(Tweet record)
     {
-      UpdateStatusOnDataGrid(record);
+      // UpdateStatusOnDataGrid(record);
       _tweetRecordsSaver.UpdateBinary(_dbInstance);
     }
 
@@ -311,16 +319,6 @@ namespace TweetAutomation.UserInterface
         this.Show();
         tweet_automation_notify.Visible = false;
       }
-    }
-
-    private void ChangeToAsterisk(object sender, EventArgs e)
-    {
-      ((TextBox)sender).PasswordChar = '*';
-    }
-
-    private void ChangeToNoAsterisk(object sender, EventArgs e)
-    {
-      ((TextBox)sender).PasswordChar = '\0';
     }
     #endregion
   }
