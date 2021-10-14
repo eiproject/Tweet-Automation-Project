@@ -5,11 +5,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject></StartupObject>
-    <ApplicationIcon>Logo-Tweet-Automation.ico</ApplicationIcon>
+    <ApplicationIcon>TweetAutomation-Logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>TweetAutomation.UserInterface</AssemblyName>
     <RootNamespace>TweetAutomation.UserInterface</RootNamespace>
-    <Version>1.0.12</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

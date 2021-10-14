@@ -52,6 +52,7 @@ namespace TweetAutomation.UserInterface.DataAccessOnline
           HttpStatusCode response = SendTweetAsync(record);
           _statusChecker.ChangeStatusByResponse(record, response);
           _dataGridManager.UpdateStatus(tweetsDataGrid, record);
+          _logger.Update("DEBUG", $"Done sending Tweet by timer. {record.Status}");
         }
       }
       return record;

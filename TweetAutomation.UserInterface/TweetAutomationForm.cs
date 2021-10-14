@@ -221,7 +221,7 @@ namespace TweetAutomation.UserInterface
     private void ChooseImage()
     {
       OpenFileDialog open = new OpenFileDialog();
-      open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+      open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.png)|*.jpg; *.jpeg; *.gif; *.bmp; *.png";
       if (open.ShowDialog() == DialogResult.OK)
       {
         TweetImageBox.Image = new Bitmap(open.FileName);
