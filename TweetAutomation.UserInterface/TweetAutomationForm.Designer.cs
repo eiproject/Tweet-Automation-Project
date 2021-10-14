@@ -370,6 +370,7 @@ namespace TweetAutomation.UserInterface
       this.loggerText.Size = new System.Drawing.Size(44, 15);
       this.loggerText.TabIndex = 16;
       this.loggerText.Text = "Logger";
+      this.loggerText.Visible = false;
       // 
       // SendImmediatelyCheckBox
       // 
@@ -463,7 +464,7 @@ namespace TweetAutomation.UserInterface
       this.MaximizeBox = false;
       this.Name = "TweetAutomationFrom";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Tweet Automation 1.0.12";
+      this.Text = "Tweet Automation 1.1.0";
       this.main_menu.ResumeLayout(false);
       this.main_menu.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweetDataGrid)).EndInit();

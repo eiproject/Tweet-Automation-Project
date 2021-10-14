@@ -23,10 +23,8 @@ namespace TweetAutomation.UserInterface
     private ISaverBinary _tweetRecordsSaver;
     private ISaverBinary _credentialSaver;
     private IStatusChecker _statusChecker;
-    private CredentialsAdapter _adapter;
     private Tweets _dbInstance;
     private TwitterAPIAccess _api;
-    private string _imagePath;
 
     public TweetAutomationFrom()
     {
@@ -34,8 +32,7 @@ namespace TweetAutomation.UserInterface
       InitializeComponent();
 
       _statusChecker = new StatusChecker();
-      _adapter = new CredentialsAdapter();
-      _api = new TwitterAPIAccess(_statusChecker, _adapter);
+      _api = new TwitterAPIAccess();
 
       InitializeDatabase();
       InitializeCustomProperties();
@@ -77,7 +74,7 @@ namespace TweetAutomation.UserInterface
       tweet_automation_notify.MouseClick += restoreWindow;
 
 #if DEBUG
-      loggerText.Visible = true;
+      loggerText.Visible = false;
 #else
       loggerText.Visible = false;
 #endif
@@ -89,7 +86,7 @@ namespace TweetAutomation.UserInterface
       if (_dbInstance == null) _dbInstance = Tweets.GetInstance();
     }
 
-    #region All Button Click Event
+    #region All Buttons Click Event
     private void ExitButtonStripMenuItem(object sender, EventArgs e)
     {
       _logger.Update("ACCESS", "Exit button clicked.");
@@ -119,10 +116,8 @@ namespace TweetAutomation.UserInterface
       Tweet tweet = GetTweet();
       SaveCredentialToBinary();
       Sendtweet(tweet);
-
-      // _statusChecker.CheckStatus(tweet);
       UpdateDataGridRecord(tweet);
-      TweetText.Clear();
+      ClearTweetForm();
     }
 
     private void DeleteButton(object sender, DataGridViewCellEventArgs e)
@@ -193,6 +188,16 @@ namespace TweetAutomation.UserInterface
       AccessTokenSecret.Clear();
     }
 
+    private void ChangeToAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '*';
+    }
+
+    private void ChangeToNoAsterisk(object sender, EventArgs e)
+    {
+      ((TextBox)sender).PasswordChar = '\0';
+    }
+
     #endregion
 
     #region Tweet Command
@@ -200,15 +205,15 @@ namespace TweetAutomation.UserInterface
     {
       return _tweetFactory.Create(
         TweetText.Text, DatePicker.Value, TimePicker.Value,
-        SendImmediatelyCheckBox.Checked, _imagePath);
+        SendImmediatelyCheckBox.Checked, TweetImageBox.ImageLocation);
     }
 
     private void Sendtweet(Tweet tweet)
     {
       _logger.Update("ACCESS", "Sending Tweet.");
-      Task.Factory.StartNew(async () =>
+      Task.Factory.StartNew(() =>
       {
-        Tweet response = _api.SendTweet(GetCredentials(), tweet);
+        Tweet response = _api.SendTweet(GetCredentials(), tweet, TweetDataGrid);
         UpdateRecords(response);
       });
     }
@@ -216,14 +221,22 @@ namespace TweetAutomation.UserInterface
     private void ChooseImage()
     {
       OpenFileDialog open = new OpenFileDialog();
-      open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+      open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.png)|*.jpg; *.jpeg; *.gif; *.bmp; *.png";
       if (open.ShowDialog() == DialogResult.OK)
       {
         TweetImageBox.Image = new Bitmap(open.FileName);
-        _imagePath = open.FileName;
         TweetImageBox.BackColor = Color.WhiteSmoke;
+        TweetImageBox.ImageLocation = open.FileName;
         loggerText.Invoke(new Action(() => loggerText.Text = open.FileName));
       }
+    }
+
+    private void ClearTweetForm()
+    {
+      TweetText.Clear();
+      TweetImageBox.Image = null;
+      TweetImageBox.ImageLocation = null;
+      TweetImageBox.BackColor = Color.Gray;
     }
 
     #endregion
@@ -260,7 +273,7 @@ namespace TweetAutomation.UserInterface
 
     internal void UpdateRecords(Tweet record)
     {
-      UpdateStatusOnDataGrid(record);
+      // UpdateStatusOnDataGrid(record);
       _tweetRecordsSaver.UpdateBinary(_dbInstance);
     }
 
@@ -289,6 +302,7 @@ namespace TweetAutomation.UserInterface
     private void TrayContextExit(object sender, EventArgs e)
     {
       this.Close();
+      Application.Exit();
     }
 
     void minimizeToTray(object sender, CancelEventArgs e)
@@ -305,16 +319,6 @@ namespace TweetAutomation.UserInterface
         this.Show();
         tweet_automation_notify.Visible = false;
       }
-    }
-
-    private void ChangeToAsterisk(object sender, EventArgs e)
-    {
-      ((TextBox)sender).PasswordChar = '*';
-    }
-
-    private void ChangeToNoAsterisk(object sender, EventArgs e)
-    {
-      ((TextBox)sender).PasswordChar = '\0';
     }
     #endregion
   }

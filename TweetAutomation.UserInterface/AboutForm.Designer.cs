@@ -111,9 +111,9 @@ namespace TweetAutomation.UserInterface
       this.label6.AutoSize = true;
       this.label6.Location = new System.Drawing.Point(116, 69);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(60, 15);
+      this.label6.Size = new System.Drawing.Size(37, 15);
       this.label6.TabIndex = 7;
-      this.label6.Text = ": 1.0.12 (0)";
+      this.label6.Text = ": 1.1.0";
       this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // label7
@@ -123,7 +123,7 @@ namespace TweetAutomation.UserInterface
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(71, 15);
       this.label7.TabIndex = 8;
-      this.label7.Text = ": 23/09/2021";
+      this.label7.Text = ": 10/14/2021";
       this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // label8
@@ -197,7 +197,7 @@ namespace TweetAutomation.UserInterface
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Name = "AboutForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "About Tweet Automation";
+      this.Text = "About Tweet Automation 1.1.0";
       this.ResumeLayout(false);
       this.PerformLayout();
 

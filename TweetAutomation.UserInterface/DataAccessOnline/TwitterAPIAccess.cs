@@ -2,60 +2,75 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TweetAutomation.LoggingSystem.BusinessLogic;
 using TweetAutomation.TwitterAPIHandler.Business;
+using TweetAutomation.UserInterface.BLL;
 using TweetAutomation.UserInterface.BusinessLogic;
 using TweetAutomation.UserInterface.Model;
 
 namespace TweetAutomation.UserInterface.DataAccessOnline
 {
-  /// <summary>
-  /// To-DO
-  /// </summary>
   class TwitterAPIAccess
   {
     private IStatusChecker _statusChecker;
     private ITwitter _api;
     private CredentialsAdapter _adapter;
     private LogRepository _logger = LogRepository.LogInstance();
+    private DataGridManager _dataGridManager;
 
-    internal TwitterAPIAccess(
-      IStatusChecker statusChecker, CredentialsAdapter adapter)
+    internal TwitterAPIAccess()
     {
-      _adapter = adapter;
-      _statusChecker = statusChecker;
+      _adapter = new CredentialsAdapter();
+      _statusChecker = new StatusChecker(); ;
+      _dataGridManager = new DataGridManager();
     }
 
-    public Tweet SendTweet(Credentials credentials, Tweet record)
+    public Tweet SendTweet(
+      Credentials credentials, Tweet record, DataGridView tweetsDataGrid)
     {
       _logger.Update("DEBUG", "Start sending Tweet.");
 
       InitializeAPI(credentials);
+      CheckInitialStatus(record, tweetsDataGrid);
       if (record.IsImmediately == true)
       {
-        _statusChecker.CheckStatusOfSendImmediately(record);
         if (record.Status == TweetStatus.Starting)
         {
           HttpStatusCode response = SendTweetAsync(record);
           _statusChecker.ChangeStatusByResponse(record, response);
+          _dataGridManager.UpdateStatus(tweetsDataGrid, record);
           _logger.Update("DEBUG", $"Done sending Tweet immediately. {record.Status}");
         }
       }
       else
       {
-        _statusChecker.CheckStatus(record);
         TimeSpan timeToGo = record.DateTimeCombined - DateTime.Now;
         if (timeToGo > TimeSpan.Zero)
         {
-          // Not sure. Maybe causing thread error, test this 
-          /*Timer timer = new Timer(async x =>
-          {*/
           Thread.Sleep((int)timeToGo.TotalMilliseconds);
           HttpStatusCode response = SendTweetAsync(record);
           _statusChecker.ChangeStatusByResponse(record, response);
-          // }, null, timeToGo, Timeout.InfiniteTimeSpan);
+          _dataGridManager.UpdateStatus(tweetsDataGrid, record);
+          _logger.Update("DEBUG", $"Done sending Tweet by timer. {record.Status}");
         }
       }
+      return record;
+    }
+
+    private Tweet CheckInitialStatus(Tweet record, DataGridView tweetsDataGrid)
+    {
+      if (record.IsImmediately == true)
+      {
+        _statusChecker.CheckStatusOfSendImmediately(record);
+        _dataGridManager.UpdateStatus(tweetsDataGrid, record);
+      }
+      else
+      {
+        _statusChecker.CheckStatus(record);
+        _dataGridManager.UpdateStatus(tweetsDataGrid, record);
+      }
+
       return record;
     }
 

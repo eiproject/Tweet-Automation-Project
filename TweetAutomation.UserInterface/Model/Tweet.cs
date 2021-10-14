@@ -27,7 +27,7 @@ namespace TweetAutomation.UserInterface.Model
       TimeObject = time;
       TimeString = time.ToString("hh:mm tt");
       DateTimeCombined = date.Date + time.TimeOfDay;
-      Status = TweetStatus.Starting;
+      Status = TweetStatus.None;
       IsImmediately = isImmediately;
       ImagePath = imagePath;
     }

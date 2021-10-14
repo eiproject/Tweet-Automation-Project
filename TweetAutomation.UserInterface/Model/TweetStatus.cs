@@ -2,7 +2,7 @@
 {
   public enum TweetStatus
   {
-    Default = -1,
+    None = -1,
     Error = 0,
     Success = 1,
     Credential_Error = 2,
